@@ -1,12 +1,7 @@
-
-var canvas = document.getElementById("myCanvas");
-
-
-
+window.canvas = document.getElementById("myCanvas");
 
 // Get context of the canvas
-var ctx = canvas.getContext("2d");
-
+window.ctx = canvas.getContext("2d");
 
 var update = function(keyPress) {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -16,10 +11,10 @@ var update = function(keyPress) {
 	drawTitle();
 }
 
-
 var main = function() {
 	update();
 }
+
 // ***** Draw Menu *****
 // Draw title
 var drawTitle = function() {
@@ -51,7 +46,19 @@ var drawSelection = function(direction) {
 	}
 }
 
-// Handles Mouse Events
+// Handles Input Events
+function onMouseDown(event) {
+	var x = event.pageX - canvas.offsetLeft;
+	var y = event.pageY - canvas.offsetTop;
+	if(150 < x  && x < 250) {
+		if(150 < y && y < 200) {
+			;
+		}
+	}		
+}
+canvas.addEventListener('mousedown', onMouseDown, false);
+
+
 function onKeyDown(event) {
     update(event.keyCode);
 }

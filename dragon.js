@@ -1,7 +1,7 @@
 function Dragon(dragonX, dragonY) {
 	this.x = dragonX;
 	this.y = dragonY;
-	this.speed = 3;
+	this.speed = 1;
 	this.rightlimit = 600;
 	this.leftlimit = 0;
 	this.uplimit = 600;
@@ -22,20 +22,28 @@ function Dragon(dragonX, dragonY) {
 	this.moveUp = function() {
         	if(this.y - this.speed > this.downlimit) {
                 	this.y -= this.speed;
-        	}
+		}
 	}
 
 	this.moveDown = function() {
-        	if(this.y + this.speed < this.uplimit) {
+        	if(this.y + this.speed < this.uplimit)
                 	this.y += this.speed;
-        	}
+		}
 	}
 	
-	this.update = function() {
-		if (Key.isDown(Key.UP)) this.moveUp();
-		if (Key.isDown(Key.LEFT)) this.moveLeft();
-		if (Key.isDown(Key.DOWN)) this.moveDown();
-		if (Key.isDown(Key.RIGHT)) this.moveRight();
+	this.update = function(player) {
+		distX = Math.abs(player.x - this.x);
+		distY = Math.abs(player.y - this.y);
+		if(distX < 100 && dist Y < 100) {
+			if(player.x < this.x)
+				this.moveLeft();
+			if(player.x > this.x)
+				this.moveRight();
+			if(player.y < this.y)
+				this.moveUp();
+			if(player.y > this.y)
+				this.moveDown();
+		}
 	}
 	
 	this.draw = function() {

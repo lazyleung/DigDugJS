@@ -1,9 +1,6 @@
-window.addEventListener('keydown', function(event) { Key.onKeydown(event); }, false);
-window.addEventListener('keyup', function(event) { Key.onKeyup(event); }, false);
-
-function Player(playerX, playerY) {
-	this.x = playerX;
-	this.y = playerY;
+function Dragon(dragonX, dragonY) {
+	this.x = dragonX;
+	this.y = dragonY;
 	this.speed = 3;
 	this.rightlimit = 600;
 	this.leftlimit = 0;
@@ -45,24 +42,3 @@ function Player(playerX, playerY) {
 		
 	}
 }
-
-var Key = {
-	pressed: {},
-
-	LEFT: 37,
-	UP: 38,
-	RIGHT: 39,
-	DOWN: 40,
-  
-	isDown: function(keyCode) {
-    		return this.pressed[keyCode];
-	},
-  
-	onKeydown: function(event) {
-    		this.pressed[event.keyCode] = true;
-	},
-  
-	onKeyup: function(event) {
-		delete this.pressed[event.keyCode];
-	}
-};

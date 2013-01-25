@@ -3,6 +3,19 @@ window.canvas = document.getElementById("myCanvas");
 // Get context of the canvas
 window.ctx = canvas.getContext("2d");
 
+function startMainMenu() {
+	// Clear context and set menu EventListeners and draw menu
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	canvas.addEventListener('mousedown', onMenuMouseDown, false);
+	canvas.addEventListener('keydown', onMenuKeyDown, false);
+
+	// make canvas focusable, then give it focus!
+	canvas.setAttribute('tabindex','0');
+	canvas.focus();
+
+	drawMenu();
+}
+
 var update = function(keyPress) {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -76,7 +89,6 @@ var spriteArray = ["Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "
 
 //Drawing Initial Level
 
-
 function drawLevel() {
 	console.log('what');
 	
@@ -147,17 +159,7 @@ function onGameKeyDown(event) {
 // ********** END EVENT LISTENERS ***********
 
 
-canvas.addEventListener('mousedown', onMenuMouseDown, false);
-
-
-canvas.addEventListener('keydown', onMenuKeyDown, false);
-// make canvas focusable, then give it focus!
-canvas.setAttribute('tabindex','0');
-canvas.focus();
-
-
-drawMenu();
-
+startMainMenu();
 
 // Whe
 

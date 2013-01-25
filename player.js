@@ -4,6 +4,7 @@ window.addEventListener('keyup', function(event) { Key.onKeyup(event); }, false)
 function Player(playerX, playerY) {
 	this.x = playerX;
 	this.y = playerY;
+	this.image = new Image();
 	this.speed = 3;
 	this.rightlimit = 600;
 	this.leftlimit = 0;
@@ -41,7 +42,8 @@ function Player(playerX, playerY) {
 		if (Key.isDown(Key.RIGHT)) this.moveRight();
 	}
 	
-	this.draw = function() {
+	this.draw = function(ctx) {
+		ctx.drawImage(this.image, this.x, this.y);
 		
 	}
 }

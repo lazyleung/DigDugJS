@@ -1,6 +1,7 @@
 function Blob(blobX, blobY) {
 	this.x = blobX;
 	this.y = blobY;
+        this.image = new Image();
 	this.speed = 3;
 	this.rightlimit = 600;
 	this.leftlimit = 0;
@@ -46,7 +47,8 @@ function Blob(blobX, blobY) {
                 }	
 	}
 	
-	this.draw = function() {
-		
-	}
+	this.draw = function(ctx) {
+                ctx.drawImage(this.image, this.x, this.y);
+                
+        }
 }

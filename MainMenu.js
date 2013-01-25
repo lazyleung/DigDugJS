@@ -1,7 +1,7 @@
 window.canvas = document.getElementById("myCanvas");
-
-// Get context of the canvas
 window.ctx = canvas.getContext("2d");
+var selectionWindow;
+
 
 var update = function(keyPress) {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -17,6 +17,7 @@ var main = function() {
 
 // ***** Draw Menu *****
 // Draw title
+
 var drawTitle = function() {
 	ctx.fillStyle = "black";
 	ctx.font = "55px Arial";
@@ -31,19 +32,16 @@ var drawTitle = function() {
 var drawSelection = function(direction) {
 	// Draw selection rectangle
 	ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
-	if (direction == 38 && y != 320) {
-		var x = 170;
-		var y = 320;
-		ctx.fillRect(x, y, 250, 70);
+	if (direction == 38 && selectionWindow.y != 320) {
+		selectionWindow.x = 170;
+		selectionWindow.y = 320;
 	}
-	else if (direction == 40 && y != 420) {
-		var x = 170;
-		var y = 410;
-		ctx.fillRect(x, y, 250, 70);
+	else if (direction == 40 && selectionWindow.y != 420) {
+		selectionWindow.x = 170;
+		selectionWindow.y = 410;
 	}
-	else {
-		ctx.fillRect(x, y, 250, 70);
-	}
+
+	ctx.fillRect(selectionWindow.x, selectionWindow.y, 250, 70);	
 }
 
 // Handles Input Events

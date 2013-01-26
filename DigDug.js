@@ -1,10 +1,13 @@
-window.canvas = document.getElementById("myCanvas");
-
 // Get context of the canvas
+window.canvas = document.getElementById("myCanvas");
 window.ctx = canvas.getContext("2d");
+
+//Variable to keep track if game is in menu or game mode
+var mode;
 
 function startMainMenu() {
 	// Clear context and set menu EventListeners and draw menu
+	mode = "menu";
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	canvas.addEventListener('mousedown', onMenuMouseDown, false);
 	canvas.addEventListener('keydown', onMenuKeyDown, false);
@@ -16,7 +19,7 @@ function startMainMenu() {
 	drawMenu();
 }
 
-var update = function(keyPress) {
+var updateMenu = function(keyPress) {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 	drawSelection(keyPress);
@@ -90,38 +93,39 @@ var spriteArray = ["Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "
 //Drawing Initial Level
 
 function drawLevel() {
-	console.log('what');
+	mode = "game";
 	
-   var img;
-   var count = 0;
-   var x_coord = 25*(count%24);
-   var y_coord = 25*(count/24);
-
-   var Level0 = new Image(); //Sky
-   Level0.src = "Level0.jpg";
-   var Level1 = new Image();
-   Level1.src = "Level1.jpg";
-   var Level2 = new Image();
-   Level2.src = "Level2.jpg";
-   var Level3 = new Image();
-   Level3.src = "Level3.jpg";
-   var Level4 = new Image();
-   Level4.src = "Level4.jpg";
-   var Level5 = new Image();
-   Level5.src = "Level5.jpg";
-   for (var count = 0; count<spriteArray.length; count++) {
-      var level = spriteArray[count];
-      x_coord = 25*(count%24);
-      y_coord = 25*(Math.floor(count/24));
-      if (level === "Level0") { img = Level0;}
-      else if (level === "Level1") { img = Level1;}
-      else if (level === "Level2") { img = Level2;}
-      else if (level === "Level3") { img = Level3;}
-      else if (level === "Level4") { img = Level4;}
-      else if (level === "Level5") { img = Level5;}
-      ctx.drawImage(img , x_coord, y_coord);
-   }
-
+  var img;
+  var count = 0;
+  var x_coord = 25*(count%24);
+  var y_coord = 25*(count/24);
+  
+	var Level0 = new Image(); //Sky
+  Level0.src = "Level0.jpg";
+  var Level1 = new Image();
+  Level1.src = "Level1.jpg";
+  var Level2 = new Image();
+  Level2.src = "Level2.jpg";
+  var Level3 = new Image();
+  Level3.src = "Level3.jpg";
+  var Level4 = new Image();
+  Level4.src = "Level4.jpg";
+  var Level5 = new Image();
+  Level5.src = "Level5.jpg";
+  for (var count = 0; count<spriteArray.length; count++) {
+    var level = spriteArray[count];
+		x_coord = 25*(count%24);
+    y_coord = 25*(Math.floor(count/24));
+    if (level === "Level0") { img = Level0;}
+    else if (level === "Level1") { img = Level1;}
+    else if (level === "Level2") { img = Level2;}
+    else if (level === "Level3") { img = Level3;}
+    else if (level === "Level4") { img = Level4;}
+    else if (level === "Level5") { img = Level5;}
+    ctx.drawImage(img , x_coord, y_coord);
+  }
+	
+	var p = new Player(50,100);
 };
 
 // ********** END GAME ***********
@@ -142,11 +146,12 @@ function onMenuMouseDown(event) {
 function onMenuKeyDown(event) {
 	if (event.keyCode == 13) {
 		drawLevel();
-		canvas.addEventListener('keydown', onGameKeyDown, false);
+		canvas.addEventListener('keydown', function(event) { Key.onKeydown(event); }, false);
+		canvas.addEventListener('keyup', function(event) { Key.onKeyup(event); }, false);
 		canvas.removeEventListener('keydown', onMenuKeyDown, false);
 	}
 	else {
-		update(event.keyCode);
+		updateMenu(event.keyCode);
 	}
 }
 
@@ -154,14 +159,31 @@ function onGameKeyDown(event) {
 	console.log(event.keyCode);
 }
 
+var Key = {
+	pressed: {},
 
+	LEFT: 37,
+	UP: 38,
+	RIGHT: 39,
+	DOWN: 40,
+  
+	isDown: function(keyCode) {
+    return this.pressed[keyCode];
+	},
+  
+	onKeydown: function(event) {
+    his.pressed[event.keyCode] = true;
+	},
+  
+	onKeyup: function(event) {
+		delete this.pressed[event.keyCode];
+	}
+};
 
 // ********** END EVENT LISTENERS ***********
 
 
 startMainMenu();
-
-// Whe
 
 
 

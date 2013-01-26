@@ -1,12 +1,11 @@
 function Blob(blobX, blobY) {
 	this.x = blobX;
 	this.y = blobY;
-        this.image = new Image();
-	this.speed = 3;
-	this.rightlimit = 600;
+	this.speed = 1;
+	this.rightlimit = 600-25;
 	this.leftlimit = 0;
-	this.uplimit = 600;
-	this.downlimit = 0;
+	this.downlimit = 600-25;
+	this.uplimit = 0;
 
 	this.moveRight = function() {
         	if(this.x + this.speed < this.rightlimit) {
@@ -21,21 +20,21 @@ function Blob(blobX, blobY) {
 	}
 
 	this.moveUp = function() {
-        	if(this.y - this.speed > this.downlimit) {
+        	if(this.y - this.speed > this.uplimit) {
                 	this.y -= this.speed;
         	}
 	}
 
 	this.moveDown = function() {
-        	if(this.y + this.speed < this.uplimit) {
+        	if(this.y + this.speed < this.downlimit) {
                 	this.y += this.speed;
         	}
 	}
 
 	this.update = function(player) {
-                distX = Math.abs(player.x - this.x);
-                distY = Math.abs(player.y - this.y);
-                if(distX < 100 && dist Y < 100) {
+                var distX = Math.abs(player.x - this.x);
+                var distY = Math.abs(player.y - this.y);
+                if(distX < 100 && distY < 100) {
                         if(player.x < this.x)
                                 this.moveLeft();
                         if(player.x > this.x)
@@ -48,7 +47,12 @@ function Blob(blobX, blobY) {
 	}
 	
 	this.draw = function(ctx) {
-                ctx.drawImage(this.image, this.x, this.y);
-                
-        }
+		var image = new Image();
+		image.src = "digdugsprite.png";
+		var x = this.x;
+		var y = this.y;
+		image.onload = function(){
+			ctx.drawImage(image, 332, 58, 14, 14, x, y, 25, 25);
+		}
+	}
 }

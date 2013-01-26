@@ -22,7 +22,7 @@ function startMainMenu() {
 var updateMenu = function(keyPress) {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-	drawSelection(keyPress);
+	drawMenuSelection(keyPress);
 
 	drawMenu();
 }
@@ -41,7 +41,7 @@ var drawMenu = function() {
 	ctx.fillText("High Scores", 300, 450);
 }
 
-var drawSelection = function(direction) {
+var drawMenuSelection = function(direction) {
 	// Draw selection rectangle
 	ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
 	if (direction == 38 && y != 320) {
@@ -92,9 +92,29 @@ var spriteArray = ["Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "
 
 //Drawing Initial Level
 
-function drawLevel() {
+var intervalId;
+var timerDelay = 25;
+var player;
+var blob;
+
+function startGame() {
 	mode = "game";
 	
+	player = new Player(50,0);
+	blob = new Blob(500,500);
+	
+	intervalId = setInterval(updateGame, timerDelay);
+}
+
+function updateGame() {
+	drawLevel();
+	player.update();
+	player.draw(window.ctx);
+	blob.update(player);
+	blob.draw(window.ctx);
+}
+
+function drawLevel() {
   var img;
   var count = 0;
   var x_coord = 25*(count%24);
@@ -124,8 +144,6 @@ function drawLevel() {
     else if (level === "Level5") { img = Level5;}
     ctx.drawImage(img , x_coord, y_coord);
   }
-	
-	var p = new Player(50,100);
 };
 
 // ********** END GAME ***********
@@ -145,7 +163,7 @@ function onMenuMouseDown(event) {
 
 function onMenuKeyDown(event) {
 	if (event.keyCode == 13) {
-		drawLevel();
+		startGame();
 		canvas.addEventListener('keydown', function(event) { Key.onKeydown(event); }, false);
 		canvas.addEventListener('keyup', function(event) { Key.onKeyup(event); }, false);
 		canvas.removeEventListener('keydown', onMenuKeyDown, false);
@@ -153,10 +171,6 @@ function onMenuKeyDown(event) {
 	else {
 		updateMenu(event.keyCode);
 	}
-}
-
-function onGameKeyDown(event) {
-	console.log(event.keyCode);
 }
 
 var Key = {
@@ -172,7 +186,7 @@ var Key = {
 	},
   
 	onKeydown: function(event) {
-    his.pressed[event.keyCode] = true;
+    this.pressed[event.keyCode] = true;
 	},
   
 	onKeyup: function(event) {

@@ -1,12 +1,11 @@
 function Player(playerX, playerY) {
 	this.x = playerX;
 	this.y = playerY;
-	this.image = new Image();
 	this.speed = 3;
-	this.rightlimit = 600;
+	this.rightlimit = 600-25;
 	this.leftlimit = 0;
-	this.uplimit = 600;
-	this.downlimit = 0;
+	this.downlimit = 600-25;
+	this.uplimit = 0;
 
 	this.moveRight = function() {
         	if(this.x + this.speed < this.rightlimit) {
@@ -21,13 +20,13 @@ function Player(playerX, playerY) {
 	}
 
 	this.moveUp = function() {
-        	if(this.y - this.speed > this.downlimit) {
+        	if(this.y - this.speed > this.uplimit) {
                 	this.y -= this.speed;
         	}
 	}
 
 	this.moveDown = function() {
-        	if(this.y + this.speed < this.uplimit) {
+        	if(this.y + this.speed < this.downlimit) {
                 	this.y += this.speed;
         	}
 	}
@@ -40,7 +39,13 @@ function Player(playerX, playerY) {
 	}
 	
 	this.draw = function(ctx) {
-		ctx.drawImage(this.image, this.x, this.y);
-		
+		var image = new Image();
+		image.src = "digdugsprite.png";
+		var x = this.x;
+		var y = this.y;
+		image.onload = function(){
+			ctx.drawImage(image, 213, 5, 14, 14, x, y, 25, 25);
+		}
 	}
 }
+

@@ -10,38 +10,51 @@ function Blob(blobX, blobY) {
 	this.uplimit = 0;
 
 	this.moveRight = function() {
-        	if(this.x + this.speed < this.rightlimit) {
-                	this.x += this.speed;
-        	}
+                futureX = this.x + blockSize/2;
+                if (spriteArray[getArrayPosition(futureX, this.y)] === null) {
+                        if(this.x + this.speed < this.rightlimit) {
+                                this.x += this.speed;
+                        }
+                }
+        	
 	}
 
 	this.moveLeft = function() {
-        	if(this.x - this.speed > this.leftlimit) {
-                	this.x -= this.speed;
-        	}
+        	futureX = this.x - blockSize/2;
+                if (spriteArray[getArrayPosition(futureX, this.y)] === null) {
+                        if(this.x - this.speed < this.rightlimit) {
+                                this.x -= this.speed;
+                        }
+                }
 	}
 
 	this.moveUp = function() {
-        	if(this.y - this.speed > this.uplimit) {
-                	this.y -= this.speed;
-        	}
+        	futureY = this.y - blockSize/2;
+                if (spriteArray[getArrayPosition(this.x, futureY)] === null) {
+                        if(this.y - this.speed < this.rightlimit) {
+                                this.y -= this.speed;
+                        }
+                }
 	}
 
 	this.moveDown = function() {
-        	if(this.y + this.speed < this.downlimit) {
-                	this.y += this.speed;
-        	}
+        	futureY = this.y + blockSize/2;
+                if (spriteArray[getArrayPosition(this.x, futureY)] === null) {
+                        if(this.y + this.speed < this.rightlimit) {
+                                this.y += this.speed;
+                        }
+                }
 	}
 
 	this.update = function(player) {
                 var distX = Math.abs(player.x - this.x);
                 var distY = Math.abs(player.y - this.y);
-                if(distX < 100 && distY < 100) {
+                if(distX < 200 && distY < 200) {
                         if(player.x < this.x)
                                 this.moveLeft();
                         else if(player.x > this.x)
                                 this.moveRight();
-                        else if(player.y < this.y)
+                        if(player.y < this.y)
                                 this.moveUp();
                         else if(player.y > this.y)
                                 this.moveDown();
@@ -57,4 +70,17 @@ function Blob(blobX, blobY) {
 			ctx.drawImage(image, 332, 58, 14, 14, x, y, 25, 25);
 		}
 	}
+
+        function getArrayPosition(x, y) {
+                return Math.floor((x + (blockSize/2)) / blockSize) + Math.floor((y + (blockSize/2)) / blockSize) * xGridSize;
+        }
+
+        function hasCollided (x, y, object2) {
+        // Check for collision
+        if ((object1.x >= object2.x && object1.x <= object2.x + object2.width) || (object1.x + object1.width >= object2.x && object1.x + object1.width <= object2.x + object2.width) )
+                if ((object1.y >= object2.y && object1.y <= object2.y + object2.height) || (object1.y + object1.height >= object2.y && object1.y + object1.height<= object2.y + object2.height)) {
+                        return true;
+                }
+
+}
 }

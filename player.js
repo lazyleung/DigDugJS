@@ -1,6 +1,7 @@
 function Player(playerX, playerY) {
 	this.x = playerX;
 	this.y = playerY;
+	this.direction;
 	this.invincible = 0;
 	this.points = 0;
 	this.width = 25;
@@ -12,27 +13,73 @@ function Player(playerX, playerY) {
 	this.uplimit = 0;
 
 	this.moveRight = function() {
-        	if(this.x + this.speed < this.rightlimit) {
-                	this.x += this.speed;
-        	}
+		// Restrict movement to certain paths
+		if (this.y % 25 != 0) {
+			console.log(this.x, this.y);
+			if (this.direction === 'up') {
+				this.y -= this.speed;
+			}
+			else if (this.direction === 'down') {
+				this.y += this.speed;
+			}
+		}
+    	else if(this.x + this.speed <= this.rightlimit) {
+        	this.x += this.speed;
+        	this.direction = 'right';
+    	}
 	}
 
 	this.moveLeft = function() {
-        	if(this.x - this.speed > this.leftlimit) {
-                	this.x -= this.speed;
-        	}
+		// Restrict movement to certain paths
+		if (this.y % 25 != 0) {
+			console.log(this.x, this.y);
+			if (this.direction === 'up') {
+				this.y -= this.speed;
+			}
+			else if (this.direction === 'down') {
+				this.y += this.speed;
+			}
+		}
+    	else if(this.x - this.speed >= this.leftlimit) {
+            	this.x -= this.speed;
+            	this.direction = 'left';
+    	}   	
 	}
 
 	this.moveUp = function() {
-        	if(this.y - this.speed > this.uplimit) {
-                	this.y -= this.speed;
-        	}
+		// Restrict movement to certain paths
+		if (this.x % 25 != 0) {
+			console.log(this.x, this.y);
+			if (this.direction === 'left') {
+				this.x -= this.speed;
+			}
+			else if (this.direction === 'right') {
+				this.x += this.speed;
+			}
+		}
+    	else if(this.y - this.speed >=this.uplimit) {
+        	this.y -= this.speed;
+        	this.direction = 'up';
+    	}
+    	
 	}
 
 	this.moveDown = function() {
-        	if(this.y + this.speed < this.downlimit) {
-                	this.y += this.speed;
-        	}
+		// Restrict movement to certain paths
+		if (this.x % 25 != 0) {
+			console.log(this.x, this.y);
+			if (this.direction === 'left') {
+				this.x -= this.speed;
+			}
+			else if (this.direction === 'right') {
+				this.x += this.speed;
+			}
+		}
+    	else if(this.y + this.speed <= this.downlimit) {
+        	this.y += this.speed;
+        	this.direction = 'down';
+    	}
+    	
 	}
 	
 	this.update = function() {
@@ -84,7 +131,7 @@ function Player(playerX, playerY) {
 		var x = this.x;
 		var y = this.y;
 		image.onload = function(){
-			ctx.drawImage(image, 213, 5, 14, 14, x, y, 25, 25);
+			ctx.drawImage(image, 213, 5, 12, 14, x, y, 25, 25);
 		}
 	}
 }

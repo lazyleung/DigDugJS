@@ -199,7 +199,7 @@ function drawLevel() {
 function updateMap() {
 	// Find center of player sprite and remove block beneath it
 	var arrayPosition = Math.floor((player.x + (blockSize/2)) / blockSize) + Math.floor((player.y + (blockSize/2)) / blockSize) * xGridSize;
-	if (spriteArray[arrayPosition] !== null && spriteArray[arrayPosition] !== "Level0") {
+	if (spriteArray[arrayPosition] !== null && spriteArray[arrayPosition] !== "Level0" && spriteArray[arrayPosition] !== "Level5") {
 		spriteArray[arrayPosition] = null;
 	}
 }

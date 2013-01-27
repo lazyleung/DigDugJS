@@ -14,6 +14,7 @@ var blockSize = 25;
 var xGridSize = 24;
 // Array to keep track of the monsters
 var monstersArray = new Array();
+var rockArray = new Array();
 
 // ********** END GLOBAL VARIABLES **********
 
@@ -108,9 +109,9 @@ var spriteArray = ["Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "
 function startGame() {
 	mode = "game";
 	
-	player = new Player(50,0);
+	player = new Player(50,200);
 	monstersArray.push(new Blob(200,200));
-	
+	rockArray.push(new Rock(275,100));
 	intervalId = setInterval(updateGame, timerDelay);
 }
 
@@ -118,15 +119,27 @@ function drawGame() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	drawLevel();
 	player.draw(window.ctx);
-	blob.draw(window.ctx);
-
+	for (var i = 0; i < monstersArray.length; i++) {
+		aMonster = monstersArray[i];
+		aMonster.draw(window.ctx);
+	}
+	for (var i = 0; i < rockArray.length; i++) {
+		aRock = rockArray[i];
+		aRock.draw(window.ctx);
+	}
 }
 
 function updateGame() {
 	player.update();
 	updateMap();
-	blob = monstersArray[0];
-	blob.update(player);
+	for (var i = 0; i < monstersArray.length; i++) {
+		aMonster = monstersArray[i];
+		aMonster.update(player);
+	}
+	for (var i = 0; i < rockArray.length; i++) {
+		aRock = rockArray[i];
+		aRock.update();
+	}
 	if (player.invincible != 1)
 		checkMonsterCollision();
 	drawGame();

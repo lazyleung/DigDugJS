@@ -4,7 +4,7 @@ function Player(playerX, playerY) {
 	this.invincible = 0;
 	this.width = 25;
     this.height = 25; 
-	this.speed = 3;
+	this.speed = 5;
 	this.rightlimit = 600-this.width;
 	this.leftlimit = 0;
 	this.downlimit = 600-this.height;

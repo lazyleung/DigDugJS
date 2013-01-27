@@ -1,6 +1,8 @@
 function Dragon(dragonX, dragonY) {
 	this.x = dragonX;
 	this.y = dragonY;
+	this.width = 25;
+    this.height = 25;
 	this.image = new Image();
 	this.speed = 1;
 	this.rightlimit = 600;
@@ -52,3 +54,4 @@ function Dragon(dragonX, dragonY) {
 		
 	}
 }
+

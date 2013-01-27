@@ -2,8 +2,21 @@
 window.canvas = document.getElementById("myCanvas");
 window.ctx = canvas.getContext("2d");
 
+
+
+// ********** GLOBAL VARIABLES **********
 //Variable to keep track if game is in menu or game mode
 var mode;
+var intervalId;
+var timerDelay = 25;
+var player;
+var blockSize = 25;
+var xGridSize = 24;
+// Array to keep track of the monsters
+var monstersArray = new Array();
+
+// ********** END GLOBAL VARIABLES **********
+
 
 function startMainMenu() {
 	// Clear context and set menu EventListeners and draw menu
@@ -90,20 +103,13 @@ var spriteArray = ["Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "
                 "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5",
                 "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5"];
 
-//Drawing Initial Level
 
-var intervalId;
-var timerDelay = 25;
-var player;
-var blob;
-var blockSize = 25;
-var xGridSize = 24;
 
 function startGame() {
 	mode = "game";
 	
 	player = new Player(50,0);
-	blob = new Blob(500,500);
+	monstersArray.push(new Blob(500,500));
 	
 	intervalId = setInterval(updateGame, timerDelay);
 }
@@ -114,8 +120,10 @@ function updateGame() {
 	player.update();
 	updateMap();
 	player.draw(window.ctx);
+	blob = monstersArray[0];
 	blob.update(player);
 	blob.draw(window.ctx);
+	checkMonsterCollision();
 }
 
 function drawLevel() {
@@ -157,9 +165,25 @@ function drawLevel() {
 function updateMap() {
 	// Find center of player sprite and remove block beneath it
 	var arrayPosition = Math.floor((player.x + (blockSize/2)) / blockSize) + Math.floor((player.y + (blockSize/2)) / blockSize) * xGridSize;
-	console.log(arrayPosition);
 	if (spriteArray[arrayPosition] !== null) {
 		spriteArray[arrayPosition] = null;
+	}
+}
+
+function hasCollided (object1, object2) {
+	// Check for collision
+	if ((object1.x >= object2.x && object1.x <= object2.x + object2.width) || (object1.x + object1.width >= object2.x && object1.x + object1.width <= object2.x + object2.width) )
+		if ((object1.y >= object2.y && object1.y <= object2.y + object2.height) || (object1.y + object1.height >= object2.y && object1.y + object1.height<= object2.y + object2.height)) {
+			return true;
+		}
+
+}
+
+function checkMonsterCollision () {
+	for (i = 0; i < monstersArray.length; i++) {
+		aMonster = monstersArray[i];
+		if (hasCollided(player, aMonster))
+			console.log('collided!!!!');
 	}
 }
 

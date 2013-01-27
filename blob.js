@@ -1,10 +1,12 @@
 function Blob(blobX, blobY) {
 	this.x = blobX;
 	this.y = blobY;
+        this.width = 25;
+        this.height = 25;
 	this.speed = 1;
-	this.rightlimit = 600-25;
+	this.rightlimit = 600-this.width;
 	this.leftlimit = 0;
-	this.downlimit = 600-25;
+	this.downlimit = 600-this.height;
 	this.uplimit = 0;
 
 	this.moveRight = function() {

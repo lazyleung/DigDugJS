@@ -1,10 +1,12 @@
 function Player(playerX, playerY) {
 	this.x = playerX;
 	this.y = playerY;
+	this.width = 25;
+    this.height = 25; 
 	this.speed = 3;
-	this.rightlimit = 600-25;
+	this.rightlimit = 600-this.width;
 	this.leftlimit = 0;
-	this.downlimit = 600-25;
+	this.downlimit = 600-this.height;
 	this.uplimit = 0;
 
 	this.moveRight = function() {

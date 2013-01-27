@@ -156,8 +156,8 @@ function updateGame() {
 		checkMonsterCollision();
 		checkMushroomCollision();
 	}
-
 	drawGame();
+	drawScore();
 }
 
 function drawLevel() {
@@ -196,11 +196,22 @@ function drawLevel() {
   }
 }
 
+function drawScore() {
+	ctx.fillStyle = "white";
+	ctx.font = "25px Arial";
+	ctx.textAlign = "left";
+	ctx.fillText("Lives: ", 5, 585);
+	ctx.fillText("Score: " + new String(player.points), 300, 585);
+
+	// Draw selectable options
+}
+
 function updateMap() {
 	// Find center of player sprite and remove block beneath it
 	var arrayPosition = Math.floor((player.x + (blockSize/2)) / blockSize) + Math.floor((player.y + (blockSize/2)) / blockSize) * xGridSize;
 	if (spriteArray[arrayPosition] !== null && spriteArray[arrayPosition] !== "Level0") {
 		spriteArray[arrayPosition] = null;
+		player.points += 1;
 	}
 }
 
@@ -210,17 +221,16 @@ function hasCollided (object1, object2) {
 		if ((object1.y >= object2.y && object1.y + 1 <= object2.y + object2.height) || (object1.y - 1 + object1.height >= object2.y && object1.y + object1.height <= object2.y + object2.height)) {
 			return true;
 		}
-
 }
 
 function checkMonsterCollision () {
 	for (i = 0; i < monstersArray.length; i++) {
 		var aMonster = monstersArray[i];
 		if (hasCollided(player, aMonster)) {
-			console.log('collided');
 			player.invincible = 1;
 			player.bounce(aMonster);
 			player.invincible = 0;
+			player.points -= 15;
 		}
 	}
 }

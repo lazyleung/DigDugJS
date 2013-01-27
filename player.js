@@ -1,38 +1,39 @@
 function Player(playerX, playerY) {
 	this.x = playerX;
 	this.y = playerY;
-	this.direction = "right";
-	this.invincible = 0;
-	this.points = 0;
 	this.width = 25;
-	this.height = 25; 
-	this.speed = 5;
+	this.height = 25;
 	this.rightlimit = 600-this.width;
 	this.leftlimit = 0;
 	this.downlimit = 600-this.height;
 	this.uplimit = 0;
 	this.animationCount = 0;
+	// Modifiable variables
+	this.direction = "right";
+	this.invincible = 0;
+	this.points = 0;
+	this.lives = 2;
+	
+	this.speed = 5;
 
 	this.moveRight = function() {
 		// Restrict movement to certain paths
 		if (this.y % 25 != 0) {
-			console.log(this.x, this.y);
 			if (this.direction === 'up') {
 				this.y -= this.speed;
 			} else if (this.direction === 'down') {
 				this.y += this.speed;
 			}
 		} else if(this.x + this.speed <= this.rightlimit) {
-        this.x += this.speed;
-        this.direction = 'right';
-				this.animationCount++;
-    }
+		    this.x += this.speed;
+		    this.direction = 'right';
+			this.animationCount++;
+    	}
 	}
 
 	this.moveLeft = function() {
 		// Restrict movement to certain paths
 		if (this.y % 25 != 0) {
-			console.log(this.x, this.y);
 			if (this.direction === 'up') {
 				this.y -= this.speed;
 			} else if (this.direction === 'down') {
@@ -48,7 +49,6 @@ function Player(playerX, playerY) {
 	this.moveUp = function() {
 		// Restrict movement to certain paths
 		if (this.x % 25 != 0) {
-			console.log(this.x, this.y);
 			if (this.direction === 'left') {
 				this.x -= this.speed;
 			} else if (this.direction === 'right') {
@@ -64,7 +64,6 @@ function Player(playerX, playerY) {
 	this.moveDown = function() {
 		// Restrict movement to certain paths
 		if (this.x % 25 != 0) {
-			console.log(this.x, this.y);
 			if (this.direction === 'left') {
 				this.x -= this.speed;
 			} else if (this.direction === 'right') {

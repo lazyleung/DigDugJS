@@ -2,6 +2,7 @@ function Player(playerX, playerY) {
 	this.x = playerX;
 	this.y = playerY;
 	this.invincible = 0;
+	this.points = 0;
 	this.width = 25;
     this.height = 25; 
 	this.speed = 5;

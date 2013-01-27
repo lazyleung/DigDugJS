@@ -15,6 +15,7 @@ var xGridSize = 24;
 // Array to keep track of the monsters
 var monstersArray = new Array();
 var rockArray = new Array();
+var mushroomArray = new Array();
 
 // ********** END GLOBAL VARIABLES **********
 
@@ -35,9 +36,7 @@ function startMainMenu() {
 
 var updateMenu = function(keyPress) {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
-
 	drawMenuSelection(keyPress);
-
 	drawMenu();
 }
 
@@ -110,8 +109,10 @@ function startGame() {
 	mode = "game";
 	
 	player = new Player(50,200);
+	// load some objects
 	monstersArray.push(new Blob(200,200));
 	rockArray.push(new Rock(275,100));
+	mushroomArray.push(new Mushroom(100,100));
 	intervalId = setInterval(updateGame, timerDelay);
 }
 
@@ -119,13 +120,20 @@ function drawGame() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	drawLevel();
 	player.draw(window.ctx);
+	// Draw all monsters
 	for (var i = 0; i < monstersArray.length; i++) {
-		aMonster = monstersArray[i];
+		var aMonster = monstersArray[i];
 		aMonster.draw(window.ctx);
 	}
+	// Draw all rocks
 	for (var i = 0; i < rockArray.length; i++) {
-		aRock = rockArray[i];
+		var aRock = rockArray[i];
 		aRock.draw(window.ctx);
+	}
+	// Draw all mushrooms
+	for (var i = 0; i < mushroomArray.length; i++) {
+		var aMushroom = mushroomArray[i];
+		aMushroom.draw(window.ctx);
 	}
 }
 
@@ -133,15 +141,20 @@ function updateGame() {
 	player.update();
 	updateMap();
 	for (var i = 0; i < monstersArray.length; i++) {
-		aMonster = monstersArray[i];
+		var aMonster = monstersArray[i];
 		aMonster.update(player);
+		
 	}
 	for (var i = 0; i < rockArray.length; i++) {
-		aRock = rockArray[i];
+		var aRock = rockArray[i];
 		aRock.update();
 	}
-	if (player.invincible != 1)
+	// Check for object collisions
+	if (player.invincible != 1) {
 		checkMonsterCollision();
+		checkMushroomCollision();
+	}
+
 	drawGame();
 }
 
@@ -202,12 +215,26 @@ function checkMonsterCollision () {
 	for (i = 0; i < monstersArray.length; i++) {
 		aMonster = monstersArray[i];
 		if (hasCollided(player, aMonster)) {
-			console.log('collided!!!!');
 			player.invincible = 1;
 			player.bounce(aMonster);
 			player.invincible = 0;
 		}
 	}
+}
+
+function checkMushroomCollision () {
+	for (i = 0; i < mushroomArray.length; i++) {
+		aMushroom = mushroomArray[i];
+		if (hasCollided(player, aMushroom)) {
+			player.points += 50;
+			removeMushroom(aMushroom);
+		}
+	}
+}
+
+function removeMushroom(mushroom) {
+    var startingIndex = mushroomArray.indexOf(aMushroom);
+    mushroomArray.splice(startingIndex, 1);
 }
 
 // ********** END GAME ***********

@@ -22,7 +22,7 @@ function Blob(blobX, blobY) {
 	this.moveLeft = function() {
         	futureX = this.x - blockSize/2;
                 if (spriteArray[getArrayPosition(futureX, this.y)] === null) {
-                        if(this.x - this.speed < this.leftlimit) {
+                        if(this.x - this.speed > this.leftlimit) {
                                 this.x -= this.speed;
                         }
                 }
@@ -31,7 +31,7 @@ function Blob(blobX, blobY) {
 	this.moveUp = function() {
         	futureY = this.y - blockSize/2;
                 if (spriteArray[getArrayPosition(this.x, futureY)] === null) {
-                        if(this.y - this.speed < this.uplimit) {
+                        if(this.y - this.speed > this.uplimit) {
                                 this.y -= this.speed;
                         }
                 }

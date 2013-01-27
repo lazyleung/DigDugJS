@@ -11,6 +11,7 @@ function Player(playerX, playerY) {
 	this.leftlimit = 0;
 	this.downlimit = 600-this.height;
 	this.uplimit = 0;
+	this.animationCount = 0;
 
 	this.moveRight = function() {
 		// Restrict movement to certain paths
@@ -133,10 +134,18 @@ function Player(playerX, playerY) {
 		var x = this.x;
 		var y = this.y;
 		var direction = this.direction;
+		var count = 0;
 		image.onload = function() {
 			switch(direction) {
 				case "right":
-					ctx.drawImage(image, 213, 5, 14, 14, x, y, 25, 25);
+					if(count < 10 || count > 20){
+						ctx.drawImage(image, 213, 5, 14, 14, x, y, 25, 25);
+						if(count > 20) count == 0;
+						count ++;
+					}else if(count > 10 && count < 20) {
+						ctx.drawImage(image, 231, 5, 14, 14, x, y, 25, 25);
+						count++;
+					}
 					break;
 				case "left":
 					ctx.drawImage(image, 125, 230, 14, 14, x, y, 25, 25);

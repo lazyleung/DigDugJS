@@ -44,10 +44,18 @@ var updateMenu = function(keyPress) {
 // ********** MENU ***********
 
 var drawMenu = function() {
+	
+	var img = new Image();
+	img.src = "digdugsprite.png";
+	img.onload = function(){
+		window.ctx.drawImage(img, 183, 236, 160, 48, 140, 25, 320, 96);
+		window.ctx.drawImage(img, 243, 384, 52, 8, 248, 500, 104, 16);
+	}
+	
 	ctx.fillStyle = "black";
 	ctx.font = "55px Arial";
 	ctx.textAlign = "center";
-	ctx.fillText("Dig Dug", 300, 70);
+	//ctx.fillText("Dig Dug", 300, 70);
 	// Draw selectable options
 	ctx.font = "40px Arial";
 	ctx.fillText("Play", 300, 370);

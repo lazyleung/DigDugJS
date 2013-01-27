@@ -37,11 +37,11 @@ function Blob(blobX, blobY) {
                 if(distX < 100 && distY < 100) {
                         if(player.x < this.x)
                                 this.moveLeft();
-                        if(player.x > this.x)
+                        else if(player.x > this.x)
                                 this.moveRight();
-                        if(player.y < this.y)
+                        else if(player.y < this.y)
                                 this.moveUp();
-                        if(player.y > this.y)
+                        else if(player.y > this.y)
                                 this.moveDown();
                 }	
 	}

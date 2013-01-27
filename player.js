@@ -33,9 +33,9 @@ function Player(playerX, playerY) {
 	
 	this.update = function() {
 		if (Key.isDown(Key.UP)) this.moveUp();
-		if (Key.isDown(Key.LEFT)) this.moveLeft();
-		if (Key.isDown(Key.DOWN)) this.moveDown();
-		if (Key.isDown(Key.RIGHT)) this.moveRight();
+		else if (Key.isDown(Key.LEFT)) this.moveLeft();
+		else if (Key.isDown(Key.DOWN)) this.moveDown();
+		else if (Key.isDown(Key.RIGHT)) this.moveRight();
 	}
 	
 	this.draw = function(ctx) {

@@ -96,6 +96,8 @@ var intervalId;
 var timerDelay = 25;
 var player;
 var blob;
+var blockSize = 25;
+var xGridSize = 24;
 
 function startGame() {
 	mode = "game";
@@ -107,8 +109,10 @@ function startGame() {
 }
 
 function updateGame() {
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	drawLevel();
 	player.update();
+	updateMap();
 	player.draw(window.ctx);
 	blob.update(player);
 	blob.draw(window.ctx);
@@ -117,8 +121,8 @@ function updateGame() {
 function drawLevel() {
   var img;
   var count = 0;
-  var x_coord = 25*(count%24);
-  var y_coord = 25*(count/24);
+  var x_coord = blockSize*(count%24);
+  var y_coord = blockSize*(count/24);
   
 	var Level0 = new Image(); //Sky
   Level0.src = "Level0.jpg";
@@ -133,18 +137,31 @@ function drawLevel() {
   var Level5 = new Image();
   Level5.src = "Level5.jpg";
   for (var count = 0; count<spriteArray.length; count++) {
-    var level = spriteArray[count];
-		x_coord = 25*(count%24);
-    y_coord = 25*(Math.floor(count/24));
-    if (level === "Level0") { img = Level0;}
-    else if (level === "Level1") { img = Level1;}
-    else if (level === "Level2") { img = Level2;}
-    else if (level === "Level3") { img = Level3;}
-    else if (level === "Level4") { img = Level4;}
-    else if (level === "Level5") { img = Level5;}
+    var block = spriteArray[count];
+    // If block is null, don't draw it
+    if (block === null) {
+    	continue;
+    }
+	x_coord = blockSize*(count%24);
+    y_coord = blockSize*(Math.floor(count/24));
+    if (block === "Level0") { img = Level0;}
+    else if (block === "Level1") { img = Level1;}
+    else if (block === "Level2") { img = Level2;}
+    else if (block === "Level3") { img = Level3;}
+    else if (block === "Level4") { img = Level4;}
+    else if (block === "Level5") { img = Level5;}
     ctx.drawImage(img , x_coord, y_coord);
   }
-};
+}
+
+function updateMap() {
+	// Find center of player sprite and remove block beneath it
+	var arrayPosition = Math.floor((player.x + (blockSize/2)) / blockSize) + Math.floor((player.y + (blockSize/2)) / blockSize) * xGridSize;
+	console.log(arrayPosition);
+	if (spriteArray[arrayPosition] !== null) {
+		spriteArray[arrayPosition] = null;
+	}
+}
 
 // ********** END GAME ***********
 

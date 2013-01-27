@@ -5,7 +5,7 @@ function Player(playerX, playerY) {
 	this.invincible = 0;
 	this.points = 0;
 	this.width = 25;
-    this.height = 25; 
+	this.height = 25; 
 	this.speed = 5;
 	this.rightlimit = 600-this.width;
 	this.leftlimit = 0;
@@ -23,10 +23,10 @@ function Player(playerX, playerY) {
 				this.y += this.speed;
 			}
 		}
-    	else if(this.x + this.speed <= this.rightlimit) {
-        	this.x += this.speed;
-        	this.direction = 'right';
-    	}
+    		else if(this.x + this.speed <= this.rightlimit) {
+        		this.x += this.speed;
+        		this.direction = 'right';
+    		}
 	}
 
 	this.moveLeft = function() {
@@ -40,10 +40,10 @@ function Player(playerX, playerY) {
 				this.y += this.speed;
 			}
 		}
-    	else if(this.x - this.speed >= this.leftlimit) {
-            	this.x -= this.speed;
-            	this.direction = 'left';
-    	}   	
+    		else if(this.x - this.speed >= this.leftlimit) {
+            		this.x -= this.speed;
+            		this.direction = 'left';
+    		}   	
 	}
 
 	this.moveUp = function() {
@@ -57,11 +57,10 @@ function Player(playerX, playerY) {
 				this.x += this.speed;
 			}
 		}
-    	else if(this.y - this.speed >=this.uplimit) {
-        	this.y -= this.speed;
-        	this.direction = 'up';
-    	}
-    	
+    		else if(this.y - this.speed >=this.uplimit) {
+        		this.y -= this.speed;
+        		this.direction = 'up';
+    		}
 	}
 
 	this.moveDown = function() {
@@ -75,11 +74,10 @@ function Player(playerX, playerY) {
 				this.x += this.speed;
 			}
 		}
-    	else if(this.y + this.speed <= this.downlimit) {
-        	this.y += this.speed;
-        	this.direction = 'down';
-    	}
-    	
+    		else if(this.y + this.speed <= this.downlimit) {
+        		this.y += this.speed;
+        		this.direction = 'down';
+    		}
 	}
 	
 	this.update = function() {
@@ -134,8 +132,24 @@ function Player(playerX, playerY) {
 		image.src = "digdugsprite.png";
 		var x = this.x;
 		var y = this.y;
-		image.onload = function(){
-			ctx.drawImage(image, 213, 5, 12, 14, x, y, 25, 25);
+		var direction = this.direction;
+		image.onload = function() {
+			switch(direction) {
+				case "right":
+					ctx.drawImage(image, 213, 5, 14, 14, x, y, 25, 25);
+					break;
+				case "left":
+					ctx.drawImage(image, 125, 230, 14, 14, x, y, 25, 25);
+					break;
+				case "down":
+					ctx.drawImage(image, 247, 5, 14, 14, x, y, 25, 25);
+					break;
+				case "up":
+					ctx.drawImage(image, 247, 5, 14, 14, x,y, 25, 25);
+					break;
+				default:
+					console.log("no direction!");
+			}
 		}
 	}
 }

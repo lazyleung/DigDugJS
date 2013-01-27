@@ -1,7 +1,7 @@
 function Player(playerX, playerY) {
 	this.x = playerX;
 	this.y = playerY;
-	this.direction;
+	this.direction = "right";
 	this.invincible = 0;
 	this.points = 0;
 	this.width = 25;

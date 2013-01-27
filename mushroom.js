@@ -5,7 +5,7 @@ function Mushroom(mushroomX, mushroomY) {
         this.height = 25;
 
 	this.update = function() {
-    	this.draw	
+    	this.draw();	
 	}
 	
 	this.draw = function(ctx) {

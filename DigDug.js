@@ -182,8 +182,8 @@ function drawLevel() {
     if (block === null) {
     	continue;
     }
-	x_coord = blockSize*(count%24);
-    y_coord = blockSize*(Math.floor(count/24));
+	var x_coord = blockSize*(count%24);
+    var y_coord = blockSize*(Math.floor(count/24));
     if (block === "Level0") { img = Level0;}
     else if (block === "Level1") { img = Level1;}
     else if (block === "Level2") { img = Level2;}
@@ -213,7 +213,7 @@ function hasCollided (object1, object2) {
 
 function checkMonsterCollision () {
 	for (i = 0; i < monstersArray.length; i++) {
-		aMonster = monstersArray[i];
+		var aMonster = monstersArray[i];
 		if (hasCollided(player, aMonster)) {
 			player.invincible = 1;
 			player.bounce(aMonster);
@@ -224,7 +224,7 @@ function checkMonsterCollision () {
 
 function checkMushroomCollision () {
 	for (i = 0; i < mushroomArray.length; i++) {
-		aMushroom = mushroomArray[i];
+		var aMushroom = mushroomArray[i];
 		if (hasCollided(player, aMushroom)) {
 			player.points += 50;
 			removeMushroom(aMushroom);
@@ -232,7 +232,7 @@ function checkMushroomCollision () {
 	}
 }
 
-function removeMushroom(mushroom) {
+function removeMushroom(aMushroom) {
     var startingIndex = mushroomArray.indexOf(aMushroom);
     mushroomArray.splice(startingIndex, 1);
 }

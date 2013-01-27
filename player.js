@@ -96,14 +96,16 @@ function Player(playerX, playerY) {
 		if (Math.abs(diffX) > Math.abs(diffY)) {
 			// bounce left or right
 			if (diffX < 0) {
-				for(bounceSpeed = 10; bounceSpeed >= 0; bounceSpeed -= 5 ) {
+				for(bounceSpeed = 10; bounceSpeed >= 0; bounceSpeed -= 1 ) {
 				this.x -= bounceSpeed;
+				updateMap();
 				this.draw(window.ctx);
 				}
 			}
 			else {
-				for(bounceSpeed = 10; bounceSpeed >= 0; bounceSpeed -= 5 ) {
+				for(bounceSpeed = 10; bounceSpeed >= 0; bounceSpeed -= 1 ) {
 				this.x += bounceSpeed;
+				updateMap();
 				this.draw(window.ctx);
 				}
 			}
@@ -111,14 +113,16 @@ function Player(playerX, playerY) {
 		else {
 			// bounce up or down
 			if (diffY < 0) {
-				for(bounceSpeed = 10; bounceSpeed >= 0; bounceSpeed -= 5 ) {
+				for(bounceSpeed = 10; bounceSpeed >= 0; bounceSpeed -= 1 ) {
 				this.y -= bounceSpeed;
+				updateMap();
 				this.draw(window.ctx);
 				}
 			}
 			else {
-				for(bounceSpeed = 10; bounceSpeed >= 0; bounceSpeed -= 5 ) {
+				for(bounceSpeed = 10; bounceSpeed >= 0; bounceSpeed -= 1 ) {
 				this.y += bounceSpeed;
+				updateMap();
 				this.draw(window.ctx);
 				}
 			}

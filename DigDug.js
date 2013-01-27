@@ -206,8 +206,8 @@ function updateMap() {
 
 function hasCollided (object1, object2) {
 	// Check for collision
-	if ((object1.x > object2.x && object1.x < object2.x + object2.width) || (object1.x + object1.width > object2.x && object1.x + object1.width < object2.x + object2.width) )
-		if ((object1.y > object2.y && object1.y < object2.y + object2.height) || (object1.y + object1.height > object2.y && object1.y + object1.height< object2.y + object2.height)) {
+	if ((object1.x >= object2.x && object1.x + 1 <= object2.x + object2.width) || (object1.x - 1 + object1.width >= object2.x && object1.x + object1.width <= object2.x + object2.width))
+		if ((object1.y >= object2.y && object1.y + 1 <= object2.y + object2.height) || (object1.y - 1 + object1.height >= object2.y && object1.y + object1.height <= object2.y + object2.height)) {
 			return true;
 		}
 
@@ -217,6 +217,7 @@ function checkMonsterCollision () {
 	for (i = 0; i < monstersArray.length; i++) {
 		var aMonster = monstersArray[i];
 		if (hasCollided(player, aMonster)) {
+			console.log('collided');
 			player.invincible = 1;
 			player.bounce(aMonster);
 			player.invincible = 0;

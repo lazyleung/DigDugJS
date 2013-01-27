@@ -109,21 +109,27 @@ function startGame() {
 	mode = "game";
 	
 	player = new Player(50,0);
-	monstersArray.push(new Blob(500,500));
+	monstersArray.push(new Blob(200,200));
 	
 	intervalId = setInterval(updateGame, timerDelay);
 }
 
-function updateGame() {
+function drawGame() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	drawLevel();
+	player.draw(window.ctx);
+	blob.draw(window.ctx);
+
+}
+
+function updateGame() {
 	player.update();
 	updateMap();
-	player.draw(window.ctx);
 	blob = monstersArray[0];
 	blob.update(player);
-	blob.draw(window.ctx);
-	checkMonsterCollision();
+	if (player.invincible != 1)
+		checkMonsterCollision();
+	drawGame();
 }
 
 function drawLevel() {
@@ -182,8 +188,12 @@ function hasCollided (object1, object2) {
 function checkMonsterCollision () {
 	for (i = 0; i < monstersArray.length; i++) {
 		aMonster = monstersArray[i];
-		if (hasCollided(player, aMonster))
+		if (hasCollided(player, aMonster)) {
 			console.log('collided!!!!');
+			player.invincible = 1;
+			player.bounce(aMonster);
+			player.invincible = 0;
+		}
 	}
 }
 

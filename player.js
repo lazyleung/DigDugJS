@@ -19,15 +19,14 @@ function Player(playerX, playerY) {
 			console.log(this.x, this.y);
 			if (this.direction === 'up') {
 				this.y -= this.speed;
-			}
-			else if (this.direction === 'down') {
+			} else if (this.direction === 'down') {
 				this.y += this.speed;
 			}
-		}
-    		else if(this.x + this.speed <= this.rightlimit) {
-        		this.x += this.speed;
-        		this.direction = 'right';
-    		}
+		} else if(this.x + this.speed <= this.rightlimit) {
+        this.x += this.speed;
+        this.direction = 'right';
+				this.animationCount++;
+    }
 	}
 
 	this.moveLeft = function() {
@@ -36,15 +35,14 @@ function Player(playerX, playerY) {
 			console.log(this.x, this.y);
 			if (this.direction === 'up') {
 				this.y -= this.speed;
-			}
-			else if (this.direction === 'down') {
+			} else if (this.direction === 'down') {
 				this.y += this.speed;
 			}
-		}
-    		else if(this.x - this.speed >= this.leftlimit) {
-            		this.x -= this.speed;
-            		this.direction = 'left';
-    		}   	
+		} else if(this.x - this.speed >= this.leftlimit) {
+        this.x -= this.speed;
+        this.direction = 'left';
+				this.animationCount++;
+    }   	
 	}
 
 	this.moveUp = function() {
@@ -53,15 +51,14 @@ function Player(playerX, playerY) {
 			console.log(this.x, this.y);
 			if (this.direction === 'left') {
 				this.x -= this.speed;
-			}
-			else if (this.direction === 'right') {
+			} else if (this.direction === 'right') {
 				this.x += this.speed;
 			}
-		}
-    		else if(this.y - this.speed >=this.uplimit) {
-        		this.y -= this.speed;
-        		this.direction = 'up';
-    		}
+		}else if(this.y - this.speed >=this.uplimit) {
+      this.y -= this.speed;
+      this.direction = 'up';
+			this.animationCount++;
+    }
 	}
 
 	this.moveDown = function() {
@@ -70,18 +67,18 @@ function Player(playerX, playerY) {
 			console.log(this.x, this.y);
 			if (this.direction === 'left') {
 				this.x -= this.speed;
-			}
-			else if (this.direction === 'right') {
+			} else if (this.direction === 'right') {
 				this.x += this.speed;
 			}
-		}
-    		else if(this.y + this.speed <= this.downlimit) {
-        		this.y += this.speed;
-        		this.direction = 'down';
-    		}
+		} else if(this.y + this.speed <= this.downlimit) {
+      this.y += this.speed;
+      this.direction = 'down';
+			this.animationCount++;
+    }
 	}
 	
 	this.update = function() {
+		if(this.animationCount > 4) this.animationCount = 0;
 		if (Key.isDown(Key.UP)) this.moveUp();
 		else if (Key.isDown(Key.LEFT)) this.moveLeft();
 		else if (Key.isDown(Key.DOWN)) this.moveDown();
@@ -134,18 +131,12 @@ function Player(playerX, playerY) {
 		var x = this.x;
 		var y = this.y;
 		var direction = this.direction;
-		var count = 0;
+		var count = this.animationCount;
 		image.onload = function() {
 			switch(direction) {
 				case "right":
-					if(count < 10 || count > 20){
-						ctx.drawImage(image, 213, 5, 14, 14, x, y, 25, 25);
-						if(count > 20) count == 0;
-						count ++;
-					}else if(count > 10 && count < 20) {
-						ctx.drawImage(image, 231, 5, 14, 14, x, y, 25, 25);
-						count++;
-					}
+						if(count < 2) ctx.drawImage(image, 213, 5, 14, 14, x, y, 25, 25);
+						else ctx.drawImage(image, 231, 5, 14, 14, x, y, 25, 25);
 					break;
 				case "left":
 					ctx.drawImage(image, 125, 230, 14, 14, x, y, 25, 25);

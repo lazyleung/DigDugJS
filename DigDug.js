@@ -140,11 +140,13 @@ function drawGame() {
 function updateGame() {
 	player.update();
 	updateMap();
+	// Update monsters
 	for (var i = 0; i < monstersArray.length; i++) {
 		var aMonster = monstersArray[i];
 		aMonster.update(player);
 		
 	}
+	// Update rocks
 	for (var i = 0; i < rockArray.length; i++) {
 		var aRock = rockArray[i];
 		aRock.update();

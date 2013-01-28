@@ -113,35 +113,36 @@ function openHighScores() {
 var spriteSheet = new Image();
 spriteSheet.src = "digdugsprite.png";
 
-var spriteArray = ["Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0" ,"Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0",
-                 "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0",
-                 "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "Level0",
-                 "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1" , "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", 
-                 "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", 
-                 "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", 
-                 "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", 
-                 "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", "Level1", 
-                 "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2",
-                 "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2",
-                 "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2",
-                "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2",
-                "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2", "Level2",
-                "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", 
-                "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", 
-                "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", 
-                "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", 
-                "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", "Level3", 
-                "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4",
-                "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4",
-                "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4",
-                "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4", "Level4",
-                "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5",
-                "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5"];
-
+//24x24 array to indicate sides that player have digged in a 4 bit mask, goes: top right bottom left
+var overlay = [0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000,
+							0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000,
+							0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000,
+							0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000,
+							0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000,
+							0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000,
+							0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000,
+							0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000,
+							0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000,
+							0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000,
+							0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000,
+							0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000,
+							0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000,
+							0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000,
+							0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000,
+							0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000,
+							0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000,
+							0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000,
+							0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000,
+							0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000,
+							0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000,
+							0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000,
+							0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000,
+							0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000]
 
 function drawGame() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	drawLevel();
+	drawOverlay();
 	player.draw(window.ctx);
 	// Draw all monsters
 	for (var i = 0; i < monstersArray.length; i++) {
@@ -187,9 +188,6 @@ function updateGame() {
 
 function drawLevel() {
   var img;
-  var count = 0;
-  var x_coord = blockSize*(count%24);
-  var y_coord = blockSize*(count/24);
   
 	var Level0 = new Image(); //Sky
   Level0.src = "Level0.jpg";
@@ -203,22 +201,33 @@ function drawLevel() {
   Level4.src = "Level4.jpg";
   var Level5 = new Image();
   Level5.src = "Level5.jpg";
-  for (var count = 0; count<spriteArray.length; count++) {
-    var block = spriteArray[count];
-    // If block is null, don't draw it
-    if (block === null) {
-    	continue;
-    }
-	var x_coord = blockSize*(count%24);
-    var y_coord = blockSize*(Math.floor(count/24));
-    if (block === "Level0") { img = Level0;}
-    else if (block === "Level1") { img = Level1;}
-    else if (block === "Level2") { img = Level2;}
-    else if (block === "Level3") { img = Level3;}
-    else if (block === "Level4") { img = Level4;}
-    else if (block === "Level5") { img = Level5;}
-    ctx.drawImage(img , x_coord, y_coord);
-  }
+	
+	for(var i = 0; i < 24; i++) {
+		for(var j = 0; j < 24; j++) {
+			if(i<3) img = Level0;
+			else if(i<8) img = Level1;
+			else if(i<13) img = Level2;
+			else if(i<18) img = Level3;
+			else if(i<22) img = Level4;
+			else img = Level5;
+			ctx.drawImage(img, j*blockSize, i*blockSize);
+		}
+	}
+}
+
+function drawOverlay() {
+	var img = new Image();
+  img.src = "overlaysprite.png";
+	var k;
+	
+	for(var i = 0; i < 24; i++) {
+		for(var j = 0; j < 24; j++) {
+			if(overlay[i*24 + j] !== 0000) {
+				k = overlay[i*24 + j] * (blockSize + 5);
+				ctx.drawImage(img, k, 0, 25, 25, j*blockSize, i*blockSize, blockSize, blockSize);
+			}
+		}
+	}
 }
 
 function drawScore() {
@@ -227,17 +236,29 @@ function drawScore() {
 	ctx.textAlign = "left";
 	ctx.fillText("Lives: ", 5, 585);
 	ctx.fillText("Score: " + new String(player.points), 300, 585);
-
 	ctx.fillText("Time: " + new String(timer), 480, 585);
 }
 
 function updateMap() {
 	// Find center of player sprite and remove block beneath it
-	var arrayPosition = Math.floor((player.x + (blockSize/2)) / blockSize) + Math.floor((player.y + (blockSize/2)) / blockSize) * xGridSize;
-	if (spriteArray[arrayPosition] !== null && spriteArray[arrayPosition] !== "Level0" && spriteArray[arrayPosition] !== "Level5") {
-		spriteArray[arrayPosition] = null;
-		player.points += 1;
+	var arrayPos = Math.floor((player.x + (blockSize/2)) / blockSize) + Math.floor((player.y + (blockSize/2)) / blockSize) * xGridSize;
+	switch(player.direction){
+		case "right":
+			overlay[arrayPos] = overlay[arrayPos] | 1;
+			break;
+		case "left":
+			overlay[arrayPos] = overlay[arrayPos] | 4;
+			break;
+		case "down":
+			overlay[arrayPos] = overlay[arrayPos] | 8;
+			break;
+		case "up":
+			overlay[arrayPos] = overlay[arrayPos] | 2;
+			break;
+		default:
+			overlay[arrayPos] = 15;
 	}
+	console.log(overlay[arrayPos]);
 }
 
 function animateClouds() {

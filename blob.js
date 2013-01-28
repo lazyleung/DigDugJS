@@ -13,7 +13,7 @@ function Blob(blobX, blobY) {
 
 	this.moveRight = function() {
                 futureX = this.x + blockSize/2;
-                if (spriteArray[getArrayPosition(futureX, this.y)] === null) {
+                if (overlay[getArrayPosition(futureX, this.y)] !== 0000) {
                         if(this.x + this.speed < this.rightlimit) {
                                 this.x += this.speed;
                         }
@@ -23,7 +23,7 @@ function Blob(blobX, blobY) {
 
 	this.moveLeft = function() {
         	futureX = this.x - blockSize/2;
-                if (spriteArray[getArrayPosition(futureX, this.y)] === null) {
+                if (overlay[getArrayPosition(futureX, this.y)] !== 0000) {
                         if(this.x - this.speed > this.leftlimit) {
                                 this.x -= this.speed;
                         }
@@ -32,7 +32,7 @@ function Blob(blobX, blobY) {
 
 	this.moveUp = function() {
         	futureY = this.y - blockSize/2;
-                if (spriteArray[getArrayPosition(this.x, futureY)] === null) {
+                if (overlay[getArrayPosition(this.x, futureY)] !== 0000) {
                         if(this.y - this.speed > this.uplimit) {
                                 this.y -= this.speed;
                         }
@@ -41,12 +41,13 @@ function Blob(blobX, blobY) {
 
 	this.moveDown = function() {
         	futureY = this.y + blockSize/2;
-                if (spriteArray[getArrayPosition(this.x, futureY)] === null) {
+                if (overlay[getArrayPosition(this.x, futureY)] !== 0000) {
                         if(this.y + this.speed < this.downlimit) {
                                 this.y += this.speed;
                         }
                 }
 	}
+
 
 	this.update = function(player) {
                 var distX = Math.abs(player.x - this.x);

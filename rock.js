@@ -12,7 +12,7 @@ function Rock(rockX, rockY) {
 
 	this.moveRight = function() {
                 futureX = this.x + blockSize/2;
-                if (spriteArray[getArrayPosition(futureX, this.y)] === null) {
+                if (overlay[getArrayPosition(futureX, this.y)] !== 0000) {
                         if(this.x + this.speed < this.rightlimit) {
                                 this.x += this.speed;
                         }
@@ -22,7 +22,7 @@ function Rock(rockX, rockY) {
 
 	this.moveLeft = function() {
         	futureX = this.x - blockSize/2;
-                if (spriteArray[getArrayPosition(futureX, this.y)] === null) {
+                if (overlay[getArrayPosition(futureX, this.y)] !== 0000) {
                         if(this.x - this.speed < this.rightlimit) {
                                 this.x -= this.speed;
                         }
@@ -31,7 +31,7 @@ function Rock(rockX, rockY) {
 
 	this.moveUp = function() {
         	futureY = this.y - blockSize/2;
-                if (spriteArray[getArrayPosition(this.x, futureY)] === null) {
+                if (overlay[getArrayPosition(this.x, futureY)] !== 0000) {
                         if(this.y - this.speed < this.rightlimit) {
                                 this.y -= this.speed;
                         }
@@ -39,7 +39,7 @@ function Rock(rockX, rockY) {
 	}
 
 	this.moveDown = function() {
-               if (spriteArray[getArrayPosition(this.x, this.y + this.speed)] === null) {
+               if (spriteArray[getArrayPosition(this.x, this.y + this.speed)] === 0000) {
                         this.y += this.speed;
                         this.speed += 3;
                         this.hitGround = 1;

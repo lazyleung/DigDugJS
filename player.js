@@ -5,14 +5,15 @@ function Player(playerX, playerY) {
 	this.height = 25;
 	this.rightlimit = 600-this.width;
 	this.leftlimit = 0;
-	this.downlimit = 600-this.height;
-	this.uplimit = 0;
+	this.downlimit = 600 - 50 - this.height;
+	this.uplimit = 50;
 	this.animationCount = 0;
 	// Modifiable variables
 	this.direction = "right";
 	this.invincible = 0;
 	this.points = 0;
 	this.lives = 2;
+	this.invincibleTimer = 20;
 	
 	this.speed = 5;
 
@@ -39,11 +40,12 @@ function Player(playerX, playerY) {
 			} else if (this.direction === 'down') {
 				this.y += this.speed;
 			}
-		} else if(this.x - this.speed >= this.leftlimit) {
-        this.x -= this.speed;
-        this.direction = 'left';
-				this.animationCount++;
-    }   	
+		} 
+		else if(this.x - this.speed >= this.leftlimit) {
+			this.x -= this.speed;
+			this.direction = 'left';
+			this.animationCount++;
+    	}   	
 	}
 
 	this.moveUp = function() {
@@ -69,11 +71,12 @@ function Player(playerX, playerY) {
 			} else if (this.direction === 'right') {
 				this.x += this.speed;
 			}
-		} else if(this.y + this.speed <= this.downlimit) {
-      this.y += this.speed;
-      this.direction = 'down';
-			this.animationCount++;
-    }
+		} 
+		else if (this.y + this.speed <= this.downlimit) {
+				this.y += this.speed;
+				this.direction = 'down';
+				this.animationCount++;
+    	}
 	}
 	
 	this.update = function() {
@@ -82,6 +85,16 @@ function Player(playerX, playerY) {
 		else if (Key.isDown(Key.LEFT)) this.moveLeft();
 		else if (Key.isDown(Key.DOWN)) this.moveDown();
 		else if (Key.isDown(Key.RIGHT)) this.moveRight();
+
+		// Handles temporary God Mode
+		if (this.invincible == 1) {
+			this.invincibleTimer -= 1;
+			if (this.invincibleTimer <= 0) {
+				this.invincible = 0;
+				this.invincibleTimer = 20;
+			}
+
+		}
 	}
 
 	this.bounce = function(monster) {
@@ -89,17 +102,24 @@ function Player(playerX, playerY) {
 		var diffY = this.y - monster.y;
 		var bounceSpeed;
 		if (Math.abs(diffX) > Math.abs(diffY)) {
-			// bounce left or right
+			// Bounce left or right
 			if (diffX < 0) {
 				for(bounceSpeed = 10; bounceSpeed >= 0; bounceSpeed -= 1 ) {
-				this.x -= bounceSpeed;
+				//  Ensures you can't be bounced off screen
+				if (bounceSpeed > this.x - this.leftlimit)
+					this.x -= this.x - this.leftlimit;
+				else
+					this.x -= bounceSpeed;
 				updateMap();
 				this.draw(window.ctx);
 				}
 			}
 			else {
 				for(bounceSpeed = 10; bounceSpeed >= 0; bounceSpeed -= 1 ) {
-				this.x += bounceSpeed;
+				if (bounceSpeed > this.rightlimit - this.x)
+					this.x += this.rightlimit - this.x;
+				else
+					this.x += bounceSpeed;
 				updateMap();
 				this.draw(window.ctx);
 				}

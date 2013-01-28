@@ -230,7 +230,7 @@ function updateMap() {
 
 function animateClouds() {
 	// Create up to 3 clouds
-	if (cloudArray.length < 3 && cloudArray[cloudArray.length -1].timeOnMap > 35)
+	if (cloudArray.length < 3 && cloudArray[cloudArray.length -1].timeOnMap > 50)
 		cloudArray.push(new Cloud());
 	//  Draw and update clouds
 	for (var i = 0; i < cloudArray.length; i++) {
@@ -245,7 +245,6 @@ function animateClouds() {
 			var startingIndex = cloudArray.indexOf(aCloud);
 			cloudArray.splice(startingIndex, 1);
 		}
-
 	}
 }
 
@@ -258,12 +257,13 @@ function hasCollided (object1, object2) {
 }
 
 function checkMonsterCollision () {
+	if (player.invincible == 1)
+		return;
 	for (i = 0; i < monstersArray.length; i++) {
 		var aMonster = monstersArray[i];
 		if (hasCollided(player, aMonster)) {
 			player.invincible = 1;
 			player.bounce(aMonster);
-			player.invincible = 0;
 			player.points -= 15;
 		}
 	}

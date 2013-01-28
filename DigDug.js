@@ -111,7 +111,7 @@ function openHighScores() {
 // ********** PAUSE MENU **********
 
 function openPauseMenu() {
-	ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+	ctx.fillStyle = "rgba(0, 0, 0, 0.65)";
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 

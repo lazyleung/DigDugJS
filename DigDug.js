@@ -221,8 +221,39 @@ function drawOverlay() {
 	
 	for(var i = 0; i < 24; i++) {
 		for(var j = 0; j < 24; j++) {
-			if(overlay[i*24 + j] !== 0000) {
-				ctx.drawImage(img, j*blockSize, i*blockSize);
+			var k = overlay[i*24 + j];
+			if(k !== 0000) {
+				switch(k)
+					case 0001:
+						
+					case 0010:
+						
+					case 0011:
+						
+					case 0100:
+						
+					case 0101:
+						
+					case 0110:
+						
+					case 0111:
+						
+					case 1000:
+						
+					case 1001:
+						
+					case 1010:
+						
+					case 1011:
+						
+					case 1100:
+						
+					case 1101:
+						
+					case 1110:
+						
+					case 1111:
+						ctx.drawImage(img, j*blockSize, i*blockSize);
 			}
 		}
 	}
@@ -234,7 +265,6 @@ function drawScore() {
 	ctx.textAlign = "left";
 	ctx.fillText("Lives: ", 5, 585);
 	ctx.fillText("Score: " + new String(player.points), 300, 585);
-
 	ctx.fillText("Time: " + new String(timer), 480, 585);
 }
 

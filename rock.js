@@ -4,6 +4,8 @@ function Rock(rockX, rockY) {
         this.width = 25;
         this.height = 25;
 	this.speed = 5;
+	this.waitCount = 0;
+	this.waitTime = 25;
 	this.downlimit = 550-this.height;
         this.image = new Image();
         this.image.src = "digdugsprite.png";
@@ -11,13 +13,14 @@ function Rock(rockX, rockY) {
         this.hitGround = 0; // 0 = not moved, 1 = falling, 2 = hit ground
 
 	this.moveDown = function() {
-               if (overlay[getArrayPosition(this.x, this.y + this.speed)] !== 0000) {
-                        this.y += this.speed;
-                        this.speed += 3;
-                        this.hitGround = 1;
-               }
-               else
-                if (this.hitGround === 1)
+               if (overlay[getArrayPosition(this.x, this.y + 20)] !== 0000) {
+                        if(this.waitCount < 25) {this.waitCount++;}
+												else {
+													this.y += this.speed;
+													this.speed += 3;
+													this.hitGround = 1;
+												}
+               } else if (this.hitGround === 1)
                         this.hitGround = 2;
 	}
 

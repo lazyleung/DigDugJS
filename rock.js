@@ -47,7 +47,6 @@ function Rock(rockX, rockY) {
                else
                 if (this.hitGround === 1)
                         this.hitGround = 2;
-                console.log(this.y, " + ", this.speed);
 	}
 
 	this.update = function() {

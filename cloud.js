@@ -5,7 +5,10 @@ function Cloud() {
         this.direction = Math.random();
         this.leftSpawn = -65;
         this.rightSpawn = 601;
-        this.timeOnMap = 0
+        this.timeOnMap = 0;
+        this.image = new Image();
+        this.image.src = "cloudSprite.png";
+
         if (this.direction < .5)
                 this.x = this.rightSpawn;
         else
@@ -25,19 +28,13 @@ function Cloud() {
 	}
 	
 	this.draw = function(ctx) {
-		var image = new Image();
-		image.src = "cloudSprite.png";
 		var x = this.x;
 		var y = this.y;
                 if (this.cloudType < .5) {
-        		image.onload = function(){
-        			ctx.drawImage(image, 0, 0, 32, 24, x, y, 32, 24);
-        		}
+        		ctx.drawImage(this.image, 0, 0, 32, 24, x, y, 32, 24);	
                 }
                 else {
-                        image.onload = function(){
-                                ctx.drawImage(image, 34, 0, 64, 24, x, y, 64, 24);
-                        }  
+                        ctx.drawImage(this.image, 34, 0, 64, 24, x, y, 64, 24);     
                 }
 	}
 }

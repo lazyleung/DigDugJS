@@ -5,6 +5,8 @@ function Rock(rockX, rockY) {
         this.height = 25;
 	this.speed = 5;
 	this.downlimit = 600-this.height;
+        this.image = new Image();
+        this.image.src = "digdugsprite.png";
 
 	this.moveRight = function() {
                 futureX = this.x + blockSize/2;
@@ -55,13 +57,9 @@ function Rock(rockX, rockY) {
 	}
 	
 	this.draw = function(ctx) {
-		var image = new Image();
-		image.src = "digdugsprite.png";
 		var x = this.x;
 		var y = this.y;
-		image.onload = function(){
-			ctx.drawImage(image, 297, 124, 16, 14, x, y, 25, 25);
-		}
+		ctx.drawImage(this.image, 297, 124, 16, 14, x, y, 25, 25);
 	}
 
         function getArrayPosition(x, y) {

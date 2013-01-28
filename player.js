@@ -8,6 +8,8 @@ function Player(playerX, playerY) {
 	this.downlimit = 600 - 50 - this.height;
 	this.uplimit = 50;
 	this.animationCount = 0;
+	this.image = new Image();
+    this.image.src = "digdugsprite.png";
 	// Modifiable variables
 	this.direction = "right";
 	this.invincible = 0;
@@ -146,32 +148,29 @@ function Player(playerX, playerY) {
 	}
 	
 	this.draw = function(ctx) {
-		var image = new Image();
-		image.src = "digdugsprite.png";
 		var x = this.x;
 		var y = this.y;
 		var direction = this.direction;
 		var count = this.animationCount;
-		image.onload = function() {
-			switch(direction) {
-				case "right":
-					if(count < 5) ctx.drawImage(image, 213, 5, 14, 14, x, y, 25, 25);
-					else ctx.drawImage(image, 231, 5, 14, 14, x, y, 25, 25);
-					break;
-				case "left":
-					if(count < 5) ctx.drawImage(image, 125, 230, 14, 14, x, y, 25, 25);
-					else ctx.drawImage(image, 106, 230, 14, 14, x, y, 25, 25);
-					break;
-				case "down":
-					ctx.drawImage(image, 247, 5, 14, 14, x, y, 25, 25);
-					break;
-				case "up":
-					ctx.drawImage(image, 247, 5, 14, 14, x,y, 25, 25);
-					break;
-				default:
-					console.log("no direction!");
-			}
+		switch(direction) {
+			case "right":
+				if(count < 5) ctx.drawImage(this.image, 213, 5, 14, 14, x, y, 25, 25);
+				else ctx.drawImage(this.image, 231, 5, 14, 14, x, y, 25, 25);
+				break;
+			case "left":
+				if(count < 5) ctx.drawImage(this.image, 125, 230, 14, 14, x, y, 25, 25);
+				else ctx.drawImage(this.image, 106, 230, 14, 14, x, y, 25, 25);
+				break;
+			case "down":
+				ctx.drawImage(this.image, 247, 5, 14, 14, x, y, 25, 25);
+				break;
+			case "up":
+				ctx.drawImage(this.image, 247, 5, 14, 14, x,y, 25, 25);
+				break;
+			default:
+				console.log("no direction!");
 		}
+		
 	}
 }
 

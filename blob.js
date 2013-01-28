@@ -8,6 +8,8 @@ function Blob(blobX, blobY) {
 	this.leftlimit = 0;
 	this.downlimit = 600-this.height;
 	this.uplimit = 0;
+        this.image = new Image();
+        this.image.src = "digdugsprite.png";
 
 	this.moveRight = function() {
                 futureX = this.x + blockSize/2;
@@ -62,13 +64,10 @@ function Blob(blobX, blobY) {
 	}
 	
 	this.draw = function(ctx) {
-		var image = new Image();
-		image.src = "digdugsprite.png";
 		var x = this.x;
 		var y = this.y;
-		image.onload = function(){
-			ctx.drawImage(image, 332, 58, 14, 14, x, y, 25, 25);
-		}
+		ctx.drawImage(this.image, 332, 58, 14, 14, x, y, 25, 25);
+		
 	}
 
         function getArrayPosition(x, y) {

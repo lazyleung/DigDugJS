@@ -11,11 +11,13 @@ var player;
 var blockSize = 25;
 var xGridSize = 24;
 var timer = 120;
+var menuSelector = 0;
 // Array to keep track of the monsters
 var monstersArray = new Array();
 var rockArray = new Array();
 var mushroomArray = new Array();
 var cloudArray = new Array();
+var highScores = new Array(4056,345,63467);
 // ********** END GLOBAL VARIABLES **********
 
 
@@ -68,15 +70,41 @@ var drawMenuSelection = function(direction) {
 		var x = 170;
 		var y = 320;
 		ctx.fillRect(x, y, 250, 70);
+		menuSelector = 0;
 	}
 	else if (direction == 40 && y != 420) {
 		var x = 170;
 		var y = 410;
 		ctx.fillRect(x, y, 250, 70);
+		menuSelector = 1;
 	}
 	else {
 		ctx.fillRect(x, y, 250, 70);
 	}
+}
+
+function startGame() {
+	mode = "game";
+	
+	player = new Player(50,200);
+	// load some objects
+	monstersArray.push(new Blob(200,200));
+	rockArray.push(new Rock(275,100));
+	cloudArray.push(new Cloud());
+
+	mushroomArray.push(new Mushroom(100,100));
+	intervalId = setInterval(updateGame, timerDelay);
+	timerInterval = setInterval(countDown, 1000); 
+}
+
+function openHighScores() {
+	ctx.clearRect(0, 236, 600, 600);	
+	for (var i = 1; i <= highScores.length; i++) {
+		ctx.font = "30px Arial";
+		ctx.textAlign = 'left';
+		ctx.fillText(new String(i) + ": "+ new String(highScores[i-1]), 150, 300 + i*30);
+	}
+	
 }
 
 // ********** END MENU **********
@@ -110,21 +138,6 @@ var spriteArray = ["Level0", "Level0", "Level0", "Level0", "Level0", "Level0", "
                 "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5",
                 "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5", "Level5"];
 
-
-
-function startGame() {
-	mode = "game";
-	
-	player = new Player(50,200);
-	// load some objects
-	monstersArray.push(new Blob(200,200));
-	rockArray.push(new Rock(275,100));
-	cloudArray.push(new Cloud());
-
-	mushroomArray.push(new Mushroom(100,100));
-	intervalId = setInterval(updateGame, timerDelay);
-	timerInterval = setInterval(countDown, 1000); 
-}
 
 function drawGame() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -285,8 +298,12 @@ function removeMushroom(aMushroom) {
 
 function countDown() {
 	if (timer <= 0)
-		console.log("Time's Up");
+		gameEnded();
 	timer--;
+}
+
+function gameEnded() {
+	highScores.push(player.points);
 }
 
 // ********** END GAME ***********
@@ -306,7 +323,10 @@ function onMenuMouseDown(event) {
 
 function onMenuKeyDown(event) {
 	if (event.keyCode == 13) {
-		startGame();
+		if (menuSelector === 0)
+			startGame();
+		else if (menuSelector === 1)
+			openHighScores();
 		canvas.addEventListener('keydown', function(event) { Key.onKeydown(event); }, false);
 		canvas.addEventListener('keyup', function(event) { Key.onKeyup(event); }, false);
 		canvas.removeEventListener('keydown', onMenuKeyDown, false);

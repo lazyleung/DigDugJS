@@ -25,8 +25,8 @@ function startMainMenu() {
 	// Clear context and set menu EventListeners and draw menu
 	mode = "menu";
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	canvas.addEventListener('mousedown', onMenuMouseDown, false);
-	canvas.addEventListener('keydown', onMenuKeyDown, false);
+	canvas.addEventListener('mousedown', inMenuMouseDown, false);
+	canvas.addEventListener('keydown', inMenuKeyDown, false);
 
 	// make canvas focusable, then give it focus!
 	canvas.setAttribute('tabindex','0');
@@ -56,7 +56,6 @@ var drawMenu = function() {
 	ctx.fillStyle = "black";
 	ctx.font = "55px Arial";
 	ctx.textAlign = "center";
-	//ctx.fillText("Dig Dug", 300, 70);
 	// Draw selectable options
 	ctx.font = "40px Arial";
 	ctx.fillText("Play", 300, 370);
@@ -108,6 +107,18 @@ function openHighScores() {
 }
 
 // ********** END MENU **********
+
+// ********** PAUSE MENU **********
+
+function openPauseMenu() {
+	ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+	ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
+
+
+
+// ********** END PAUSE MENU **********
+
 
 // ********** GAME ***********
 var spriteSheet = new Image();
@@ -334,7 +345,7 @@ function gameEnded() {
 // ********** EVENT LISTENERS ***********
 
 // Handles mouse input events
-function onMenuMouseDown(event) {
+function inMenuMouseDown(event) {
 	var x = event.pageX - canvas.offsetLeft;
 	var y = event.pageY - canvas.offsetTop;
 	if(150 < x  && x < 250) {
@@ -344,7 +355,7 @@ function onMenuMouseDown(event) {
 	}		
 }
 
-function onMenuKeyDown(event) {
+function inMenuKeyDown(event) {
 	if (event.keyCode == 13) {
 		if (menuSelector === 0)
 			startGame();
@@ -352,7 +363,7 @@ function onMenuKeyDown(event) {
 			openHighScores();
 		canvas.addEventListener('keydown', function(event) { Key.onKeydown(event); }, false);
 		canvas.addEventListener('keyup', function(event) { Key.onKeyup(event); }, false);
-		canvas.removeEventListener('keydown', onMenuKeyDown, false);
+		canvas.removeEventListener('keydown', inMenuKeyDown, false);
 	}
 	else {
 		updateMenu(event.keyCode);
@@ -372,6 +383,22 @@ var Key = {
 	},
   
 	onKeydown: function(event) {
+		// Pause game if 'p' is pressed
+		if (event.keyCode == 80) {
+			if (mode === "game") {
+				mode = "pause";
+				clearInterval(intervalId);
+				clearInterval(timerInterval);
+				openPauseMenu();
+			}
+			// Resume game when 'p' is pressed again
+			else if (mode === "pause") {
+				mode = "game";
+				intervalId = setInterval(updateGame, timerDelay);
+				timerInterval = setInterval(countDown, 1000);
+			}
+		
+		}
     this.pressed[event.keyCode] = true;
 	},
   

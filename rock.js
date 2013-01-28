@@ -10,34 +10,6 @@ function Rock(rockX, rockY) {
         this.animationCount = 0;
         this.hitGround = 0; // 0 = not moved, 1 = falling, 2 = hit ground
 
-	this.moveRight = function() {
-                futureX = this.x + blockSize/2;
-                if (overlay[getArrayPosition(futureX, this.y)] !== 0000) {
-                        if(this.x + this.speed < this.rightlimit) {
-                                this.x += this.speed;
-                        }
-                }
-        	
-	}
-
-	this.moveLeft = function() {
-        	futureX = this.x - blockSize/2;
-                if (overlay[getArrayPosition(futureX, this.y)] !== 0000) {
-                        if(this.x - this.speed < this.rightlimit) {
-                                this.x -= this.speed;
-                        }
-                }
-	}
-
-	this.moveUp = function() {
-        	futureY = this.y - blockSize/2;
-                if (overlay[getArrayPosition(this.x, futureY)] !== 0000) {
-                        if(this.y - this.speed < this.rightlimit) {
-                                this.y -= this.speed;
-                        }
-                }
-	}
-
 	this.moveDown = function() {
                if (overlay[getArrayPosition(this.x, this.y + this.speed)] !== 0000) {
                         this.y += this.speed;
@@ -47,7 +19,6 @@ function Rock(rockX, rockY) {
                else
                 if (this.hitGround === 1)
                         this.hitGround = 2;
-                console.log(this.y, " + ", this.speed);
 	}
 
 	this.update = function() {

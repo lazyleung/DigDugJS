@@ -60,7 +60,7 @@ function Blob(blobX, blobY) {
                                 this.moveUp();
                         else if(player.y > this.y)
                                 this.moveDown();
-                }	
+                }
 	}
 	
 	this.draw = function(ctx) {

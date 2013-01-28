@@ -148,29 +148,28 @@ function Player(playerX, playerY) {
 	}
 	
 	this.draw = function(ctx) {
-		var x = this.x;
-		var y = this.y;
 		var direction = this.direction;
 		var count = this.animationCount;
 		switch(direction) {
 			case "right":
-				if(count < 5) ctx.drawImage(this.image, 213, 5, 14, 14, x, y, 25, 25);
-				else ctx.drawImage(this.image, 231, 5, 14, 14, x, y, 25, 25);
+				if(count < 5) ctx.drawImage(this.image, 213, 5, 14, 14, this.x, this.y, 25, 25);
+				else ctx.drawImage(this.image, 231, 5, 14, 14, this.x, this.y, 25, 25);
 				break;
 			case "left":
-				if(count < 5) ctx.drawImage(this.image, 125, 230, 14, 14, x, y, 25, 25);
-				else ctx.drawImage(this.image, 106, 230, 14, 14, x, y, 25, 25);
+				if(count < 5) ctx.drawImage(this.image, 125, 230, 14, 14, this.x, this.y, 25, 25);
+				else ctx.drawImage(this.image, 106, 230, 14, 14, this.x, this.y, 25, 25);
 				break;
 			case "down":
-				if(count < 5) ctx.drawImage(image, 247, 5, 14, 14, x, y, 25, 25);
-				else ctx.drawImage(image, 264, 5, 14, 14, x, y, 25, 25);
+				if(count < 5) ctx.drawImage(this.image, 247, 5, 14, 14, this.x, this.y, 25, 25);
+				else ctx.drawImage(this.image, 264, 5, 14, 14, this.x, this.y, 25, 25);
 				break;
 			case "up":
-				if(count < 5) ctx.drawImage(image, 30, 57, 14, 14, x, y, 25, 25);
-				else ctx.drawImage(image, 13, 57, 14, 14, x, y, 25, 25);
+				if(count < 5) ctx.drawImage(this.image, 30, 57, 14, 14, this.x, this.y, 25, 25);
+				else ctx.drawImage(this.image, 13, 57, 14, 14, this.x, this.y, 25, 25);
 				break;
 			default:
 				console.log("no direction!");
+		}
 	}
 }
 

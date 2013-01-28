@@ -39,7 +39,7 @@ function Rock(rockX, rockY) {
 	}
 
 	this.moveDown = function() {
-               if (spriteArray[getArrayPosition(this.x, this.y + this.speed)] === 0000) {
+               if (overlay[getArrayPosition(this.x, this.y + this.speed)] !== 0000) {
                         this.y += this.speed;
                         this.speed += 3;
                         this.hitGround = 1;

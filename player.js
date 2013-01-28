@@ -107,7 +107,7 @@ function Player(playerX, playerY) {
 		if (Math.abs(diffX) > Math.abs(diffY)) {
 			// Bounce left or right
 			if (diffX < 0) {
-				for(bounceSpeed = 10; bounceSpeed >= 0; bounceSpeed -= 1 ) {
+				for(bounceSpeed = 5; bounceSpeed >= 0; bounceSpeed -= 1 ) {
 				//  Ensures you can't be bounced off screen
 				if (bounceSpeed > this.x - this.leftlimit)
 					this.x -= this.x - this.leftlimit;
@@ -118,7 +118,7 @@ function Player(playerX, playerY) {
 				}
 			}
 			else {
-				for(bounceSpeed = 10; bounceSpeed >= 0; bounceSpeed -= 1 ) {
+				for(bounceSpeed = 5; bounceSpeed >= 0; bounceSpeed -= 1 ) {
 				if (bounceSpeed > this.rightlimit - this.x)
 					this.x += this.rightlimit - this.x;
 				else
@@ -131,14 +131,14 @@ function Player(playerX, playerY) {
 		else {
 			// bounce up or down
 			if (diffY < 0) {
-				for(bounceSpeed = 10; bounceSpeed >= 0; bounceSpeed -= 1 ) {
+				for(bounceSpeed = 5; bounceSpeed >= 0; bounceSpeed -= 1 ) {
 				this.y -= bounceSpeed;
 				updateMap();
 				this.draw(window.ctx);
 				}
 			}
 			else {
-				for(bounceSpeed = 10; bounceSpeed >= 0; bounceSpeed -= 1 ) {
+				for(bounceSpeed = 5; bounceSpeed >= 0; bounceSpeed -= 1 ) {
 				this.y += bounceSpeed;
 				updateMap();
 				this.draw(window.ctx);

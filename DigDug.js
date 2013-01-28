@@ -12,6 +12,7 @@ var timerDelay = 25;
 var player;
 var blockSize = 25;
 var xGridSize = 24;
+var timer = 120;
 // Array to keep track of the monsters
 var monstersArray = new Array();
 var rockArray = new Array();
@@ -125,6 +126,7 @@ function startGame() {
 
 	mushroomArray.push(new Mushroom(100,100));
 	intervalId = setInterval(updateGame, timerDelay);
+	timerInterval = setInterval(countDown, 1000); 
 }
 
 function drawGame() {
@@ -216,7 +218,7 @@ function drawScore() {
 	ctx.fillText("Lives: ", 5, 585);
 	ctx.fillText("Score: " + new String(player.points), 300, 585);
 
-	// Draw selectable options
+	ctx.fillText("Time: " + new String(timer), 480, 585);
 }
 
 function updateMap() {
@@ -282,6 +284,12 @@ function checkMushroomCollision () {
 function removeMushroom(aMushroom) {
     var startingIndex = mushroomArray.indexOf(aMushroom);
     mushroomArray.splice(startingIndex, 1);
+}
+
+function countDown() {
+	if (timer <= 0)
+		console.log("Time's Up");
+	timer--;
 }
 
 // ********** END GAME ***********

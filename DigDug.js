@@ -2,8 +2,6 @@
 window.canvas = document.getElementById("myCanvas");
 window.ctx = canvas.getContext("2d");
 
-
-
 // ********** GLOBAL VARIABLES **********
 //Variable to keep track if game is in menu or game mode
 var mode;
@@ -18,7 +16,6 @@ var monstersArray = new Array();
 var rockArray = new Array();
 var mushroomArray = new Array();
 var cloudArray = new Array();
-
 // ********** END GLOBAL VARIABLES **********
 
 

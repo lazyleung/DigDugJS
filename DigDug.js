@@ -217,43 +217,14 @@ function drawLevel() {
 
 function drawOverlay() {
 	var img = new Image();
-  img.src = "topbot.png";
+  img.src = "overlaysprite.png";
+	var k;
 	
 	for(var i = 0; i < 24; i++) {
 		for(var j = 0; j < 24; j++) {
-			var k = overlay[i*24 + j];
-			if(k !== 0000) {
-				switch(k)
-					case 0001:
-						
-					case 0010:
-						
-					case 0011:
-						
-					case 0100:
-						
-					case 0101:
-						
-					case 0110:
-						
-					case 0111:
-						
-					case 1000:
-						
-					case 1001:
-						
-					case 1010:
-						
-					case 1011:
-						
-					case 1100:
-						
-					case 1101:
-						
-					case 1110:
-						
-					case 1111:
-						ctx.drawImage(img, j*blockSize, i*blockSize);
+			if(overlay[i*24 + j] !== 0000) {
+				k = overlay[i*24 + j] * (blockSize + 5);
+				ctx.drawImage(img, k, 0, 25, 25, j*blockSize, i*blockSize, blockSize, blockSize);
 			}
 		}
 	}
@@ -273,20 +244,21 @@ function updateMap() {
 	var arrayPos = Math.floor((player.x + (blockSize/2)) / blockSize) + Math.floor((player.y + (blockSize/2)) / blockSize) * xGridSize;
 	switch(player.direction){
 		case "right":
-			overlay[arrayPos] = overlay[arrayPos] + 0001;
+			overlay[arrayPos] = overlay[arrayPos] | 1;
 			break;
 		case "left":
-			overlay[arrayPos] = overlay[arrayPos] + 0100;
+			overlay[arrayPos] = overlay[arrayPos] | 4;
 			break;
 		case "down":
-			overlay[arrayPos] = overlay[arrayPos] + 1000;
+			overlay[arrayPos] = overlay[arrayPos] | 8;
 			break;
 		case "up":
-			overlay[arrayPos] = overlay[arrayPos] + 0001;
+			overlay[arrayPos] = overlay[arrayPos] | 2;
 			break;
 		default:
-			overlay[arrayPos] = 1111;
+			overlay[arrayPos] = 15;
 	}
+	console.log(overlay[arrayPos]);
 }
 
 function animateClouds() {

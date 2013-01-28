@@ -14,7 +14,9 @@ function Rock(rockX, rockY) {
 
 	this.moveDown = function() {
                if (overlay[getArrayPosition(this.x, this.y + 20)] !== 0000) {
-                        if(this.waitCount < 25) {this.waitCount++;}
+                        if(this.waitCount < 25) {
+													this.waitCount++;
+												}
 												else {
 													this.y += this.speed;
 													this.speed += 3;

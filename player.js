@@ -12,6 +12,7 @@ function Player(playerX, playerY) {
   this.image.src = "digdugsprite.png";
 	// Modifiable variables
 	this.direction = "right";
+	this.directionOld = "right";
 	this.invincible = 0;
 	this.points = 0;
 	this.lives = 2;
@@ -22,9 +23,9 @@ function Player(playerX, playerY) {
 	this.moveRight = function() {
 		// Restrict movement to certain paths
 		if (this.y % 25 != 0) {
-			if (this.direction === 'up') {
+			if (this.direction === 'upleft' || this.direction === 'upright') {
 				this.y -= this.speed;
-			} else if (this.direction === 'down') {
+			} else if (this.direction === 'downleft' || this.direction === 'downright') {
 				this.y += this.speed;
 			}
 		} else if(this.x + this.speed <= this.rightlimit) {
@@ -37,9 +38,9 @@ function Player(playerX, playerY) {
 	this.moveLeft = function() {
 		// Restrict movement to certain paths
 		if (this.y % 25 != 0) {
-			if (this.direction === 'up') {
+			if (this.direction === 'upleft' || this.direction === 'upright') {
 				this.y -= this.speed;
-			} else if (this.direction === 'down') {
+			} else if (this.direction === 'downleft' || this.direction === 'downright') {
 				this.y += this.speed;
 			}
 		} 
@@ -60,7 +61,8 @@ function Player(playerX, playerY) {
 			}
 		}else if(this.y - this.speed >=this.uplimit) {
       this.y -= this.speed;
-      this.direction = 'up';
+      if(this.directionOld === 'left') this.direction = 'upleft';
+				else if(this.directionOld === 'right') this.direction = 'upright';
 			this.animationCount++;
     }
 	}
@@ -76,18 +78,19 @@ function Player(playerX, playerY) {
 		} 
 		else if (this.y + this.speed <= this.downlimit) {
 				this.y += this.speed;
-				this.direction = 'down';
+				if(this.directionOld === 'left') this.direction = 'downleft';
+				else if(this.directionOld === 'right') this.direction = 'downright';
 				this.animationCount++;
     	}
 	}
 	
 	this.update = function() {
-		var originalDirection = this.direction;
+		this.directionOld = this.direction;
 		if (Key.isDown(Key.UP)) this.moveUp();
 		else if (Key.isDown(Key.LEFT)) this.moveLeft();
 		else if (Key.isDown(Key.DOWN)) this.moveDown();
 		else if (Key.isDown(Key.RIGHT)) this.moveRight();
-		if(this.animationCount > 10 || originalDirection !== this.direction) this.animationCount = 0;
+		if(this.animationCount > 10 || this.directionOld !== this.direction) this.animationCount = 0;
 		
 		// Handles temporary God Mode
 		if (this.invincible == 1) {
@@ -159,13 +162,21 @@ function Player(playerX, playerY) {
 				if(count < 5) ctx.drawImage(this.image, 125, 230, 14, 14, this.x, this.y, 25, 25);
 				else ctx.drawImage(this.image, 106, 230, 14, 14, this.x, this.y, 25, 25);
 				break;
-			case "down":
+			case "downright":
 				if(count < 5) ctx.drawImage(this.image, 247, 5, 14, 14, this.x, this.y, 25, 25);
 				else ctx.drawImage(this.image, 264, 5, 14, 14, this.x, this.y, 25, 25);
 				break;
-			case "up":
+			case "downleft":
+				if(count < 5) ctx.drawImage(this.image, 89, 230, 14, 14, this.x, this.y, 25, 25);
+				else ctx.drawImage(this.image, 72, 230, 14, 14, this.x, this.y, 25, 25);
+				break;
+			case "upright":
 				if(count < 5) ctx.drawImage(this.image, 30, 57, 14, 14, this.x, this.y, 25, 25);
 				else ctx.drawImage(this.image, 13, 57, 14, 14, this.x, this.y, 25, 25);
+				break;
+			case "upleft":
+				if(count < 5) ctx.drawImage(this.image, 56, 57, 14, 14, this.x, this.y, 25, 25);
+				else ctx.drawImage(this.image, 73, 57, 14, 14, this.x, this.y, 25, 25);
 				break;
 			default:
 				console.log("no direction!");

@@ -80,12 +80,13 @@ function Player(playerX, playerY) {
 	}
 	
 	this.update = function() {
-		if(this.animationCount > 4) this.animationCount = 0;
+		var originalDirection = this.direction;
 		if (Key.isDown(Key.UP)) this.moveUp();
 		else if (Key.isDown(Key.LEFT)) this.moveLeft();
 		else if (Key.isDown(Key.DOWN)) this.moveDown();
 		else if (Key.isDown(Key.RIGHT)) this.moveRight();
-
+		if(this.animationCount > 10 || originalDirection !== this.direction) this.animationCount = 0;
+		
 		// Handles temporary God Mode
 		if (this.invincible == 1) {
 			this.invincibleTimer -= 1;
@@ -154,11 +155,12 @@ function Player(playerX, playerY) {
 		image.onload = function() {
 			switch(direction) {
 				case "right":
-						if(count < 2) ctx.drawImage(image, 213, 5, 14, 14, x, y, 25, 25);
-						else ctx.drawImage(image, 231, 5, 14, 14, x, y, 25, 25);
+					if(count < 5) ctx.drawImage(image, 213, 5, 14, 14, x, y, 25, 25);
+					else ctx.drawImage(image, 231, 5, 14, 14, x, y, 25, 25);
 					break;
 				case "left":
-					ctx.drawImage(image, 125, 230, 14, 14, x, y, 25, 25);
+					if(count < 5) ctx.drawImage(image, 125, 230, 14, 14, x, y, 25, 25);
+					else ctx.drawImage(image, 106, 230, 14, 14, x, y, 25, 25);
 					break;
 				case "down":
 					ctx.drawImage(image, 247, 5, 14, 14, x, y, 25, 25);

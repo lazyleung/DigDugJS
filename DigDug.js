@@ -16,6 +16,7 @@ var xGridSize = 24;
 var monstersArray = new Array();
 var rockArray = new Array();
 var mushroomArray = new Array();
+var cloudArray = new Array();
 
 // ********** END GLOBAL VARIABLES **********
 
@@ -112,6 +113,8 @@ function startGame() {
 	// load some objects
 	monstersArray.push(new Blob(200,200));
 	rockArray.push(new Rock(275,100));
+	cloudArray.push(new Cloud());
+
 	mushroomArray.push(new Mushroom(100,100));
 	intervalId = setInterval(updateGame, timerDelay);
 }
@@ -135,6 +138,8 @@ function drawGame() {
 		var aMushroom = mushroomArray[i];
 		aMushroom.draw(window.ctx);
 	}
+	drawScore();
+	
 }
 
 function updateGame() {
@@ -157,7 +162,7 @@ function updateGame() {
 		checkMushroomCollision();
 	}
 	drawGame();
-	drawScore();
+	animateClouds();
 }
 
 function drawLevel() {
@@ -212,6 +217,27 @@ function updateMap() {
 	if (spriteArray[arrayPosition] !== null && spriteArray[arrayPosition] !== "Level0" && spriteArray[arrayPosition] !== "Level5") {
 		spriteArray[arrayPosition] = null;
 		player.points += 1;
+	}
+}
+
+function animateClouds() {
+	// Create up to 3 clouds
+	if (cloudArray.length < 3 && cloudArray[cloudArray.length -1].timeOnMap > 35)
+		cloudArray.push(new Cloud());
+	//  Draw and update clouds
+	for (var i = 0; i < cloudArray.length; i++) {
+		aCloud = cloudArray[i];
+		aCloud.draw(ctx);
+		aCloud.update();
+	}
+	// Delete clouds once they reach off screen
+	for (var i = 0; i < cloudArray.length; i++) {
+		var aCloud = cloudArray[i];
+		if (aCloud.x < aCloud.leftSpawn || aCloud.x > aCloud.rightSpawn) {
+			var startingIndex = cloudArray.indexOf(aCloud);
+			cloudArray.splice(startingIndex, 1);
+		}
+
 	}
 }
 

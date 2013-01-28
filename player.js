@@ -9,7 +9,7 @@ function Player(playerX, playerY) {
 	this.uplimit = 50;
 	this.animationCount = 0;
 	this.image = new Image();
-    this.image.src = "digdugsprite.png";
+  this.image.src = "digdugsprite.png";
 	// Modifiable variables
 	this.direction = "right";
 	this.invincible = 0;
@@ -162,15 +162,15 @@ function Player(playerX, playerY) {
 				else ctx.drawImage(this.image, 106, 230, 14, 14, x, y, 25, 25);
 				break;
 			case "down":
-				ctx.drawImage(this.image, 247, 5, 14, 14, x, y, 25, 25);
+				if(count < 5) ctx.drawImage(image, 247, 5, 14, 14, x, y, 25, 25);
+				else ctx.drawImage(image, 264, 5, 14, 14, x, y, 25, 25);
 				break;
 			case "up":
-				ctx.drawImage(this.image, 247, 5, 14, 14, x,y, 25, 25);
+				if(count < 5) ctx.drawImage(image, 30, 57, 14, 14, x, y, 25, 25);
+				else ctx.drawImage(image, 13, 57, 14, 14, x, y, 25, 25);
 				break;
 			default:
 				console.log("no direction!");
-		}
-		
 	}
 }
 

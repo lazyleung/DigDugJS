@@ -88,7 +88,7 @@ function startGame() {
 	player = new Player(50,200);
 	// load some objects
 	monstersArray.push(new Blob(200,200));
-    monstersArray.push(new Dragon(300,300));
+   monstersArray.push(new Dragon(300,300));
 
 	rockArray.push(new Rock(275,100));
 	

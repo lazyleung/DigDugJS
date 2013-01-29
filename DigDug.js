@@ -15,7 +15,7 @@ var menuSelector = 0;
 // Array to keep track of the monsters
 var monstersArray = new Array();
 var rockArray = new Array();
-var mushroomArray = new Array();
+var itemArray = new Array();
 var cloudArray = new Array();
 var highScores = new Array(4056,345,63467);
 // ********** END GLOBAL VARIABLES **********
@@ -88,13 +88,17 @@ function startGame() {
 	player = new Player(50,200);
 	// load some objects
 	monstersArray.push(new Blob(200,200));
-   monstersArray.push(new Dragon(300,300));
+    monstersArray.push(new Dragon(300,300));
 
 	rockArray.push(new Rock(275,100));
+	rockArray.push(new Rock(400, 475));
 	
 	cloudArray.push(new Cloud());
 
-	mushroomArray.push(new Mushroom(100,100));
+	itemArray.push(new Mushroom(100,100));
+	itemArray.push(new Carrot(175, 175));
+	itemArray.push(new Watermelon(440, 400));
+	itemArray.push(new Eggplant(325, 300)); 
 	createLevel();
 	intervalId = setInterval(updateGame, timerDelay);
 	timerInterval = setInterval(countDown, 1000); 
@@ -181,10 +185,10 @@ function drawGame() {
 		var aRock = rockArray[i];
 		aRock.draw(window.ctx);
 	}
-	// Draw all mushrooms
-	for (var i = 0; i < mushroomArray.length; i++) {
-		var aMushroom = mushroomArray[i];
-		aMushroom.draw(window.ctx);
+	// Draw all items
+	for (var i = 0; i < itemArray.length; i++) {
+		var aItem = itemArray[i];
+		aItem.draw(window.ctx);
 	}
 	drawScore();
 	
@@ -207,7 +211,7 @@ function updateGame() {
 	// Check for object collisions
 	if (player.invincible != 1) {
 		checkMonsterCollision();
-		checkMushroomCollision();
+		checkItemCollision();
 	}
 	drawGame();
 	animateClouds();
@@ -342,19 +346,19 @@ function checkMonsterCollision () {
 	}
 }
 
-function checkMushroomCollision () {
-	for (i = 0; i < mushroomArray.length; i++) {
-		var aMushroom = mushroomArray[i];
-		if (hasCollided(player, aMushroom)) {
-			player.points += 50;
-			removeMushroom(aMushroom);
+function checkItemCollision () {
+	for (i = 0; i < itemArray.length; i++) {
+		var aItem = itemArray[i];
+		if (hasCollided(player, aItem)) {
+			player.points += aItem.points;
+			removeItem(aItem);
 		}
 	}
 }
 
-function removeMushroom(aMushroom) {
-    var startingIndex = mushroomArray.indexOf(aMushroom);
-    mushroomArray.splice(startingIndex, 1);
+function removeItem(aItem) {
+    var startingIndex = itemArray.indexOf(aItem);
+    itemArray.splice(startingIndex, 1);
 }
 
 function countDown() {

@@ -84,7 +84,9 @@ var drawMenu = function() {
 }
 
 function openHighScores() {
-	ctx.clearRect(0, 225, 600, 600);	
+	mode = "highscore";
+	ctx.fillStyle = "rgb(0,0,0)";
+	ctx.fillRect(0, 225, 600, 600);	
 	for (var i = 1; i <= highScores.length; i++) {
 		ctx.font = "30px Arial";
 		ctx.textAlign = 'left';
@@ -426,13 +428,11 @@ function inMenuKeyDown(event) {
 		if(event.keyCode === 13) {
 			clearInterval(intervalId);
 			openHighScores();
-			canvas.addEventListener('keydown', function(event) { Key.onKeydown(event); }, false);
-			canvas.addEventListener('keyup', function(event) { Key.onKeyup(event); }, false);
-			canvas.removeEventListener('keydown', inMenuKeyDown, false);
-		}
-		else if(event.keyCode === Key.UP || event.keyCode === Key.DOWN){
+		}else if(event.keyCode === Key.UP || event.keyCode === Key.DOWN){
 			menuSelector = 0;
-		}
+		}else if(mode === "highscore" && event.keyCode === 27) {
+			startMainMenu();
+		} 
 	} else {
 		menuSelector = 0;
 	}

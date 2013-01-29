@@ -251,7 +251,7 @@ function drawLevel() {
 
 function drawOverlay() {
 	var img = new Image();
-  img.src = "overlaysprite.png";
+  img.src = "overlaysprite2.png";
 	var k;
 	
 	for(var i = 0; i < 24; i++) {

@@ -196,7 +196,7 @@ function drawGame() {
 
 function updateGame() {
 	player.update();
-	updateMap();
+	updateOverlay();
 	// Update monsters
 	for (var i = 0; i < monstersArray.length; i++) {
 		var aMonster = monstersArray[i];
@@ -274,33 +274,31 @@ function drawScore() {
 }
 
 var arrayPosPast;
-function updateMap() {
-	// Find center of player sprite and remove block beneath it
+function updateOverlay() {
+	//Updates overlay values
 	var arrayPos = Math.floor((player.x + (blockSize/2)) / blockSize) + Math.floor((player.y + (blockSize/2)) / blockSize) * xGridSize;
-	if(true) {
-		if(arrayPos > 71 && player.direction === "right") {
-			overlay[arrayPos] = overlay[arrayPos] | 1;
-			if(arrayPos - 1 === arrayPosPast) {
-				overlay[arrayPos - 1] = overlay[arrayPos - 1] | 4;
-			}
-		} else if(arrayPos > 71 && player.direction === "left") {
-			overlay[arrayPos] = overlay[arrayPos] | 4;
-			if(arrayPos + 1 === arrayPosPast) {
-				overlay[arrayPos + 1] = overlay[arrayPos + 1] | 1;
-			}
-		} else if(player.direction === "downright" || player.direction === "downleft") {
-			if(arrayPos > 71) overlay[arrayPos] = overlay[arrayPos] | 8;
-			if(arrayPosPast > 71 && arrayPos - 24 === arrayPosPast) {
-				overlay[arrayPos - 24] = overlay[arrayPos - 24] | 2;
-			}
-		} else if(player.direction === "upright" || player.direction === "upleft") {
-			if(arrayPos > 71) overlay[arrayPos] = overlay[arrayPos] | 2;
-			if(arrayPos + 24 === arrayPosPast) {
-				overlay[arrayPos + 24] = overlay[arrayPos + 24] | 8;
-			}
-		} else if (arrayPos > 71){
-			overlay[arrayPos] = 15;
+	if(arrayPos > 71 && player.direction === "right") {
+		overlay[arrayPos] = overlay[arrayPos] | 1;
+		if(arrayPos - 1 === arrayPosPast) {
+			overlay[arrayPos - 1] = overlay[arrayPos - 1] | 4;
 		}
+	} else if(arrayPos > 71 && player.direction === "left") {
+		overlay[arrayPos] = overlay[arrayPos] | 4;
+		if(arrayPos + 1 === arrayPosPast) {
+			overlay[arrayPos + 1] = overlay[arrayPos + 1] | 1;
+		}
+	} else if(player.direction === "downright" || player.direction === "downleft") {
+		if(arrayPos > 71) overlay[arrayPos] = overlay[arrayPos] | 8;
+		if(arrayPosPast > 71 && arrayPos - 24 === arrayPosPast) {
+			overlay[arrayPos - 24] = overlay[arrayPos - 24] | 2;
+		}
+	} else if(player.direction === "upright" || player.direction === "upleft") {
+		if(arrayPos > 71) overlay[arrayPos] = overlay[arrayPos] | 2;
+		if(arrayPos + 24 === arrayPosPast) {
+			overlay[arrayPos + 24] = overlay[arrayPos + 24] | 8;
+		}
+	} else if (arrayPos > 71){
+		overlay[arrayPos] = 15;
 	}
 	arrayPosPast = arrayPos;
 }

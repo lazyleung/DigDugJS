@@ -49,7 +49,7 @@ var updateMenu = function() {
 
 var drawMenu = function() {
 	window.ctx.drawImage(background, 0, 0);
-	//animateClouds();
+	setInterval(animateClouds(), timerDelay);
 	window.ctx.drawImage(spriteSheet, 183, 236, 160, 48, 140, 25, 320, 96);
 	window.ctx.drawImage(spriteSheet, 243, 384, 52, 8, 248, 535, 104, 16);
 	
@@ -150,7 +150,7 @@ function startGame() {
 	rockArray.push(new Rock(275,100));
 	rockArray.push(new Rock(400, 475));
 	
-	cloudArray.push(new Cloud());
+	
 
 	itemArray.push(new Mushroom(100,100));
 	itemArray.push(new Carrot(175, 175));
@@ -310,6 +310,9 @@ function updateOverlay() {
 }
 
 function animateClouds() {
+	if (cloudArray == false)
+		cloudArray.push(new Cloud());
+
 	// Create up to 3 clouds
 	if (cloudArray.length < 3 && cloudArray[cloudArray.length -1].timeOnMap > 50)
 		cloudArray.push(new Cloud());

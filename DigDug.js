@@ -19,7 +19,7 @@ var monstersArray = new Array();
 var rockArray = new Array();
 var itemArray = new Array();
 var cloudArray = new Array();
-var highScores = new Array(4056,345,63467);
+var highScores = new Array(1000,500,0);
 
 var spriteSheet = new Image();
 spriteSheet.src = "digdugsprite.png";
@@ -159,9 +159,19 @@ function startGame() {
 	
 	switch(stage) {
 		case 0:
+			ctx.fillStyle = "rgba(0, 0, 0, 0.95)";
+			ctx.fillRect(0, 0, canvas.width, canvas.height);
+			ctx.fillStyle = "white";
+			ctx.font = "40px Arial";
+			ctx.textAlign = 'center';
+			ctx.fillText("How To Play!", 300, 100);
+			ctx.font = "30px Arial";
+			ctx.fillText("Press enter to continue", 300, 500);
+			break;
+		case 1:
 			player = new Player(50,200);
 			monstersArray.push(new Blob(200,200));
-		  	monstersArray.push(new Dragon(300,300));
+		  monstersArray.push(new Dragon(300,300));
 
 			rockArray.push(new Rock(275,100));
 			rockArray.push(new Rock(400, 475));
@@ -171,15 +181,14 @@ function startGame() {
 			itemArray.push(new Watermelon(440, 400));
 			itemArray.push(new Eggplant(325, 300));
 			break;
-		case 1:
-			break;
 		default:
 			break;
 	}
-	createLevel();
-	intervalId = setInterval(updateGame, timerDelay);
-	timerInterval = setInterval(countDown, 1000);
-		
+	if(stage > 0) {
+		createLevel();
+		intervalId = setInterval(updateGame, timerDelay);
+		timerInterval = setInterval(countDown, 1000);
+	}
 }
 
 function createLevel() {
@@ -241,7 +250,7 @@ function drawGame() {
 		var aItem = itemArray[i];
 		aItem.draw(window.ctx);
 	}
-	drawScore();
+	drawInfo();
 	
 }
 
@@ -292,12 +301,16 @@ function drawOverlay() {
 	}
 }
 
-function drawScore() {
+function drawInfo() {
 	ctx.fillStyle = "white";
 	ctx.font = "25px Arial";
 	ctx.textAlign = "left";
 	ctx.fillText("Lives: ", 5, 585);
-	ctx.fillText("Score: " + new String(player.points), 300, 585);
+	for(var i = player.lives; i > 0; i--) {
+		ctx.drawImage(spriteSheet, 213, 5, 14, 14, 50 + (i*25), 565, 25, 25);
+	}
+	ctx.fillText("Level: " + new String(stage), 210, 585);
+	ctx.fillText("Score: " + new String(player.points), 330, 585);
 	ctx.fillText("Time: " + new String(timer), 480, 585);
 }
 
@@ -454,7 +467,7 @@ var Key = {
   
 	onKeydown: function(event) {
 		// Pause game if esc or 'p' is pressed
-		if (event.keyCode === 27 || event.keyCode === 80) {
+		if(event.keyCode === 27 || event.keyCode === 80) {
 			if (mode === "game") {
 				mode = "pause";
 				clearInterval(intervalId);
@@ -467,7 +480,11 @@ var Key = {
 				intervalId = setInterval(updateGame, timerDelay);
 				timerInterval = setInterval(countDown, 1000);
 			}
-		
+		}
+		//Advacnes game
+		if(stage === 0 && event.keyCode === 13){
+			stage++;
+			startGame();
 		}
     this.pressed[event.keyCode] = true;
 	},

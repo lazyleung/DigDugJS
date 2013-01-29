@@ -16,7 +16,7 @@ function Player(playerX, playerY) {
 	this.directionOld = "right";
 	this.invincible = 0;
 	this.points = 0;
-	this.lives = 2;
+	this.lives = 3;
 	this.invincibleTimer = 25;
 	this.animationCount = 0;
 	this.speed = 5;

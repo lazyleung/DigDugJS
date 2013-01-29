@@ -329,6 +329,7 @@ function hasCollided (object1, object2) {
 		if ((object1.y >= object2.y && object1.y + 1 <= object2.y + object2.height) || (object1.y - 1 + object1.height >= object2.y && object1.y + object1.height <= object2.y + object2.height)) {
 			return true;
 		}
+	return false;
 }
 
 function checkMonsterCollision () {
@@ -337,9 +338,8 @@ function checkMonsterCollision () {
 	for (i = 0; i < monstersArray.length; i++) {
 		var aMonster = monstersArray[i];
 		if (hasCollided(player, aMonster)) {
-			player.invincible = 1;
+			player.wasHit = 1;
 			player.bounce(aMonster);
-			player.points -= 15;
 		}
 	}
 }

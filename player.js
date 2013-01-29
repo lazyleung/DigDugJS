@@ -20,6 +20,7 @@ function Player(playerX, playerY) {
 	this.animationCount = 0;
 	this.speed = 5;
 	this.action = "walk";
+	this.wasHit = 0;
 
 	this.moveRight = function() {
 		// Restrict movement to certain paths
@@ -113,6 +114,13 @@ function Player(playerX, playerY) {
 				this.invincible = 0;
 				this.invincibleTimer = 20;
 			}
+		}
+		// Player gets hit and loses a life
+		if (this.wasHit === 1) {
+			this.invincible = 1;
+			this.lives--;
+			this.points -= 15;
+			this.wasHit = 0;
 		}
 	}
 

@@ -28,6 +28,9 @@ spriteSheet.src = "digdugsprite.png";
 var background = new Image();
 background.src = "menubackground.png";
 
+var animatePlayerX = -60;
+var animatePlayerCount = 0;
+
 function startMainMenu() {
 	// Clear context and set menu EventListeners and draw menu
 	mode = "menu";
@@ -45,6 +48,9 @@ function startMainMenu() {
 var updateMenu = function() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	drawMenu();
+	if(animatePlayerCount++ > 10) animatePlayerCount = 0;
+	if(animatePlayerX > 620) animatePlayerX = -60;
+	else animatePlayerX += 1.5;
 }
 
 var drawMenu = function() {
@@ -52,6 +58,9 @@ var drawMenu = function() {
 	setInterval(animateClouds(), timerDelay);
 	window.ctx.drawImage(spriteSheet, 183, 236, 160, 48, 140, 25, 320, 96);
 	window.ctx.drawImage(spriteSheet, 243, 384, 52, 8, 248, 535, 104, 16);
+	
+	if(animatePlayerCount < 5) ctx.drawImage(spriteSheet, 213, 5, 14, 14, animatePlayerX, 202, 25, 25);
+	else ctx.drawImage(spriteSheet, 231, 5, 14, 14, animatePlayerX, 202, 25, 25);
 	
 	ctx.fillStyle = "rgba(255, 69, 0, 1)";
 	if(menuSelector === 0) {

@@ -47,7 +47,6 @@ function Dragon(dragonX, dragonY) {
             if (overlay[getArrayPosition(this.x, futureY)] !== 0000) {
                 if(this.y - this.speed > this.uplimit) {
                     this.y -= this.speed;
-                    this.direction = "up";
                 }
             }
     }
@@ -57,7 +56,6 @@ function Dragon(dragonX, dragonY) {
             if (overlay[getArrayPosition(this.x, futureY)] !== 0000) {
                 if(this.y + this.speed < this.downlimit) {
                     this.y += this.speed;
-                    this.direction = "down";
                 }
             }
     }
@@ -132,16 +130,22 @@ function Dragon(dragonX, dragonY) {
     this.draw = function(ctx) {
         var x = this.x;
         var y = this.y;
-        ctx.drawImage(this.image, 314, 90, 14, 14, x, y, 25, 25);
+
+        //  Draw dragon
+        if (this.direction === "right")
+            ctx.drawImage(this.image, 315, 91, 13, 13, x, y, 25, 25);
+        else if (this.direction === "left")
+            ctx.drawImage(this.image, 22, 316, 13, 13, x, y, 25, 25);
+
         // Draw Fire
         if (this.fireState > 0) {
             if (this.direction === "left") {
                 if (this.fireState < 1)
-                    ctx.drawImage(this.image, 3, 333, 16, 13, x, y, 16, 13);
+                    ctx.drawImage(this.image, 3, 333, 16, 13, x - 16, y, 16, 13);
                 else if (this.fireState < 2)
-                    ctx.drawImage(this.image, 3, 348, 32, 16, x, y, 32, 16);
+                    ctx.drawImage(this.image, 3, 348, 32, 16, x - 32, y, 32, 16);
                 else if (this.fireState < 3)
-                    ctx.drawImage(this.image, 21, 331, 48, 16, x, y, 48, 16);
+                    ctx.drawImage(this.image, 21, 331, 48, 16, x - 48, y, 48, 16);
             }
 
             else if (this.direction === "right") {

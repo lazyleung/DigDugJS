@@ -16,7 +16,7 @@ function Player(playerX, playerY) {
 	this.invincible = 0;
 	this.points = 0;
 	this.lives = 2;
-	this.invincibleTimer = 20;
+	this.invincibleTimer = 40;
 	
 	this.speed = 5;
 
@@ -97,7 +97,7 @@ function Player(playerX, playerY) {
 			this.invincibleTimer -= 1;
 			if (this.invincibleTimer <= 0) {
 				this.invincible = 0;
-				this.invincibleTimer = 20;
+				this.invincibleTimer = 40;
 			}
 
 		}

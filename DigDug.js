@@ -84,17 +84,33 @@ var drawMenuSelection = function(direction) {
 
 function startGame() {
 	mode = "game";
-	
 	player = new Player(50,200);
 	// load some objects
 	monstersArray.push(new Blob(200,200));
     monstersArray.push(new Dragon(300,300));
-
 	rockArray.push(new Rock(275,100));
 	rockArray.push(new Rock(400, 475));
-	
 	cloudArray.push(new Cloud());
+	itemArray.push(new Mushroom(100,100));
+	itemArray.push(new Carrot(175, 175));
+	itemArray.push(new Watermelon(440, 400));
+	itemArray.push(new Eggplant(325, 300)); 
+	createLevel();
+	intervalId = setInterval(updateGame, timerDelay);
+	timerInterval = setInterval(countDown, 1000); 
+}
 
+function startGame_level2() {
+	mode = "game";
+	player = new Player(50,200);
+	// load some objects
+	monstersArray.push(new Blob(200,200));
+	monstersArray.push(new Blob(500,200));
+    monstersArray.push(new Dragon(300,300));
+    monstersArray.push(new Dragon(200,500));
+	rockArray.push(new Rock(275,100));
+	rockArray.push(new Rock(400, 475));
+	cloudArray.push(new Cloud());
 	itemArray.push(new Mushroom(100,100));
 	itemArray.push(new Carrot(175, 175));
 	itemArray.push(new Watermelon(440, 400));
@@ -269,6 +285,37 @@ function drawOverlay() {
 	}
 }
 
+function updateGround(arrayPosition) {
+//Takes an index representing the array of the new hole 
+console.log("Got Here");
+console.log(arrayPosition);
+var level_delay;
+var fallingLevelArray = new Array(); 
+if (spriteArray[arrayPosition] === 0){level_delay = 500;}
+else if (spriteArray[arrayPosition] === 1){level_delay = 1000;}
+else if (spriteArray[arrayPosition] === 2){level_delay = 2000;}
+else if (spriteArray[arrayPosition] === 3){level_delay = 4000;}
+//Add all the blocks above the gap that aren't holes
+for(var index = arrayPosition%24+72; index<arrayPosition-24; index+=24){
+	if (spriteArray[index] != 5){ 
+	fallingLevelArray.push(index)
+	console.log(index);
+		}
+	}	
+//Draw the blocks falling down 
+	groundId = (animateFallingBlocks(fallingLevelArray), level_delay);
+//After the blocks fall, then update the spriteArray
+for(var count = 0; count<fallingLevelArray.length; count++){
+		//if (count == 0) {spriteArray[fallingLevelArray[count]] = 5;}
+		spriteArray[fallingLevelArray[count]+48] = spriteArray[fallingLevelArray[count]];
+	}
+drawLevel();
+}
+
+function animateFallingBlocks(fallingLevelArray) {
+
+}
+
 function drawScore() {
 	ctx.fillStyle = "white";
 	ctx.font = "25px Arial";
@@ -306,6 +353,7 @@ function updateOverlay() {
 		overlay[arrayPos] = 15;
 	}
 	arrayPosPast = arrayPos;
+	updateGround(arrayPos);
 }
 
 function animateClouds() {

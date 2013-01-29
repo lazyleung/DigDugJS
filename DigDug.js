@@ -5,6 +5,8 @@ window.ctx = canvas.getContext("2d");
 // ********** GLOBAL VARIABLES **********
 //Variable to keep track if game is in menu or game mode
 var mode;
+//Variable to keeptrack of level
+var stage = 0;
 var intervalId;
 var timerDelay = 25;
 var player;
@@ -93,7 +95,7 @@ function openHighScores() {
 		ctx.fillText(new String(i) + ": "+ new String(highScores[i-1]), 150, 300 + i*30);
 	}
 	ctx.textAlign = 'center';
-	ctx.fillText("Press Esc or q to exit", 300, 500);
+	ctx.fillText("Press Esc to exit", 300, 500);
 }
 
 // ********** END MENU **********
@@ -155,21 +157,29 @@ var spriteArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0, 0, 0, 0, 0, 0
 function startGame() {
 	mode = "game";
 	
-	player = new Player(50,200);
-	// load some objects
-	monstersArray.push(new Blob(200,200));
-  	monstersArray.push(new Dragon(300,300));
+	switch(stage) {
+		case 0:
+			player = new Player(50,200);
+			monstersArray.push(new Blob(200,200));
+		  	monstersArray.push(new Dragon(300,300));
 
-	rockArray.push(new Rock(275,100));
-	rockArray.push(new Rock(400, 475));
+			rockArray.push(new Rock(275,100));
+			rockArray.push(new Rock(400, 475));
 
-	itemArray.push(new Mushroom(100,100));
-	itemArray.push(new Carrot(175, 175));
-	itemArray.push(new Watermelon(440, 400));
-	itemArray.push(new Eggplant(325, 300)); 
+			itemArray.push(new Mushroom(100,100));
+			itemArray.push(new Carrot(175, 175));
+			itemArray.push(new Watermelon(440, 400));
+			itemArray.push(new Eggplant(325, 300));
+			break;
+		case 1:
+			break;
+		default:
+			break;
+	}
 	createLevel();
 	intervalId = setInterval(updateGame, timerDelay);
-	timerInterval = setInterval(countDown, 1000); 
+	timerInterval = setInterval(countDown, 1000);
+		
 }
 
 function createLevel() {
@@ -200,7 +210,7 @@ function updateGame() {
 	// Update rocks
 	for (var i = 0; i < rockArray.length; i++) {
 		aRock = rockArray[i];
-		aRock.update();
+		aRock.update();;
 	}
 	// Check for object collisions
 	if (player.invincible != 1) {
@@ -444,7 +454,7 @@ var Key = {
   
 	onKeydown: function(event) {
 		// Pause game if esc or 'p' is pressed
-		if (event.keyCode ==27 || event.keyCode == 80) {
+		if (event.keyCode === 27 || event.keyCode === 80) {
 			if (mode === "game") {
 				mode = "pause";
 				clearInterval(intervalId);

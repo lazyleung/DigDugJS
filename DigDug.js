@@ -32,7 +32,7 @@ function startMainMenu() {
 	canvas.setAttribute('tabindex','0');
 	canvas.focus();
 	drawMenu();
-	drawLevel();
+	intervalId = setInterval(updateMenu, timerDelay);
 }
 
 var updateMenu = function(keyPress) {
@@ -44,41 +44,35 @@ var updateMenu = function(keyPress) {
 
 // ********** MENU ***********
 
-var drawMenu = function() {
-	var img = new Image();
-	img.src = "digdugsprite.png";
-	drawLevel();
-	img.onload = function(){
-		window.ctx.drawImage(img, 183, 236, 160, 48, 140, 25, 320, 96);
-		window.ctx.drawImage(img, 243, 384, 52, 8, 248, 500, 104, 16);
-		window.ctx.drawImage(img, 184, 291, 150, 70, 150, 150, 300, 140);
-	}
-	ctx.fillStyle = "black";
-	ctx.font = "55px Arial";
-	ctx.textAlign = "center";
-	// Draw selectable options
-	ctx.font = "40px Arial";
-	ctx.fillText("Play", 300, 370);
-	ctx.fillText("High Scores", 300, 450);
-}
+var background = new Image();
+background.src = "menubackground.png";
 
-var drawMenuSelection = function(direction) {
-	// Draw selection rectangle
-	ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
-	if (direction == 38 && y != 320) {
-		var x = 170;
-		var y = 320;
-		ctx.fillRect(x, y, 250, 70);
-		menuSelector = 0;
-	}
-	else if (direction == 40 && y != 420) {
-		var x = 170;
-		var y = 410;
-		ctx.fillRect(x, y, 250, 70);
-		menuSelector = 1;
-	}
-	else {
-		ctx.fillRect(x, y, 250, 70);
+var img = new Image();
+img.src = "digdugsprite.png";
+
+var drawMenu = function() {
+	window.ctx.drawImage(background, 0, 0);
+	window.ctx.drawImage(img, 183, 236, 160, 48, 140, 25, 320, 96);
+	window.ctx.drawImage(img, 243, 384, 52, 8, 248, 535, 104, 16);
+	
+	ctx.fillStyle = "rgba(255, 69, 0, 1)";
+	if(menuSelector === 0) {
+		ctx.beginPath();
+		ctx.moveTo(200, 250);
+		ctx.lineTo(400, 250);
+		ctx.lineTo(400, 330);
+		ctx.lineTo(200, 330);
+		ctx.closePath();
+		ctx.stroke();
+		//ctx.fillRect(100, 225, 400, 125);
+	} else {
+		ctx.beginPath();
+		ctx.moveTo(125, 370);
+		ctx.lineTo(500, 370);
+		ctx.lineTo(500, 460);
+		ctx.lineTo(125, 460);
+		ctx.closePath();
+		ctx.stroke();
 	}
 }
 
@@ -392,17 +386,30 @@ function inMenuMouseDown(event) {
 }
 
 function inMenuKeyDown(event) {
-	if (event.keyCode == 13) {
-		if (menuSelector === 0)
+	if (menuSelector === 0) {
+		if(event.keyCode === 13) {
+			clearInterval(intervalId);
 			startGame();
-		else if (menuSelector === 1)
+			canvas.addEventListener('keydown', function(event) { Key.onKeydown(event); }, false);
+			canvas.addEventListener('keyup', function(event) { Key.onKeyup(event); }, false);
+			canvas.removeEventListener('keydown', inMenuKeyDown, false);
+		}
+		else if(event.keyCode === Key.UP || event.keyCode === Key.DOWN){
+			menuSelector = 1;
+		}
+	} else if (menuSelector === 1) {
+		if(event.keyCode === 13) {
+			clearInterval(intervalId);
 			openHighScores();
-		canvas.addEventListener('keydown', function(event) { Key.onKeydown(event); }, false);
-		canvas.addEventListener('keyup', function(event) { Key.onKeyup(event); }, false);
-		canvas.removeEventListener('keydown', inMenuKeyDown, false);
-	}
-	else {
-		updateMenu(event.keyCode);
+			canvas.addEventListener('keydown', function(event) { Key.onKeydown(event); }, false);
+			canvas.addEventListener('keyup', function(event) { Key.onKeyup(event); }, false);
+			canvas.removeEventListener('keydown', inMenuKeyDown, false);
+		}
+		else if(event.keyCode === Key.UP || event.keyCode === Key.DOWN){
+			menuSelector = 0;
+		}
+	} else {
+		menuSelector = 0;
 	}
 }
 

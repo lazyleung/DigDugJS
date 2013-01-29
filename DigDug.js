@@ -433,7 +433,7 @@ var Key = {
 	DOWN: 40,
   
 	isDown: function(keyCode) {
-    return this.pressed[keyCode];
+    	return this.pressed[keyCode];
 	},
   
 	onKeydown: function(event) {
@@ -458,7 +458,7 @@ var Key = {
   
 	onKeyup: function(event) {
 		delete this.pressed[event.keyCode];
-	}
+	},
 };
 
 // ********** END EVENT LISTENERS ***********

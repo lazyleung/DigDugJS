@@ -9,6 +9,7 @@ function Player(playerX, playerY) {
 	this.uplimit = 50;
 	this.image = new Image();
   	this.image.src = "digdugsprite.png";
+  	this.oldAnimationFrame;
 
 	// Modifiable variables
 	this.direction = "right";
@@ -16,7 +17,7 @@ function Player(playerX, playerY) {
 	this.invincible = 0;
 	this.points = 0;
 	this.lives = 2;
-	this.invincibleTimer = 40;
+	this.invincibleTimer = 25;
 	this.animationCount = 0;
 	this.speed = 5;
 	this.action = "walk";
@@ -31,13 +32,13 @@ function Player(playerX, playerY) {
 				this.y += this.speed;
 			}
 		} else if(this.x + this.speed <= this.rightlimit) {
-		    this.x += this.speed;
-		    this.direction = 'right';
-				this.animationCount++;
-				var arrayPosition = getArrayPosition(this.x + 24, this.y);
-				if(arrayPosition > 71 && overlay[arrayPosition] === 0000) this.action = "dig";
-				else this.action = "walk";
-    }
+			this.x += this.speed;
+			this.direction = 'right';
+			this.animationCount++;
+			var arrayPosition = getArrayPosition(this.x + 24, this.y);
+			if(arrayPosition > 71 && overlay[arrayPosition] === 0000) this.action = "dig";
+			else this.action = "walk";
+		}
 	}
 
 	this.moveLeft = function() {
@@ -112,16 +113,32 @@ function Player(playerX, playerY) {
 		else if (Key.isDown(Key.DOWN)) this.moveDown();
 		else if (Key.isDown(Key.RIGHT)) this.moveRight();
 
-		if(this.animationCount > 10 || this.directionOld !== this.direction) this.animationCount = 0;
+		//  Set animation frame to 0 when direction change or when over 10
+		if(this.animationCount > 10 || this.directionOld !== this.direction)
+			this.animationCount = 0;
 
-		// Handles temporary God Mode
+		// Handles temporary God Mode and flashing animation
 		if (this.invincible == 1) {
 			this.invincibleTimer -= 1;
 			if (this.invincibleTimer <= 0) {
 				this.invincible = 0;
-				this.invincibleTimer = 40;
+				this.invincibleTimer = 25;
+
+			}
+
+			// Flashing animation
+			if (this.oldAnimationFrame === -1) { // set to blank
+				this.oldAnimationFrame = this.animationCount;
+				this.animationCount = -1;
+			}
+			else {
+				this.animationCount = this.oldAnimationFrame;
+				if(this.invincibleTimer !== 1)
+					this.oldAnimationFrame = -1;
+
 			}
 		}
+
 		// Player gets hit and loses a life
 		else {
 			if (this.wasHit === 1) {
@@ -185,6 +202,9 @@ function Player(playerX, playerY) {
 
 		var direction = this.direction;
 		var count = this.animationCount;
+		// Handles special flashing case
+		if (count === -1)
+			return;
 		switch(direction) {
 			case "right":
 				if (this.action === "dig") {
@@ -197,46 +217,46 @@ function Player(playerX, playerY) {
 				break;
 			case "left":
 				if(this.action === "dig") {	
-					if(count < 5) ctx.drawImage(this.image, 55, 230, 14, 14, this.x, this.y, 25, 25);
+					if(count < 5 && count >= 0) ctx.drawImage(this.image, 55, 230, 14, 14, this.x, this.y, 25, 25);
 					else ctx.drawImage(this.image, 38, 230, 14, 14, this.x, this.y, 25, 25);
 				} else {
-					if(count < 5) ctx.drawImage(this.image, 125, 230, 14, 14, this.x, this.y, 25, 25);
+					if(count < 5 && count >= 0) ctx.drawImage(this.image, 125, 230, 14, 14, this.x, this.y, 25, 25);
 					else ctx.drawImage(this.image, 106, 230, 14, 14, this.x, this.y, 25, 25);
 				}
 				break;
 			case "downright":
 				if(this.action === "dig") {
-					if(count < 5) ctx.drawImage(this.image, 315, 5, 14, 14, this.x, this.y, 25, 25);
+					if(count < 5 && count >= 0) ctx.drawImage(this.image, 315, 5, 14, 14, this.x, this.y, 25, 25);
 					else ctx.drawImage(this.image, 332, 5, 14, 14, this.x, this.y, 25, 25);
 				} else {				
-					if(count < 5) ctx.drawImage(this.image, 247, 5, 14, 14, this.x, this.y, 25, 25);
+					if(count < 5 && count >= 0) ctx.drawImage(this.image, 247, 5, 14, 14, this.x, this.y, 25, 25);
 					else ctx.drawImage(this.image, 264, 5, 14, 14, this.x, this.y, 25, 25);
 				}
 				break;
 			case "downleft":
 				if(this.action === "dig") {
-					if(count < 5) ctx.drawImage(this.image, 21, 230, 14, 14, this.x, this.y, 25, 25);
+					if(count < 5 && count >= 0) ctx.drawImage(this.image, 21, 230, 14, 14, this.x, this.y, 25, 25);
 					else ctx.drawImage(this.image, 4, 230, 14, 14, this.x, this.y, 25, 25);
 				} else {
-					if(count < 5) ctx.drawImage(this.image, 89, 230, 14, 14, this.x, this.y, 25, 25);
+					if(count < 5 && count >= 0) ctx.drawImage(this.image, 89, 230, 14, 14, this.x, this.y, 25, 25);
 					else ctx.drawImage(this.image, 72, 230, 14, 14, this.x, this.y, 25, 25);
 				}
 				break;
 			case "upright":
 				if(this.action === "dig") {
-					if(count < 5) ctx.drawImage(this.image, 29, 39, 14, 14, this.x, this.y, 25, 25);
+					if(count < 5 && count >= 0) ctx.drawImage(this.image, 29, 39, 14, 14, this.x, this.y, 25, 25);
 					else ctx.drawImage(this.image, 12, 39, 14, 14, this.x, this.y, 25, 25);
 				} else {
-					if(count < 5) ctx.drawImage(this.image, 30, 57, 14, 14, this.x, this.y, 25, 25);
+					if(count < 5 && count >= 0) ctx.drawImage(this.image, 30, 57, 14, 14, this.x, this.y, 25, 25);
 					else ctx.drawImage(this.image, 13, 57, 14, 14, this.x, this.y, 25, 25);
 				}
 				break;
 			case "upleft":
 				if(this.action === "dig") {
-					if(count < 5) ctx.drawImage(this.image, 57, 39, 14, 14, this.x, this.y, 25, 25);
+					if(count < 5 && count >= 0) ctx.drawImage(this.image, 57, 39, 14, 14, this.x, this.y, 25, 25);
 					else ctx.drawImage(this.image, 74, 39, 14, 14, this.x, this.y, 25, 25);
 				} else {
-					if(count < 5) ctx.drawImage(this.image, 56, 57, 14, 14, this.x, this.y, 25, 25);
+					if(count < 5 && count >= 0) ctx.drawImage(this.image, 56, 57, 14, 14, this.x, this.y, 25, 25);
 					else ctx.drawImage(this.image, 73, 57, 14, 14, this.x, this.y, 25, 25);
 				}
 				break;

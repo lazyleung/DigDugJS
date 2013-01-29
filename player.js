@@ -8,8 +8,8 @@ function Player(playerX, playerY) {
 	this.downlimit = 600 - 50 - this.height;
 	this.uplimit = 50;
 	this.image = new Image();
-  this.image.src = "digdugsprite.png";
-  this.oldAnimationFrame;
+	this.image.src = "digdugsprite.png";
+	this.oldAnimationFrame;
 
 	// Modifiable variables
 	this.direction = "right";
@@ -24,6 +24,19 @@ function Player(playerX, playerY) {
 	this.wasHit = 0;
 
 	this.moveRight = function() {
+		var arrayPosition = getArrayPosition(this.x + 25, this.y);
+
+		if(arrayPosition > 71 && overlay[arrayPosition] === 0000) {
+			this.action = "dig";
+			this.speed = 2.5;
+		}
+		else {
+				if (this.action === "dig" && !almostEquals(this.x % 5, 0)) // Correct for 2.5 remainder when changing direction and changing to walk
+					this.x += 2.5;
+				this.action = "walk";
+				this.speed = 5;
+			}
+
 		// Restrict movement to certain paths
 		if (!almostEquals(this.y % 25, 0)) {
 			if (this.direction === 'upleft' || this.direction === 'upright') {
@@ -35,20 +48,23 @@ function Player(playerX, playerY) {
 			this.x += this.speed;
 			this.direction = 'right';
 			this.animationCount++;
-			var arrayPosition = getArrayPosition(this.x + 24, this.y);
 			
-			if(arrayPosition > 71 && overlay[arrayPosition] === 0000) {
-				this.action = "dig";
-				this.speed = 2.5;
-			}
-			else {
-				this.action = "walk";
-				this.speed = 5;
-			}
 		}
 	}
 
 	this.moveLeft = function() {
+		var arrayPosition = getArrayPosition(this.x - 25, this.y);
+
+		if(arrayPosition > 71 && overlay[arrayPosition] === 0000) {
+			this.action = "dig";
+			this.speed = 2.5;
+		}
+		else {
+				if (this.action === "dig" && !almostEquals(this.x % 5, 0)) // Correct for 2.5 remainder when changing direction and changing to walk
+					this.x -= 2.5;
+				this.action = "walk";
+				this.speed = 5;
+			}
 		// Restrict movement to certain paths
 		if (!almostEquals(this.y % 25, 0)) {
 			if (this.direction === 'upleft' || this.direction === 'upright') {
@@ -61,20 +77,24 @@ function Player(playerX, playerY) {
 			this.x -= this.speed;
 			this.direction = 'left';
 			this.animationCount++;
-			var arrayPosition = getArrayPosition(this.x - 24, this.y);
 			
-			if(arrayPosition > 71 && overlay[arrayPosition] === 0000) {
-				this.action = "dig";
-				this.speed = 2.5;
-			}
-			else {
-				this.action = "walk";
-				this.speed = 5;
-			}
-    	}   	
+		}   	
 	}
 
 	this.moveUp = function() {
+		var arrayPosition = getArrayPosition(this.x, this.y - 25);
+
+		if(arrayPosition > 71 && overlay[arrayPosition] === 0000) {
+			this.action = "dig";
+			console.log("dig");
+			this.speed = 2.5;
+		}
+		else {
+			if (this.action === "dig" && !almostEquals(this.y % 5, 0)) // Correct for 2.5 remainder when changing direction and changing to walk
+				this.y -= 2.5;
+			this.action = "walk";
+			this.speed = 5;
+		}
 		// Restrict movement to certain paths
 		if (!almostEquals(this.x % 25, 0)) {
 			if (this.direction === 'left') {
@@ -91,20 +111,23 @@ function Player(playerX, playerY) {
 				this.direction = 'upright';
 			
 			this.animationCount++;
-			var arrayPosition = getArrayPosition(this.x, this.y - 24);
 			
-			if(arrayPosition > 71 && overlay[arrayPosition] === 0000) {
-				this.action = "dig";
-				this.speed = 2.5;
-			}
-			else {
-				this.action = "walk";
-				this.speed = 5;
-			}
 		}
 	}
 
 	this.moveDown = function() {
+		var arrayPosition = getArrayPosition(this.x, this.y + 25);
+
+		if(arrayPosition > 71 && overlay[arrayPosition] === 0000) {
+			this.action = "dig";
+			this.speed = 2.5;
+		}
+		else {
+			if (this.action === "dig" && !almostEquals(this.y % 5, 0)) // Correct for 2.5 remainder when changing direction and changing to walk
+				this.y += 2.5;
+			this.action = "walk";
+			this.speed = 5;
+		}
 		// Restrict movement to certain paths
 		console.log(this.x % 25);
 		if (!almostEquals(this.x % 25, 0)) {
@@ -114,24 +137,15 @@ function Player(playerX, playerY) {
 				this.x += this.speed;
 			}
 		} else if (this.y + this.speed <= this.downlimit) {
-				this.y += this.speed;
-				if(this.directionOld === 'left' || this.directionOld === 'upright') {
-					this.direction = 'downleft';
-				} else if(this.directionOld === 'right' || this.directionOld === 'upleft') {
-					this.direction = 'downright';
-				}
-				this.animationCount++;
-				var arrayPosition = getArrayPosition(this.x, this.y + 24);
-				
-				if(arrayPosition > 71 && overlay[arrayPosition] === 0000) {
-				this.action = "dig";
-				this.speed = 2.5;
+			this.y += this.speed;
+			if(this.directionOld === 'left' || this.directionOld === 'upright') {
+				this.direction = 'downleft';
+			} else if(this.directionOld === 'right' || this.directionOld === 'upleft') {
+				this.direction = 'downright';
 			}
-			else {
-				this.action = "walk";
-				this.speed = 5;
-			}
-    	}
+			this.animationCount++;
+
+		}
 	}
 
 	this.update = function() {
@@ -194,7 +208,7 @@ function Player(playerX, playerY) {
 						this.x -= bounceSpeed;
 					overlay[getArrayPosition(this.x, this.y)] = 5;
 					this.draw(window.ctx);
-					}
+				}
 			}
 			else {
 				for(bounceSpeed = 9; bounceSpeed >= 0; bounceSpeed -= 1 ) {
@@ -224,8 +238,8 @@ function Player(playerX, playerY) {
 						this.y += this.downlimit - this.y;
 					else
 						this.y += bounceSpeed;
-				overlay[getArrayPosition(this.x, this.y)] = 10;
-				this.draw(window.ctx);
+					overlay[getArrayPosition(this.x, this.y)] = 10;
+					this.draw(window.ctx);
 				}
 			}
 		}
@@ -240,71 +254,71 @@ function Player(playerX, playerY) {
 			return;
 		switch(direction) {
 			case "right":
-				if (this.action === "dig") {
-					if(count < 5 && count >= 0) ctx.drawImage(this.image, 281, 5, 14, 14, this.x, this.y, 25, 25);
-					else ctx.drawImage(this.image, 298, 5, 14, 14, this.x, this.y, 25, 25);
-				} else {
-					if(count < 5 && count >= 0) ctx.drawImage(this.image, 213, 5, 14, 14, this.x, this.y, 25, 25);
-					else ctx.drawImage(this.image, 231, 5, 14, 14, this.x, this.y, 25, 25);
-				}
-				break;
+			if (this.action === "dig") {
+				if(count < 5 && count >= 0) ctx.drawImage(this.image, 281, 5, 14, 14, this.x, this.y, 25, 25);
+				else ctx.drawImage(this.image, 298, 5, 14, 14, this.x, this.y, 25, 25);
+			} else {
+				if(count < 5 && count >= 0) ctx.drawImage(this.image, 213, 5, 14, 14, this.x, this.y, 25, 25);
+				else ctx.drawImage(this.image, 231, 5, 14, 14, this.x, this.y, 25, 25);
+			}
+			break;
 			case "left":
-				if(this.action === "dig") {	
-					if(count < 5 && count >= 0) ctx.drawImage(this.image, 55, 230, 14, 14, this.x, this.y, 25, 25);
-					else ctx.drawImage(this.image, 38, 230, 14, 14, this.x, this.y, 25, 25);
-				} else {
-					if(count < 5 && count >= 0) ctx.drawImage(this.image, 125, 230, 14, 14, this.x, this.y, 25, 25);
-					else ctx.drawImage(this.image, 106, 230, 14, 14, this.x, this.y, 25, 25);
-				}
-				break;
+			if(this.action === "dig") {	
+				if(count < 5 && count >= 0) ctx.drawImage(this.image, 55, 230, 14, 14, this.x, this.y, 25, 25);
+				else ctx.drawImage(this.image, 38, 230, 14, 14, this.x, this.y, 25, 25);
+			} else {
+				if(count < 5 && count >= 0) ctx.drawImage(this.image, 125, 230, 14, 14, this.x, this.y, 25, 25);
+				else ctx.drawImage(this.image, 106, 230, 14, 14, this.x, this.y, 25, 25);
+			}
+			break;
 			case "downright":
-				if(this.action === "dig") {
-					if(count < 5 && count >= 0) ctx.drawImage(this.image, 315, 5, 14, 14, this.x, this.y, 25, 25);
-					else ctx.drawImage(this.image, 332, 5, 14, 14, this.x, this.y, 25, 25);
-				} else {				
-					if(count < 5 && count >= 0) ctx.drawImage(this.image, 247, 5, 14, 14, this.x, this.y, 25, 25);
-					else ctx.drawImage(this.image, 264, 5, 14, 14, this.x, this.y, 25, 25);
-				}
-				break;
+			if(this.action === "dig") {
+				if(count < 5 && count >= 0) ctx.drawImage(this.image, 315, 5, 14, 14, this.x, this.y, 25, 25);
+				else ctx.drawImage(this.image, 332, 5, 14, 14, this.x, this.y, 25, 25);
+			} else {				
+				if(count < 5 && count >= 0) ctx.drawImage(this.image, 247, 5, 14, 14, this.x, this.y, 25, 25);
+				else ctx.drawImage(this.image, 264, 5, 14, 14, this.x, this.y, 25, 25);
+			}
+			break;
 			case "downleft":
-				if(this.action === "dig") {
-					if(count < 5 && count >= 0) ctx.drawImage(this.image, 21, 230, 14, 14, this.x, this.y, 25, 25);
-					else ctx.drawImage(this.image, 4, 230, 14, 14, this.x, this.y, 25, 25);
-				} else {
-					if(count < 5 && count >= 0) ctx.drawImage(this.image, 89, 230, 14, 14, this.x, this.y, 25, 25);
-					else ctx.drawImage(this.image, 72, 230, 14, 14, this.x, this.y, 25, 25);
-				}
-				break;
+			if(this.action === "dig") {
+				if(count < 5 && count >= 0) ctx.drawImage(this.image, 21, 230, 14, 14, this.x, this.y, 25, 25);
+				else ctx.drawImage(this.image, 4, 230, 14, 14, this.x, this.y, 25, 25);
+			} else {
+				if(count < 5 && count >= 0) ctx.drawImage(this.image, 89, 230, 14, 14, this.x, this.y, 25, 25);
+				else ctx.drawImage(this.image, 72, 230, 14, 14, this.x, this.y, 25, 25);
+			}
+			break;
 			case "upright":
-				if(this.action === "dig") {
-					if(count < 5 && count >= 0) ctx.drawImage(this.image, 29, 39, 14, 14, this.x, this.y, 25, 25);
-					else ctx.drawImage(this.image, 12, 39, 14, 14, this.x, this.y, 25, 25);
-				} else {
-					if(count < 5 && count >= 0) ctx.drawImage(this.image, 30, 57, 14, 14, this.x, this.y, 25, 25);
-					else ctx.drawImage(this.image, 13, 57, 14, 14, this.x, this.y, 25, 25);
-				}
-				break;
+			if(this.action === "dig") {
+				if(count < 5 && count >= 0) ctx.drawImage(this.image, 29, 39, 14, 14, this.x, this.y, 25, 25);
+				else ctx.drawImage(this.image, 12, 39, 14, 14, this.x, this.y, 25, 25);
+			} else {
+				if(count < 5 && count >= 0) ctx.drawImage(this.image, 30, 57, 14, 14, this.x, this.y, 25, 25);
+				else ctx.drawImage(this.image, 13, 57, 14, 14, this.x, this.y, 25, 25);
+			}
+			break;
 			case "upleft":
-				if(this.action === "dig") {
-					if(count < 5 && count >= 0) ctx.drawImage(this.image, 57, 39, 14, 14, this.x, this.y, 25, 25);
-					else ctx.drawImage(this.image, 74, 39, 14, 14, this.x, this.y, 25, 25);
-				} else {
-					if(count < 5 && count >= 0) ctx.drawImage(this.image, 56, 57, 14, 14, this.x, this.y, 25, 25);
-					else ctx.drawImage(this.image, 73, 57, 14, 14, this.x, this.y, 25, 25);
-				}
-				break;
+			if(this.action === "dig") {
+				if(count < 5 && count >= 0) ctx.drawImage(this.image, 57, 39, 14, 14, this.x, this.y, 25, 25);
+				else ctx.drawImage(this.image, 74, 39, 14, 14, this.x, this.y, 25, 25);
+			} else {
+				if(count < 5 && count >= 0) ctx.drawImage(this.image, 56, 57, 14, 14, this.x, this.y, 25, 25);
+				else ctx.drawImage(this.image, 73, 57, 14, 14, this.x, this.y, 25, 25);
+			}
+			break;
 			default:
-				console.log("no direction!");
+			console.log("no direction!");
 		}
 	}
 
 	function getArrayPosition(x, y) {
-                return Math.floor((x + (blockSize/2)) / blockSize) + Math.floor((y + (blockSize/2)) / blockSize) * xGridSize;
- 	}
+		return Math.floor((x + (blockSize/2)) / blockSize) + Math.floor((y + (blockSize/2)) / blockSize) * xGridSize;
+	}
 
- 	function almostEquals(object1, object2) {
- 		if (Math.abs(object1 - object2) < 0.00001)
- 			return true
- 		else return false;
- 	}
+	function almostEquals(object1, object2) {
+		if (Math.abs(object1 - object2) < 0.001)
+			return true
+		else return false;
+	}
 }

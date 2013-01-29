@@ -24,19 +24,6 @@ function Player(playerX, playerY) {
 	this.wasHit = 0;
 
 	this.moveRight = function() {
-		var arrayPosition = getArrayPosition(this.x + 25, this.y);
-
-		if(arrayPosition > 71 && overlay[arrayPosition] === 0000) {
-			this.action = "dig";
-			this.speed = 2.5;
-		}
-		else {
-				if (this.action === "dig" && !almostEquals(this.x % 5, 0)) // Correct for 2.5 remainder when changing direction and changing to walk
-					this.x += 2.5;
-				this.action = "walk";
-				this.speed = 5;
-			}
-
 		// Restrict movement to certain paths
 		if (!almostEquals(this.y % 25, 0)) {
 			if (this.direction === 'upleft' || this.direction === 'upright') {
@@ -48,23 +35,23 @@ function Player(playerX, playerY) {
 			this.x += this.speed;
 			this.direction = 'right';
 			this.animationCount++;
+			var arrayPosition = getArrayPosition(this.x + 25, this.y);
+
+			if(arrayPosition > 71 && overlay[arrayPosition] === 0000) {
+				this.action = "dig";
+				this.speed = 2.5;
+			}
+			else {
+					if (!almostEquals(this.x % 5, 0)) // Correct for 2.5 remainder when changing direction and changing to walk
+						this.x += 2.5;
+					this.action = "walk";
+					this.speed = 5;
+				}
 			
 		}
 	}
 
 	this.moveLeft = function() {
-		var arrayPosition = getArrayPosition(this.x - 25, this.y);
-
-		if(arrayPosition > 71 && overlay[arrayPosition] === 0000) {
-			this.action = "dig";
-			this.speed = 2.5;
-		}
-		else {
-				if (this.action === "dig" && !almostEquals(this.x % 5, 0)) // Correct for 2.5 remainder when changing direction and changing to walk
-					this.x -= 2.5;
-				this.action = "walk";
-				this.speed = 5;
-			}
 		// Restrict movement to certain paths
 		if (!almostEquals(this.y % 25, 0)) {
 			if (this.direction === 'upleft' || this.direction === 'upright') {
@@ -77,24 +64,23 @@ function Player(playerX, playerY) {
 			this.x -= this.speed;
 			this.direction = 'left';
 			this.animationCount++;
+			var arrayPosition = getArrayPosition(this.x - 25, this.y);
+
+			if(arrayPosition > 71 && overlay[arrayPosition] === 0000) {
+				this.action = "dig";
+				this.speed = 2.5;
+			}
+			else {
+					if (!almostEquals(this.x % 5, 0)) // Correct for 2.5 remainder when changing direction and changing to walk
+						this.x -= 2.5;
+					this.action = "walk";
+					this.speed = 5;
+				}
 			
 		}   	
 	}
 
 	this.moveUp = function() {
-		var arrayPosition = getArrayPosition(this.x, this.y - 25);
-
-		if(arrayPosition > 71 && overlay[arrayPosition] === 0000) {
-			this.action = "dig";
-			console.log("dig");
-			this.speed = 2.5;
-		}
-		else {
-			if (this.action === "dig" && !almostEquals(this.y % 5, 0)) // Correct for 2.5 remainder when changing direction and changing to walk
-				this.y -= 2.5;
-			this.action = "walk";
-			this.speed = 5;
-		}
 		// Restrict movement to certain paths
 		if (!almostEquals(this.x % 25, 0)) {
 			if (this.direction === 'left') {
@@ -111,25 +97,24 @@ function Player(playerX, playerY) {
 				this.direction = 'upright';
 			
 			this.animationCount++;
+			var arrayPosition = getArrayPosition(this.x, this.y - 25);
+
+			if(arrayPosition > 71 && overlay[arrayPosition] === 0000) {
+				this.action = "dig";
+				this.speed = 2.5;
+			}
+			else {
+				if (!almostEquals(this.y % 5, 0)) // Correct for 2.5 remainder when changing direction and changing to walk
+					this.y -= 2.5;
+				this.action = "walk";
+				this.speed = 5;
+			}
 			
 		}
 	}
 
 	this.moveDown = function() {
-		var arrayPosition = getArrayPosition(this.x, this.y + 25);
-
-		if(arrayPosition > 71 && overlay[arrayPosition] === 0000) {
-			this.action = "dig";
-			this.speed = 2.5;
-		}
-		else {
-			if (this.action === "dig" && !almostEquals(this.y % 5, 0)) // Correct for 2.5 remainder when changing direction and changing to walk
-				this.y += 2.5;
-			this.action = "walk";
-			this.speed = 5;
-		}
 		// Restrict movement to certain paths
-		console.log(this.x % 25);
 		if (!almostEquals(this.x % 25, 0)) {
 			if (this.direction === 'left') {
 				this.x -= this.speed;
@@ -144,6 +129,21 @@ function Player(playerX, playerY) {
 				this.direction = 'downright';
 			}
 			this.animationCount++;
+
+			var arrayPosition = getArrayPosition(this.x, this.y + 25);
+
+			if(arrayPosition > 71 && overlay[arrayPosition] === 0000) {
+				this.action = "dig";
+				this.speed = 2.5;
+			}
+			else {
+				console.log(this.speed);
+				if (!almostEquals(this.y % 5, 0)) { // Correct for 2.5 remainder when changing direction and changing to walk
+					this.y += 2.5;
+				}
+				this.action = "walk";
+				this.speed = 5;
+			}
 
 		}
 	}
@@ -200,7 +200,7 @@ function Player(playerX, playerY) {
 		if (Math.abs(diffX) > Math.abs(diffY)) {
 			// Bounce left or right
 			if (diffX < 0) {
-				for(bounceSpeed = 9; bounceSpeed >= 0; bounceSpeed -= 1 ) {
+				for(bounceSpeed = 5; bounceSpeed >= 0; bounceSpeed -= 1 ) {
 					//  Ensures you can't be bounced off screen
 					if (bounceSpeed > this.x - this.leftlimit)
 						this.x -= this.x - this.leftlimit;
@@ -211,7 +211,7 @@ function Player(playerX, playerY) {
 				}
 			}
 			else {
-				for(bounceSpeed = 9; bounceSpeed >= 0; bounceSpeed -= 1 ) {
+				for(bounceSpeed = 5; bounceSpeed >= 0; bounceSpeed -= 1 ) {
 					if (bounceSpeed > this.rightlimit - this.x)
 						this.x += this.rightlimit - this.x;
 					else
@@ -223,7 +223,7 @@ function Player(playerX, playerY) {
 		} else {
 			// bounce up or down
 			if (diffY < 0) {
-				for(bounceSpeed = 9; bounceSpeed >= 0; bounceSpeed -= 1 ) {
+				for(bounceSpeed = 5; bounceSpeed >= 0; bounceSpeed -= 1 ) {
 					if (bounceSpeed > this.y - this.uplimit)
 						this.y -= this.y - this.uplimit;
 					else
@@ -233,7 +233,7 @@ function Player(playerX, playerY) {
 				}
 			}
 			else {
-				for(bounceSpeed = 9; bounceSpeed >= 0; bounceSpeed -= 1 ) {
+				for(bounceSpeed = 5; bounceSpeed >= 0; bounceSpeed -= 1 ) {
 					if (bounceSpeed > this.downlimit - this.y)
 						this.y += this.downlimit - this.y;
 					else

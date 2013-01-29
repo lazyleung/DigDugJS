@@ -12,6 +12,7 @@ function Dragon(dragonX, dragonY) {
     this.image = new Image();
     this.image.src = "digdugsprite.png";
     this.fireCooldown = 100;
+    this.fireState = 0;
 
     function Fire(x, y) {
         this.x = x;
@@ -85,13 +86,19 @@ function Dragon(dragonX, dragonY) {
         else {
             this.fireCooldown -= 1;
         }
+
+        // Control fire animation frames
+        if (this.fireState > 0) {
+            this.fireState += .3
+            if (this.fireState >= 4)
+                this.fireState = 0;
+        }
     }
     
     this.breathFire = function() {
         var fire = new Fire();
         fire.x = this.x;
         fire.y = this.y;
-        console.log(fire);
         switch (this.direction) {
             case "left":
                 fire.x -= 25;
@@ -118,39 +125,36 @@ function Dragon(dragonX, dragonY) {
                     break;
                 }
                 break;
-
-            case "up":
-                fire.y -= 25;
-                if (hasCollided(player, fire) === true) {
-                    player.wasHit = 1;
-                    break;
-                }
-                fire.y -= 25;
-                if (hasCollided(player, fire) === true) {
-                    player.wasHit = 1;
-                    break;
-                }
-                break;
-
-            case "down":
-                fire.y += 25;
-                if (hasCollided(player, fire) === true) {
-                    player.wasHit = 1;
-                    break;
-                }
-                fire.y += 25;
-                if (hasCollided(player, fire) === true) {
-                    player.wasHit = 1;
-                    break;
-                }
         }
-
+        this.fireState = .1;
     }
 
     this.draw = function(ctx) {
         var x = this.x;
         var y = this.y;
         ctx.drawImage(this.image, 314, 90, 14, 14, x, y, 25, 25);
+        // Draw Fire
+        if (this.fireState > 0) {
+            if (this.direction === "left") {
+                if (this.fireState < 1)
+                    ctx.drawImage(this.image, 3, 333, 16, 13, x, y, 16, 13);
+                else if (this.fireState < 2)
+                    ctx.drawImage(this.image, 3, 348, 32, 16, x, y, 32, 16);
+                else if (this.fireState < 3)
+                    ctx.drawImage(this.image, 21, 331, 48, 16, x, y, 48, 16);
+            }
+
+            else if (this.direction === "right") {
+                if (this.fireState < 1)
+                    ctx.drawImage(this.image, 331, 108, 16, 13, x + 25, y, 16, 13);
+                else if (this.fireState < 2)
+                    ctx.drawImage(this.image, 315, 123, 32, 16, x + 25, y, 32, 16);
+                else if (this.fireState < 4)
+                    ctx.drawImage(this.image, 281, 106, 48, 16, x + 25, y, 48, 16);
+            }
+
+        }
+
         
     }
 

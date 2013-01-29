@@ -215,10 +215,10 @@ function Player(playerX, playerY) {
 		switch(direction) {
 			case "right":
 				if (this.action === "dig") {
-					if(count < 5) ctx.drawImage(this.image, 281, 5, 14, 14, this.x, this.y, 25, 25);
+					if(count < 5 && count >= 0) ctx.drawImage(this.image, 281, 5, 14, 14, this.x, this.y, 25, 25);
 					else ctx.drawImage(this.image, 298, 5, 14, 14, this.x, this.y, 25, 25);
 				} else {
-					if(count < 5) ctx.drawImage(this.image, 213, 5, 14, 14, this.x, this.y, 25, 25);
+					if(count < 5 && count >= 0) ctx.drawImage(this.image, 213, 5, 14, 14, this.x, this.y, 25, 25);
 					else ctx.drawImage(this.image, 231, 5, 14, 14, this.x, this.y, 25, 25);
 				}
 				break;

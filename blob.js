@@ -1,16 +1,17 @@
 function Blob(blobX, blobY) {
 	this.x = blobX;
 	this.y = blobY;
-        this.width = 25;
-        this.height = 25;
+  this.width = 25;
+  this.height = 25;
 	this.speed = 1;
 	this.rightlimit = 600-this.width;
 	this.leftlimit = 0;
 	this.downlimit = 600-this.height;
 	this.uplimit = 0;
-        this.image = new Image();
-        this.image.src = "digdugsprite.png";
-        this.direction = "left";
+  this.image = new Image();
+  this.image.src = "digdugsprite.png";
+  this.direction = "left";
+	this.animationCount = 0;
 
 	this.moveRight = function() {
                 futureX = this.x + blockSize/2;
@@ -18,10 +19,8 @@ function Blob(blobX, blobY) {
                         if(this.x + this.speed < this.rightlimit) {
                                 this.x += this.speed;
                         }
-
                         this.direction = "right";
                 }
-        	
 	}
 
 	this.moveLeft = function() {
@@ -66,15 +65,19 @@ function Blob(blobX, blobY) {
                         else if(player.y > this.y)
                                 this.moveDown();
                 }
+								this.animationCount++;
+								if(this.animationCount > 10) this.animationCount = 0;
 	}
 	
 	this.draw = function(ctx) {
 		var x = this.x;
 		var y = this.y;
     if (this.direction === "right")
-			ctx.drawImage(this.image, 332, 58, 13, 12, x, y, 25, 25);
+			if(this.animationCount < 5 && this.animationCount >= 0) ctx.drawImage(this.image, 332, 58, 13, 12, x, y, 25, 25);
+			else ctx.drawImage(this.image, 315, 56, 13, 12, x, y, 25, 25);
     if (this.direction === "left")
-      ctx.drawImage(this.image, 5, 283, 13, 12, x, y, 25, 25);
+      if(this.animationCount < 5 && this.animationCount >= 0) ctx.drawImage(this.image, 5, 283, 13, 12, x, y, 25, 25);
+			else ctx.drawImage(this.image, 22, 281, 13, 12, x, y, 25, 25);
 
 
 		

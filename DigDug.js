@@ -175,7 +175,7 @@ function createLevel() {
 		var monster = monstersArray[i];
 		var monsterPos = Math.floor((monster.x + (blockSize/2)) / blockSize) + Math.floor((monster.y + (blockSize/2)) / blockSize) * xGridSize;
 		for (var index = monsterPos-2; index < monsterPos+3; index++) {
-			spriteArray[index] = 5;
+			overlay[index] = 5;
 		}
 	}
 }

@@ -208,9 +208,15 @@ function updateGame() {
 		aMonster.update(player);
 		
 	}
-	// Update rocks
+	//  Delete rocks
 	for (var i = 0; i < rockArray.length; i++) {
 		var aRock = rockArray[i];
+		if (aRock.needToRemove === 1)
+			removeRock(aRock);
+	}
+	// Update rocks
+	for (var i = 0; i < rockArray.length; i++) {
+		aRock = rockArray[i];
 		aRock.update();
 	}
 	// Check for object collisions
@@ -362,6 +368,11 @@ function checkItemCollision () {
 function removeItem(aItem) {
     var startingIndex = itemArray.indexOf(aItem);
     itemArray.splice(startingIndex, 1);
+}
+
+function removeRock(aItem) {
+    var startingIndex = rockArray.indexOf(aItem);
+    rockArray.splice(startingIndex, 1);
 }
 
 function countDown() {

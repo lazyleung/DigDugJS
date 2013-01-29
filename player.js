@@ -71,9 +71,9 @@ function Player(playerX, playerY) {
 		}
 		else if(this.y - this.speed >=this.uplimit) {
 			this.y -= this.speed;
-			if(this.directionOld === 'left')
+			if(this.directionOld === 'left' || this.directionOld === 'downright')
 				this.direction = 'upleft';
-			else if(this.directionOld === 'right')
+			else if(this.directionOld === 'right' || this.directionOld === 'downleft')
 				this.direction = 'upright';
 			
 			this.animationCount++;
@@ -94,11 +94,13 @@ function Player(playerX, playerY) {
 			} else if (this.direction === 'right') {
 				this.x += this.speed;
 			}
-		} 
-		else if (this.y + this.speed <= this.downlimit) {
+		} else if (this.y + this.speed <= this.downlimit) {
 				this.y += this.speed;
-				if(this.directionOld === 'left') this.direction = 'downleft';
-				else if(this.directionOld === 'right') this.direction = 'downright';
+				if(this.directionOld === 'left' || this.directionOld === 'upright') {
+					this.direction = 'downleft';
+				} else if(this.directionOld === 'right' || this.directionOld === 'upleft') {
+					this.direction = 'downright';
+				}
 				this.animationCount++;
 				var arrayPosition = getArrayPosition(this.x, this.y + 24);
 				if(arrayPosition > 71 && overlay[arrayPosition] === 0000) this.action = "dig";

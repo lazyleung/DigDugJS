@@ -18,8 +18,15 @@ var rockArray = new Array();
 var itemArray = new Array();
 var cloudArray = new Array();
 var highScores = new Array(4056,345,63467);
+
+var spriteSheet = new Image();
+spriteSheet.src = "digdugsprite.png";
 // ********** END GLOBAL VARIABLES **********
 
+// ********** MENU ***********
+
+var background = new Image();
+background.src = "menubackground.png";
 
 function startMainMenu() {
 	// Clear context and set menu EventListeners and draw menu
@@ -31,29 +38,20 @@ function startMainMenu() {
 	// make canvas focusable, then give it focus!
 	canvas.setAttribute('tabindex','0');
 	canvas.focus();
-	drawMenu();
+	
 	intervalId = setInterval(updateMenu, timerDelay);
 }
 
-var updateMenu = function(keyPress) {
+var updateMenu = function() {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	drawMenu();
-	drawMenuSelection(keyPress);
 }
-
-
-// ********** MENU ***********
-
-var background = new Image();
-background.src = "menubackground.png";
-
-var img = new Image();
-img.src = "digdugsprite.png";
 
 var drawMenu = function() {
 	window.ctx.drawImage(background, 0, 0);
-	window.ctx.drawImage(img, 183, 236, 160, 48, 140, 25, 320, 96);
-	window.ctx.drawImage(img, 243, 384, 52, 8, 248, 535, 104, 16);
+	//animateClouds();
+	window.ctx.drawImage(spriteSheet, 183, 236, 160, 48, 140, 25, 320, 96);
+	window.ctx.drawImage(spriteSheet, 243, 384, 52, 8, 248, 535, 104, 16);
 	
 	ctx.fillStyle = "rgba(255, 69, 0, 1)";
 	if(menuSelector === 0) {
@@ -76,28 +74,6 @@ var drawMenu = function() {
 	}
 }
 
-function startGame() {
-	mode = "game";
-	
-	player = new Player(50,200);
-	// load some objects
-	monstersArray.push(new Blob(200,200));
-    monstersArray.push(new Dragon(300,300));
-
-	rockArray.push(new Rock(275,100));
-	rockArray.push(new Rock(400, 475));
-	
-	cloudArray.push(new Cloud());
-
-	itemArray.push(new Mushroom(100,100));
-	itemArray.push(new Carrot(175, 175));
-	itemArray.push(new Watermelon(440, 400));
-	itemArray.push(new Eggplant(325, 300)); 
-	createLevel();
-	intervalId = setInterval(updateGame, timerDelay);
-	timerInterval = setInterval(countDown, 1000); 
-}
-
 function openHighScores() {
 	ctx.clearRect(0, 225, 600, 600);	
 	for (var i = 1; i <= highScores.length; i++) {
@@ -105,10 +81,15 @@ function openHighScores() {
 		ctx.textAlign = 'left';
 		ctx.fillText(new String(i) + ": "+ new String(highScores[i-1]), 150, 300 + i*30);
 	}
-	
 }
 
 // ********** END MENU **********
+
+
+
+
+
+
 
 // ********** PAUSE MENU **********
 
@@ -128,8 +109,7 @@ function openPauseMenu() {
 
 
 // ********** GAME ***********
-var spriteSheet = new Image();
-spriteSheet.src = "digdugsprite.png";
+var arrayPosPast;
 
 //24x24 array to indicate sides that player have digged in a 4 bit mask, goes: top right bottom left
 var overlay = [0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000]
@@ -159,6 +139,28 @@ var spriteArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0, 0, 0, 0, 0, 0
                 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
                 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5];
 
+function startGame() {
+	mode = "game";
+	
+	player = new Player(50,200);
+	// load some objects
+	monstersArray.push(new Blob(200,200));
+  monstersArray.push(new Dragon(300,300));
+
+	rockArray.push(new Rock(275,100));
+	rockArray.push(new Rock(400, 475));
+	
+	cloudArray.push(new Cloud());
+
+	itemArray.push(new Mushroom(100,100));
+	itemArray.push(new Carrot(175, 175));
+	itemArray.push(new Watermelon(440, 400));
+	itemArray.push(new Eggplant(325, 300)); 
+	createLevel();
+	intervalId = setInterval(updateGame, timerDelay);
+	timerInterval = setInterval(countDown, 1000); 
+}
+
 function createLevel() {
 	for (var i = 0; i < monstersArray.length; i++) {
 		var monster = monstersArray[i];
@@ -167,30 +169,6 @@ function createLevel() {
 			spriteArray[index] = 5;
 		}
 	}
-}
-
-function drawGame() {
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	drawLevel();
-	drawOverlay();
-	player.draw(window.ctx);
-	// Draw all monsters
-	for (var i = 0; i < monstersArray.length; i++) {
-		var aMonster = monstersArray[i];
-		aMonster.draw(window.ctx);
-	}
-	// Draw all rocks
-	for (var i = 0; i < rockArray.length; i++) {
-		var aRock = rockArray[i];
-		aRock.draw(window.ctx);
-	}
-	// Draw all items
-	for (var i = 0; i < itemArray.length; i++) {
-		var aItem = itemArray[i];
-		aItem.draw(window.ctx);
-	}
-	drawScore();
-	
 }
 
 function updateGame() {
@@ -220,6 +198,30 @@ function updateGame() {
 	}
 	drawGame();
 	animateClouds();
+}
+
+function drawGame() {
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	drawLevel();
+	drawOverlay();
+	player.draw(window.ctx);
+	// Draw all monsters
+	for (var i = 0; i < monstersArray.length; i++) {
+		var aMonster = monstersArray[i];
+		aMonster.draw(window.ctx);
+	}
+	// Draw all rocks
+	for (var i = 0; i < rockArray.length; i++) {
+		var aRock = rockArray[i];
+		aRock.draw(window.ctx);
+	}
+	// Draw all items
+	for (var i = 0; i < itemArray.length; i++) {
+		var aItem = itemArray[i];
+		aItem.draw(window.ctx);
+	}
+	drawScore();
+	
 }
 
 function drawLevel() {
@@ -278,7 +280,6 @@ function drawScore() {
 	ctx.fillText("Time: " + new String(timer), 480, 585);
 }
 
-var arrayPosPast;
 function updateOverlay() {
 	//Updates overlay values
 	var arrayPos = Math.floor((player.x + (blockSize/2)) / blockSize) + Math.floor((player.y + (blockSize/2)) / blockSize) * xGridSize;
@@ -397,6 +398,7 @@ function inMenuMouseDown(event) {
 }
 
 function inMenuKeyDown(event) {
+	//keyCode 13 = enter
 	if (menuSelector === 0) {
 		if(event.keyCode === 13) {
 			clearInterval(intervalId);
@@ -426,7 +428,7 @@ function inMenuKeyDown(event) {
 
 var Key = {
 	pressed: {},
-
+	
 	LEFT: 37,
 	UP: 38,
 	RIGHT: 39,
@@ -462,7 +464,6 @@ var Key = {
 };
 
 // ********** END EVENT LISTENERS ***********
-
 
 startMainMenu();
 

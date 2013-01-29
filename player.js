@@ -25,7 +25,7 @@ function Player(playerX, playerY) {
 
 	this.moveRight = function() {
 		// Restrict movement to certain paths
-		if (this.y % 25 != 0) {
+		if (!almostEquals(this.y % 25, 0)) {
 			if (this.direction === 'upleft' || this.direction === 'upright') {
 				this.y -= this.speed;
 			} else if (this.direction === 'downleft' || this.direction === 'downright') {
@@ -36,14 +36,21 @@ function Player(playerX, playerY) {
 			this.direction = 'right';
 			this.animationCount++;
 			var arrayPosition = getArrayPosition(this.x + 24, this.y);
-			if(arrayPosition > 71 && overlay[arrayPosition] === 0000) this.action = "dig";
-			else this.action = "walk";
+			
+			if(arrayPosition > 71 && overlay[arrayPosition] === 0000) {
+				this.action = "dig";
+				this.speed = 2.5;
+			}
+			else {
+				this.action = "walk";
+				this.speed = 5;
+			}
 		}
 	}
 
 	this.moveLeft = function() {
 		// Restrict movement to certain paths
-		if (this.y % 25 != 0) {
+		if (!almostEquals(this.y % 25, 0)) {
 			if (this.direction === 'upleft' || this.direction === 'upright') {
 				this.y -= this.speed;
 			} else if (this.direction === 'downleft' || this.direction === 'downright') {
@@ -55,14 +62,21 @@ function Player(playerX, playerY) {
 			this.direction = 'left';
 			this.animationCount++;
 			var arrayPosition = getArrayPosition(this.x - 24, this.y);
-			if(arrayPosition > 71 && overlay[arrayPosition] === 0000) this.action = "dig";
-			else this.action = "walk";
+			
+			if(arrayPosition > 71 && overlay[arrayPosition] === 0000) {
+				this.action = "dig";
+				this.speed = 2.5;
+			}
+			else {
+				this.action = "walk";
+				this.speed = 5;
+			}
     	}   	
 	}
 
 	this.moveUp = function() {
 		// Restrict movement to certain paths
-		if (this.x % 25 != 0) {
+		if (!almostEquals(this.x % 25, 0)) {
 			if (this.direction === 'left') {
 				this.x -= this.speed;
 			} else if (this.direction === 'right') {
@@ -79,16 +93,21 @@ function Player(playerX, playerY) {
 			this.animationCount++;
 			var arrayPosition = getArrayPosition(this.x, this.y - 24);
 			
-			if(arrayPosition > 71 && overlay[arrayPosition] === 0000)
+			if(arrayPosition > 71 && overlay[arrayPosition] === 0000) {
 				this.action = "dig";
-			else
+				this.speed = 2.5;
+			}
+			else {
 				this.action = "walk";
+				this.speed = 5;
+			}
 		}
 	}
 
 	this.moveDown = function() {
 		// Restrict movement to certain paths
-		if (this.x % 25 != 0) {
+		console.log(this.x % 25);
+		if (!almostEquals(this.x % 25, 0)) {
 			if (this.direction === 'left') {
 				this.x -= this.speed;
 			} else if (this.direction === 'right') {
@@ -103,8 +122,15 @@ function Player(playerX, playerY) {
 				}
 				this.animationCount++;
 				var arrayPosition = getArrayPosition(this.x, this.y + 24);
-				if(arrayPosition > 71 && overlay[arrayPosition] === 0000) this.action = "dig";
-				else this.action = "walk";
+				
+				if(arrayPosition > 71 && overlay[arrayPosition] === 0000) {
+				this.action = "dig";
+				this.speed = 2.5;
+			}
+			else {
+				this.action = "walk";
+				this.speed = 5;
+			}
     	}
 	}
 
@@ -274,5 +300,11 @@ function Player(playerX, playerY) {
 
 	function getArrayPosition(x, y) {
                 return Math.floor((x + (blockSize/2)) / blockSize) + Math.floor((y + (blockSize/2)) / blockSize) * xGridSize;
-  }
+ 	}
+
+ 	function almostEquals(object1, object2) {
+ 		if (Math.abs(object1 - object2) < 0.00001)
+ 			return true
+ 		else return false;
+ 	}
 }

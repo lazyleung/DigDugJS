@@ -10,7 +10,7 @@ function Blob(blobX, blobY) {
 	this.uplimit = 0;
   this.image = new Image();
   this.image.src = "digdugsprite.png";
-  this.direction = "left";
+  this.direction = "right";
 	this.animationCount = 0;
 
 	this.moveRight = function() {
@@ -64,7 +64,33 @@ function Blob(blobX, blobY) {
                                 this.moveUp();
                         else if(player.y > this.y)
                                 this.moveDown();
-                }
+                } else {
+									if (this.direction === "right") {
+										if (overlay[getArrayPosition(this.x + blockSize/2, this.y)] !== 0000) {
+											if(this.x + this.speed < this.rightlimit) {
+                        this.x += this.speed;
+                      }
+                      this.direction = "right";
+										} else if (overlay[getArrayPosition(this.x - blockSize/2, this.y)] !== 0000) {
+                      if(this.x - this.speed > this.leftlimit) {
+                        this.x -= this.speed;
+                      }
+                      this.direction = "left";
+										}
+									} else if (this.direction === "left") {
+										if (overlay[getArrayPosition(this.x - blockSize/2, this.y)] !== 0000) {
+											if(this.x - this.speed > this.leftlimit) {
+												this.x -= this.speed;
+											}
+											this.direction = "left";
+										} else if (overlay[getArrayPosition(this.x + blockSize/2, this.y)] !== 0000) {
+											if(this.x + this.speed < this.rightlimit) {
+												this.x += this.speed;
+											}
+											this.direction = "right";
+										}
+									}
+								}
 								this.animationCount++;
 								if(this.animationCount > 10) this.animationCount = 0;
 	}

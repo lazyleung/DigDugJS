@@ -35,7 +35,6 @@ function startMainMenu() {
 	// Clear context and set menu EventListeners and draw menu
 	mode = "menu";
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	canvas.addEventListener('mousedown', inMenuMouseDown, false);
 	canvas.addEventListener('keydown', inMenuKeyDown, false);
 
 	// make canvas focusable, then give it focus!
@@ -85,7 +84,7 @@ var drawMenu = function() {
 
 function openHighScores() {
 	mode = "highscore";
-	ctx.fillStyle = "rgb(0,0,0)";
+	ctx.fillStyle = "rgba(0,0,0,0.9)";
 	ctx.fillRect(0, 225, 600, 600);
 	ctx.fillStyle = "rgb(255,255,255)";	
 	for (var i = 1; i <= highScores.length; i++) {
@@ -93,6 +92,8 @@ function openHighScores() {
 		ctx.textAlign = 'left';
 		ctx.fillText(new String(i) + ": "+ new String(highScores[i-1]), 150, 300 + i*30);
 	}
+	ctx.textAlign = 'center';
+	ctx.fillText("Press Esc or q to exit", 300, 500);
 }
 
 // ********** END MENU **********
@@ -157,12 +158,10 @@ function startGame() {
 	player = new Player(50,200);
 	// load some objects
 	monstersArray.push(new Blob(200,200));
-  monstersArray.push(new Dragon(300,300));
+  	monstersArray.push(new Dragon(300,300));
 
 	rockArray.push(new Rock(275,100));
 	rockArray.push(new Rock(400, 475));
-	
-	
 
 	itemArray.push(new Mushroom(100,100));
 	itemArray.push(new Carrot(175, 175));
@@ -401,17 +400,6 @@ function gameEnded() {
 
 // ********** EVENT LISTENERS ***********
 
-// Handles mouse input events
-function inMenuMouseDown(event) {
-	var x = event.pageX - canvas.offsetLeft;
-	var y = event.pageY - canvas.offsetTop;
-	if(150 < x  && x < 250) {
-		if(150 < y && y < 200) {
-			;
-		}
-	}		
-}
-
 function inMenuKeyDown(event) {
 	//keyCode 13 = enter
 	if (menuSelector === 0) {
@@ -455,15 +443,15 @@ var Key = {
 	},
   
 	onKeydown: function(event) {
-		// Pause game if 'p' is pressed
-		if (event.keyCode == 80) {
+		// Pause game if esc or 'p' is pressed
+		if (event.keyCode ==27 || event.keyCode == 80) {
 			if (mode === "game") {
 				mode = "pause";
 				clearInterval(intervalId);
 				clearInterval(timerInterval);
 				openPauseMenu();
 			}
-			// Resume game when 'p' is pressed again
+			// Resume game when esc or 'p' is pressed again
 			else if (mode === "pause") {
 				mode = "game";
 				intervalId = setInterval(updateGame, timerDelay);

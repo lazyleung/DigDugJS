@@ -55,7 +55,7 @@ var updateMenu = function() {
 
 var drawMenu = function() {
 	window.ctx.drawImage(background, 0, 0);
-	setInterval(animateClouds(), timerDelay);
+	animateClouds()
 	window.ctx.drawImage(spriteSheet, 183, 236, 160, 48, 140, 25, 320, 96);
 	window.ctx.drawImage(spriteSheet, 243, 384, 52, 8, 248, 535, 104, 16);
 	

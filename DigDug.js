@@ -99,7 +99,7 @@ function startGame() {
 }
 
 function openHighScores() {
-	ctx.clearRect(0, 236, 600, 600);	
+	ctx.clearRect(0, 225, 600, 600);	
 	for (var i = 1; i <= highScores.length; i++) {
 		ctx.font = "30px Arial";
 		ctx.textAlign = 'left';

@@ -71,10 +71,10 @@ function Blob(blobX, blobY) {
 	this.draw = function(ctx) {
 		var x = this.x;
 		var y = this.y;
-                if (this.direction === "right")
-		      ctx.drawImage(this.image, 332, 58, 13, 12, x, y, 25, 25);
-                if (this.direction === "left")
-                      ctx.drawImage(this.image, 5, 283, 13, 12, x, y, 25, 25);
+    if (this.direction === "right")
+			ctx.drawImage(this.image, 332, 58, 13, 12, x, y, 25, 25);
+    if (this.direction === "left")
+      ctx.drawImage(this.image, 5, 283, 13, 12, x, y, 25, 25);
 
 
 		

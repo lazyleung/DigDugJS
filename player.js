@@ -8,8 +8,8 @@ function Player(playerX, playerY) {
 	this.downlimit = 600 - 50 - this.height;
 	this.uplimit = 50;
 	this.image = new Image();
-  	this.image.src = "digdugsprite.png";
-  	this.oldAnimationFrame;
+  this.image.src = "digdugsprite.png";
+  this.oldAnimationFrame;
 
 	// Modifiable variables
 	this.direction = "right";
@@ -166,6 +166,7 @@ function Player(playerX, playerY) {
 						this.x -= this.x - this.leftlimit;
 					else
 						this.x -= bounceSpeed;
+					overlay[getArrayPosition(this.x, this.y)] = 5;
 					this.draw(window.ctx);
 					}
 			}
@@ -175,11 +176,11 @@ function Player(playerX, playerY) {
 						this.x += this.rightlimit - this.x;
 					else
 						this.x += bounceSpeed;
+					overlay[getArrayPosition(this.x, this.y)] = 5;
 					this.draw(window.ctx);
 				}
 			}
-		}
-		else {
+		} else {
 			// bounce up or down
 			if (diffY < 0) {
 				for(bounceSpeed = 9; bounceSpeed >= 0; bounceSpeed -= 1 ) {
@@ -187,6 +188,7 @@ function Player(playerX, playerY) {
 						this.y -= this.y - this.uplimit;
 					else
 						this.y -= bounceSpeed;
+					overlay[getArrayPosition(this.x, this.y)] = 10;
 					this.draw(window.ctx);
 				}
 			}
@@ -196,6 +198,7 @@ function Player(playerX, playerY) {
 						this.y += this.downlimit - this.y;
 					else
 						this.y += bounceSpeed;
+				overlay[getArrayPosition(this.x, this.y)] = 10;
 				this.draw(window.ctx);
 				}
 			}
@@ -271,5 +274,5 @@ function Player(playerX, playerY) {
 
 	function getArrayPosition(x, y) {
                 return Math.floor((x + (blockSize/2)) / blockSize) + Math.floor((y + (blockSize/2)) / blockSize) * xGridSize;
-        }
+  }
 }

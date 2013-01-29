@@ -31,28 +31,28 @@ function startMainMenu() {
 	// make canvas focusable, then give it focus!
 	canvas.setAttribute('tabindex','0');
 	canvas.focus();
-
 	drawMenu();
+	drawLevel();
 }
 
 var updateMenu = function(keyPress) {
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	drawMenuSelection(keyPress);
 	drawMenu();
+	drawMenuSelection(keyPress);
 }
 
 
 // ********** MENU ***********
 
 var drawMenu = function() {
-	
 	var img = new Image();
 	img.src = "digdugsprite.png";
+	drawLevel();
 	img.onload = function(){
 		window.ctx.drawImage(img, 183, 236, 160, 48, 140, 25, 320, 96);
 		window.ctx.drawImage(img, 243, 384, 52, 8, 248, 500, 104, 16);
+		window.ctx.drawImage(img, 184, 291, 150, 70, 150, 150, 300, 140);
 	}
-	
 	ctx.fillStyle = "black";
 	ctx.font = "55px Arial";
 	ctx.textAlign = "center";
@@ -121,6 +121,11 @@ function openHighScores() {
 function openPauseMenu() {
 	ctx.fillStyle = "rgba(0, 0, 0, 0.65)";
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
+	ctx.fillStyle = "white";
+	ctx.font = "30px Arial";
+	ctx.textAlign = 'left';
+	ctx.fillText("Paused", 250,300);
+
 }
 
 

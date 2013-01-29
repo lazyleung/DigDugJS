@@ -360,7 +360,8 @@ function removeMushroom(aMushroom) {
 function countDown() {
 	if (timer <= 0)
 		gameEnded();
-	timer--;
+	else
+		timer--;
 }
 
 function gameEnded() {

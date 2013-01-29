@@ -9,7 +9,7 @@ function Player(playerX, playerY) {
 	this.uplimit = 50;
 	this.animationCount = 0;
 	this.image = new Image();
-  this.image.src = "digdugsprite.png";
+    this.image.src = "digdugsprite.png";
 	// Modifiable variables
 	this.direction = "right";
 	this.directionOld = "right";

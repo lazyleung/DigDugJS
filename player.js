@@ -7,19 +7,19 @@ function Player(playerX, playerY) {
 	this.leftlimit = 0;
 	this.downlimit = 600 - 50 - this.height;
 	this.uplimit = 50;
-	this.animationCount = 0;
 	this.image = new Image();
-  this.image.src = "digdugsprite.png";
-	
+  	this.image.src = "digdugsprite.png";
+
 	// Modifiable variables
 	this.direction = "right";
 	this.directionOld = "right";
 	this.invincible = 0;
 	this.points = 0;
 	this.lives = 2;
-	this.invincibleTimer = 40;
-	
-	this.speed = 2;
+	this.invincibleTimer = 20;
+	this.animationCount = 0;
+	this.speed = 5;
+	this.action = "walk";
 
 	this.moveRight = function() {
 		// Restrict movement to certain paths
@@ -52,6 +52,9 @@ function Player(playerX, playerY) {
 			this.x -= this.speed;
 			this.direction = 'left';
 			this.animationCount++;
+			var arrayPosition = getArrayPosition(this.x - 24, this.y);
+			if(arrayPosition > 71 && overlay[arrayPosition] === 0000) this.action = "dig";
+			else this.action = "walk";
     	}   	
 	}
 
@@ -66,8 +69,11 @@ function Player(playerX, playerY) {
 		}else if(this.y - this.speed >=this.uplimit) {
       this.y -= this.speed;
       if(this.directionOld === 'left') this.direction = 'upleft';
-				else if(this.directionOld === 'right') this.direction = 'upright';
+			else if(this.directionOld === 'right') this.direction = 'upright';
 			this.animationCount++;
+			var arrayPosition = getArrayPosition(this.x, this.y - 24);
+			if(arrayPosition > 71 && overlay[arrayPosition] === 0000) this.action = "dig";
+			else this.action = "walk";
     }
 	}
 
@@ -85,17 +91,21 @@ function Player(playerX, playerY) {
 				if(this.directionOld === 'left') this.direction = 'downleft';
 				else if(this.directionOld === 'right') this.direction = 'downright';
 				this.animationCount++;
+				var arrayPosition = getArrayPosition(this.x, this.y + 24);
+				if(arrayPosition > 71 && overlay[arrayPosition] === 0000) this.action = "dig";
+				else this.action = "walk";
     	}
 	}
-	
+
 	this.update = function() {
 		this.directionOld = this.direction;
 		if (Key.isDown(Key.UP)) this.moveUp();
 		else if (Key.isDown(Key.LEFT)) this.moveLeft();
 		else if (Key.isDown(Key.DOWN)) this.moveDown();
 		else if (Key.isDown(Key.RIGHT)) this.moveRight();
+
 		if(this.animationCount > 10 || this.directionOld !== this.direction) this.animationCount = 0;
-		
+
 		// Handles temporary God Mode
 		if (this.invincible == 1) {
 			this.invincibleTimer -= 1;
@@ -103,7 +113,6 @@ function Player(playerX, playerY) {
 				this.invincible = 0;
 				this.invincibleTimer = 20;
 			}
-
 		}
 	}
 
@@ -153,8 +162,9 @@ function Player(playerX, playerY) {
 			}
 		}
 	}
-	
+
 	this.draw = function(ctx) {
+
 		var direction = this.direction;
 		var count = this.animationCount;
 		switch(direction) {
@@ -218,7 +228,6 @@ function Player(playerX, playerY) {
 	}
 
 	function getArrayPosition(x, y) {
-	        return Math.floor((x + (blockSize/2)) / blockSize) + Math.floor((y + (blockSize/2)) / blockSize) * xGridSize;
-	}
+                return Math.floor((x + (blockSize/2)) / blockSize) + Math.floor((y + (blockSize/2)) / blockSize) * xGridSize;
+        }
 }
-

@@ -86,7 +86,8 @@ var drawMenu = function() {
 function openHighScores() {
 	mode = "highscore";
 	ctx.fillStyle = "rgb(0,0,0)";
-	ctx.fillRect(0, 225, 600, 600);	
+	ctx.fillRect(0, 225, 600, 600);
+	ctx.fillStyle = "rgb(255,255,255)";	
 	for (var i = 1; i <= highScores.length; i++) {
 		ctx.font = "30px Arial";
 		ctx.textAlign = 'left';
@@ -425,14 +426,17 @@ function inMenuKeyDown(event) {
 			menuSelector = 1;
 		}
 	} else if (menuSelector === 1) {
-		if(event.keyCode === 13) {
-			clearInterval(intervalId);
-			openHighScores();
-		}else if(event.keyCode === Key.UP || event.keyCode === Key.DOWN){
-			menuSelector = 0;
-		}else if(mode === "highscore" && event.keyCode === 27) {
+		if(mode !== "highscore") {
+			if(event.keyCode === 13) {
+				clearInterval(intervalId);
+				openHighScores();
+			}else if(event.keyCode === Key.UP || event.keyCode === Key.DOWN){
+				menuSelector = 0;
+			}
+		}else if(event.keyCode === 27) {
 			startMainMenu();
-		} 
+		}
+		 
 	} else {
 		menuSelector = 0;
 	}

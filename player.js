@@ -67,15 +67,22 @@ function Player(playerX, playerY) {
 			} else if (this.direction === 'right') {
 				this.x += this.speed;
 			}
-		}else if(this.y - this.speed >=this.uplimit) {
-      this.y -= this.speed;
-      if(this.directionOld === 'left') this.direction = 'upleft';
-			else if(this.directionOld === 'right') this.direction = 'upright';
+		}
+		else if(this.y - this.speed >=this.uplimit) {
+			this.y -= this.speed;
+			if(this.directionOld === 'left')
+				this.direction = 'upleft';
+			else if(this.directionOld === 'right')
+				this.direction = 'upright';
+			
 			this.animationCount++;
 			var arrayPosition = getArrayPosition(this.x, this.y - 24);
-			if(arrayPosition > 71 && overlay[arrayPosition] === 0000) this.action = "dig";
-			else this.action = "walk";
-    }
+			
+			if(arrayPosition > 71 && overlay[arrayPosition] === 0000)
+				this.action = "dig";
+			else
+				this.action = "walk";
+		}
 	}
 
 	this.moveDown = function() {
@@ -116,11 +123,14 @@ function Player(playerX, playerY) {
 			}
 		}
 		// Player gets hit and loses a life
-		if (this.wasHit === 1) {
-			this.invincible = 1;
-			this.lives--;
-			this.points -= 15;
-			this.wasHit = 0;
+		else {
+			if (this.wasHit === 1) {
+				console.log("GOT HIT");
+				this.invincible = 1;
+				this.lives--;
+				this.points -= 15;
+				this.wasHit = 0;
+			}
 		}
 	}
 

@@ -10,6 +10,7 @@ function Blob(blobX, blobY) {
 	this.uplimit = 0;
         this.image = new Image();
         this.image.src = "digdugsprite.png";
+        this.direction = "left";
 
 	this.moveRight = function() {
                 futureX = this.x + blockSize/2;
@@ -17,6 +18,8 @@ function Blob(blobX, blobY) {
                         if(this.x + this.speed < this.rightlimit) {
                                 this.x += this.speed;
                         }
+
+                        this.direction = "right";
                 }
         	
 	}
@@ -27,6 +30,7 @@ function Blob(blobX, blobY) {
                         if(this.x - this.speed > this.leftlimit) {
                                 this.x -= this.speed;
                         }
+                        this.direction = "left";
                 }
 	}
 
@@ -67,7 +71,12 @@ function Blob(blobX, blobY) {
 	this.draw = function(ctx) {
 		var x = this.x;
 		var y = this.y;
-		ctx.drawImage(this.image, 332, 58, 14, 14, x, y, 25, 25);
+                if (this.direction === "right")
+		      ctx.drawImage(this.image, 332, 58, 13, 12, x, y, 25, 25);
+                if (this.direction === "left")
+                      ctx.drawImage(this.image, 5, 283, 13, 12, x, y, 25, 25);
+
+
 		
 	}
 

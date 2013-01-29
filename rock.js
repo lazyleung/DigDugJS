@@ -13,26 +13,39 @@ function Rock(rockX, rockY) {
         this.hitGround = 0; // 0 = not moved, 1 = falling, 2 = hit ground
 
 	this.moveDown = function() {
-               if (overlay[getArrayPosition(this.x, this.y + 20)] !== 0000) {
-                        if(this.waitCount < 25) {
-													this.waitCount++;
-												}
-												else {
-													this.y += this.speed;
-													this.speed += 3;
-													this.hitGround = 1;
-												}
-               } else if (this.hitGround === 1)
-                        this.hitGround = 2;
+       if (overlay[getArrayPosition(this.x, this.y + 20)] !== 0000) {
+            if(this.waitCount < 25) {
+					this.waitCount++;
+			}
+			else {
+				this.y += this.speed;
+                if (this.speed < 23)
+				   this.speed += 3;
+				this.hitGround = 1;
+			}
+       }
+       else if (this.hitGround === 1)
+            this.hitGround = 2;
 	}
 
 	this.update = function() {
-                this.moveDown();
-                if (this.hitGround === 2) {
-                        if(this.animationCount === 1)
-                                this.animationCount = 2;
-                        this.animationCount += .25;
-                }
+        //  Update animation
+        if (this.hitGround === 2) {
+            //  Stop rock movement
+            this.speed = 0;
+            if(this.animationCount === 1)
+                this.animationCount = 2;
+            this.animationCount += .25;
+        }
+
+        this.moveDown();
+        
+        // Collision with player only while falling
+        if (this.hitGround === 1)
+            if(hasCollided(player, this)) {
+                player.wasHit = 1;
+                this.hitGround = 2;
+            }
 	}
 	
 	this.draw = function(ctx) {

@@ -277,28 +277,28 @@ var arrayPosPast;
 function updateMap() {
 	// Find center of player sprite and remove block beneath it
 	var arrayPos = Math.floor((player.x + (blockSize/2)) / blockSize) + Math.floor((player.y + (blockSize/2)) / blockSize) * xGridSize;
-	if(arrayPos > 72) {
-		if(player.direction === "right") {
+	if(true) {
+		if(arrayPos > 71 && player.direction === "right") {
 			overlay[arrayPos] = overlay[arrayPos] | 1;
-			if(arrayPos - 1 == arrayPosPast) {
+			if(arrayPos - 1 === arrayPosPast) {
 				overlay[arrayPos - 1] = overlay[arrayPos - 1] | 4;
 			}
-		} else if(player.direction === "left") {
+		} else if(arrayPos > 71 && player.direction === "left") {
 			overlay[arrayPos] = overlay[arrayPos] | 4;
-			if(arrayPos + 1 == arrayPosPast) {
+			if(arrayPos + 1 === arrayPosPast) {
 				overlay[arrayPos + 1] = overlay[arrayPos + 1] | 1;
 			}
-		} else if(player.direction === "downright" || player.direction === "downright") {
-			overlay[arrayPos] = overlay[arrayPos] | 8;
-			if(arrayPos - 24 == arrayPosPast) {
+		} else if(player.direction === "downright" || player.direction === "downleft") {
+			if(arrayPos > 71) overlay[arrayPos] = overlay[arrayPos] | 8;
+			if(arrayPosPast > 71 && arrayPos - 24 === arrayPosPast) {
 				overlay[arrayPos - 24] = overlay[arrayPos - 24] | 2;
 			}
 		} else if(player.direction === "upright" || player.direction === "upleft") {
-			overlay[arrayPos] = overlay[arrayPos] | 2;
-			if(arrayPos + 24 == arrayPosPast) {
+			if(arrayPos > 71) overlay[arrayPos] = overlay[arrayPos] | 2;
+			if(arrayPos + 24 === arrayPosPast) {
 				overlay[arrayPos + 24] = overlay[arrayPos + 24] | 8;
 			}
-		} else {
+		} else if (arrayPos > 71){
 			overlay[arrayPos] = 15;
 		}
 	}

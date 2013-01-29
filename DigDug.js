@@ -273,34 +273,30 @@ var arrayPosPast;
 function updateMap() {
 	// Find center of player sprite and remove block beneath it
 	var arrayPos = Math.floor((player.x + (blockSize/2)) / blockSize) + Math.floor((player.y + (blockSize/2)) / blockSize) * xGridSize;
-	switch(player.direction){
-		case "right":
+	if(arrayPos > 72) {
+		if(player.direction === "right") {
 			overlay[arrayPos] = overlay[arrayPos] | 1;
 			if(arrayPos - 1 == arrayPosPast) {
 				overlay[arrayPos - 1] = overlay[arrayPos - 1] | 4;
 			}
-			
-			break;
-		case "left":
+		} else if(player.direction === "left") {
 			overlay[arrayPos] = overlay[arrayPos] | 4;
 			if(arrayPos + 1 == arrayPosPast) {
 				overlay[arrayPos + 1] = overlay[arrayPos + 1] | 1;
 			}
-			break;
-		case "down":
+		} else if(player.direction === "downright" || player.direction === "downright") {
 			overlay[arrayPos] = overlay[arrayPos] | 8;
 			if(arrayPos - 24 == arrayPosPast) {
 				overlay[arrayPos - 24] = overlay[arrayPos - 24] | 2;
 			}
-			break;
-		case "up":
+		} else if(player.direction === "upright" || player.direction === "upleft") {
 			overlay[arrayPos] = overlay[arrayPos] | 2;
 			if(arrayPos + 24 == arrayPosPast) {
 				overlay[arrayPos + 24] = overlay[arrayPos + 24] | 8;
 			}
-			break;
-		default:
+		} else {
 			overlay[arrayPos] = 15;
+		}
 	}
 	arrayPosPast = arrayPos;
 }
@@ -368,6 +364,7 @@ function countDown() {
 }
 
 function gameEnded() {
+	clearInterval(timerInterval);
 	highScores.push(player.points);
 }
 

@@ -7,9 +7,9 @@ function Player(playerX, playerY) {
 	this.leftlimit = 0;
 	this.downlimit = 600 - 50 - this.height;
 	this.uplimit = 50;
-	this.animationCount = 0;
 	this.image = new Image();
-    this.image.src = "digdugsprite.png";
+  this.image.src = "digdugsprite.png";
+	
 	// Modifiable variables
 	this.direction = "right";
 	this.directionOld = "right";
@@ -17,8 +17,9 @@ function Player(playerX, playerY) {
 	this.points = 0;
 	this.lives = 2;
 	this.invincibleTimer = 20;
-	
+	this.animationCount = 0;
 	this.speed = 5;
+	this.action = "walk";
 
 	this.moveRight = function() {
 		// Restrict movement to certain paths
@@ -31,8 +32,11 @@ function Player(playerX, playerY) {
 		} else if(this.x + this.speed <= this.rightlimit) {
 		    this.x += this.speed;
 		    this.direction = 'right';
-			this.animationCount++;
-    	}
+				this.animationCount++;
+				var arrayPosition = getArrayPosition(this.x + 24, this.y);
+				if(arrayPosition > 71 && overlay[arrayPosition] === 0000) this.action = "dig";
+				else this.action = "walk";
+    }
 	}
 
 	this.moveLeft = function() {
@@ -48,6 +52,9 @@ function Player(playerX, playerY) {
 			this.x -= this.speed;
 			this.direction = 'left';
 			this.animationCount++;
+			var arrayPosition = getArrayPosition(this.x - 24, this.y);
+			if(arrayPosition > 71 && overlay[arrayPosition] === 0000) this.action = "dig";
+			else this.action = "walk";
     	}   	
 	}
 
@@ -62,8 +69,11 @@ function Player(playerX, playerY) {
 		}else if(this.y - this.speed >=this.uplimit) {
       this.y -= this.speed;
       if(this.directionOld === 'left') this.direction = 'upleft';
-				else if(this.directionOld === 'right') this.direction = 'upright';
+			else if(this.directionOld === 'right') this.direction = 'upright';
 			this.animationCount++;
+			var arrayPosition = getArrayPosition(this.x, this.y - 24);
+			if(arrayPosition > 71 && overlay[arrayPosition] === 0000) this.action = "dig";
+			else this.action = "walk";
     }
 	}
 
@@ -81,6 +91,9 @@ function Player(playerX, playerY) {
 				if(this.directionOld === 'left') this.direction = 'downleft';
 				else if(this.directionOld === 'right') this.direction = 'downright';
 				this.animationCount++;
+				var arrayPosition = getArrayPosition(this.x, this.y + 24);
+				if(arrayPosition > 71 && overlay[arrayPosition] === 0000) this.action = "dig";
+				else this.action = "walk";
     	}
 	}
 	
@@ -90,6 +103,7 @@ function Player(playerX, playerY) {
 		else if (Key.isDown(Key.LEFT)) this.moveLeft();
 		else if (Key.isDown(Key.DOWN)) this.moveDown();
 		else if (Key.isDown(Key.RIGHT)) this.moveRight();
+		
 		if(this.animationCount > 10 || this.directionOld !== this.direction) this.animationCount = 0;
 		
 		// Handles temporary God Mode
@@ -99,7 +113,6 @@ function Player(playerX, playerY) {
 				this.invincible = 0;
 				this.invincibleTimer = 20;
 			}
-
 		}
 	}
 
@@ -151,36 +164,70 @@ function Player(playerX, playerY) {
 	}
 	
 	this.draw = function(ctx) {
+
 		var direction = this.direction;
 		var count = this.animationCount;
 		switch(direction) {
 			case "right":
-				if(count < 5) ctx.drawImage(this.image, 213, 5, 14, 14, this.x, this.y, 25, 25);
-				else ctx.drawImage(this.image, 231, 5, 14, 14, this.x, this.y, 25, 25);
+				if (this.action === "dig") {
+					if(count < 5) ctx.drawImage(this.image, 281, 5, 14, 14, this.x, this.y, 25, 25);
+					else ctx.drawImage(this.image, 298, 5, 14, 14, this.x, this.y, 25, 25);
+				} else {
+					if(count < 5) ctx.drawImage(this.image, 213, 5, 14, 14, this.x, this.y, 25, 25);
+					else ctx.drawImage(this.image, 231, 5, 14, 14, this.x, this.y, 25, 25);
+				}
 				break;
 			case "left":
-				if(count < 5) ctx.drawImage(this.image, 125, 230, 14, 14, this.x, this.y, 25, 25);
-				else ctx.drawImage(this.image, 106, 230, 14, 14, this.x, this.y, 25, 25);
+				if(this.action === "dig") {	
+					if(count < 5) ctx.drawImage(this.image, 55, 230, 14, 14, this.x, this.y, 25, 25);
+					else ctx.drawImage(this.image, 38, 230, 14, 14, this.x, this.y, 25, 25);
+				} else {
+					if(count < 5) ctx.drawImage(this.image, 125, 230, 14, 14, this.x, this.y, 25, 25);
+					else ctx.drawImage(this.image, 106, 230, 14, 14, this.x, this.y, 25, 25);
+				}
 				break;
 			case "downright":
-				if(count < 5) ctx.drawImage(this.image, 247, 5, 14, 14, this.x, this.y, 25, 25);
-				else ctx.drawImage(this.image, 264, 5, 14, 14, this.x, this.y, 25, 25);
+				if(this.action === "dig") {
+					if(count < 5) ctx.drawImage(this.image, 315, 5, 14, 14, this.x, this.y, 25, 25);
+					else ctx.drawImage(this.image, 332, 5, 14, 14, this.x, this.y, 25, 25);
+				} else {				
+					if(count < 5) ctx.drawImage(this.image, 247, 5, 14, 14, this.x, this.y, 25, 25);
+					else ctx.drawImage(this.image, 264, 5, 14, 14, this.x, this.y, 25, 25);
+				}
 				break;
 			case "downleft":
-				if(count < 5) ctx.drawImage(this.image, 89, 230, 14, 14, this.x, this.y, 25, 25);
-				else ctx.drawImage(this.image, 72, 230, 14, 14, this.x, this.y, 25, 25);
+				if(this.action === "dig") {
+					if(count < 5) ctx.drawImage(this.image, 21, 230, 14, 14, this.x, this.y, 25, 25);
+					else ctx.drawImage(this.image, 4, 230, 14, 14, this.x, this.y, 25, 25);
+				} else {
+					if(count < 5) ctx.drawImage(this.image, 89, 230, 14, 14, this.x, this.y, 25, 25);
+					else ctx.drawImage(this.image, 72, 230, 14, 14, this.x, this.y, 25, 25);
+				}
 				break;
 			case "upright":
-				if(count < 5) ctx.drawImage(this.image, 30, 57, 14, 14, this.x, this.y, 25, 25);
-				else ctx.drawImage(this.image, 13, 57, 14, 14, this.x, this.y, 25, 25);
+				if(this.action === "dig") {
+					if(count < 5) ctx.drawImage(this.image, 29, 39, 14, 14, this.x, this.y, 25, 25);
+					else ctx.drawImage(this.image, 12, 39, 14, 14, this.x, this.y, 25, 25);
+				} else {
+					if(count < 5) ctx.drawImage(this.image, 30, 57, 14, 14, this.x, this.y, 25, 25);
+					else ctx.drawImage(this.image, 13, 57, 14, 14, this.x, this.y, 25, 25);
+				}
 				break;
 			case "upleft":
-				if(count < 5) ctx.drawImage(this.image, 56, 57, 14, 14, this.x, this.y, 25, 25);
-				else ctx.drawImage(this.image, 73, 57, 14, 14, this.x, this.y, 25, 25);
+				if(this.action === "dig") {
+					if(count < 5) ctx.drawImage(this.image, 57, 39, 14, 14, this.x, this.y, 25, 25);
+					else ctx.drawImage(this.image, 74, 39, 14, 14, this.x, this.y, 25, 25);
+				} else {
+					if(count < 5) ctx.drawImage(this.image, 56, 57, 14, 14, this.x, this.y, 25, 25);
+					else ctx.drawImage(this.image, 73, 57, 14, 14, this.x, this.y, 25, 25);
+				}
 				break;
 			default:
 				console.log("no direction!");
 		}
 	}
+	
+	function getArrayPosition(x, y) {
+                return Math.floor((x + (blockSize/2)) / blockSize) + Math.floor((y + (blockSize/2)) / blockSize) * xGridSize;
+        }
 }
-

@@ -507,7 +507,7 @@ function gameEnded() {
 	ctx.fillText("Score: " + new String(player.points), 300, 300);
 	if(mode === "lose") {
 		ctx.fillText("You lost!", 300,150);
-		ctx.fillText("Press enter to restart level", 300,150);
+		ctx.fillText("Press enter to restart level", 300,185);
 	} else {
 		ctx.fillText("You passed level " + new String(stage), 300,150);
 		ctx.fillText("Press enter to continue", 300,450);

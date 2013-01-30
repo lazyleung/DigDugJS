@@ -481,11 +481,8 @@ function removeRock(aItem) {
 }
 
 function countDown() {
-	if(player.lives <= 0) {
+	if(player.lives <= 0 || timer <= 0) {
 		mode = "lose";
-		gameEnded();
-	}else if(timer <= 0) {
-		mode = "win";
 		gameEnded();
 	} else 
 		timer--;

@@ -12,6 +12,7 @@ function Blob(blobX, blobY) {
   this.image.src = "digdugsprite.png";
   this.direction = "right";
 	this.animationCount = 0;
+	this.waitCount = 0;
 
 	this.moveRight = function() {
                 futureX = this.x + blockSize/2;
@@ -66,28 +67,26 @@ function Blob(blobX, blobY) {
                                 this.moveDown();
                 } else {
 									if (this.direction === "right") {
-										if (overlay[getArrayPosition(this.x + blockSize/2, this.y)] !== 0000) {
-											if(this.x + this.speed < this.rightlimit) {
+										if (overlay[getArrayPosition(this.x + blockSize/2, this.y)] !== 0000 && this.x + this.speed < this.rightlimit) {
                         this.x += this.speed;
-                      }
-                      this.direction = "right";
 										} else if (overlay[getArrayPosition(this.x - blockSize/2, this.y)] !== 0000) {
-                      if(this.x - this.speed > this.leftlimit) {
+                      if(this.waitCount++ < 10 && this.x - this.speed > this.leftlimit) {
                         this.x -= this.speed;
-                      }
-                      this.direction = "left";
+                      } else {
+												this.direction = "left";
+												this.waitCount = 0;
+											}
 										}
 									} else if (this.direction === "left") {
-										if (overlay[getArrayPosition(this.x - blockSize/2, this.y)] !== 0000) {
-											if(this.x - this.speed > this.leftlimit) {
+										if (overlay[getArrayPosition(this.x - blockSize/2, this.y)] !== 0000 && this.x - this.speed > this.leftlimit) {
 												this.x -= this.speed;
-											}
-											this.direction = "left";
 										} else if (overlay[getArrayPosition(this.x + blockSize/2, this.y)] !== 0000) {
-											if(this.x + this.speed < this.rightlimit) {
+											if(this.waitCount++ < 10 && this.x + this.speed < this.rightlimit) {
 												this.x += this.speed;
+											} else {
+												this.direction = "right";
+												this.waitCount = 0;
 											}
-											this.direction = "right";
 										}
 									}
 								}

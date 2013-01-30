@@ -164,7 +164,7 @@ function startGame() {
 			ctx.fillStyle = "white";
 			ctx.font = "40px Arial";
 			ctx.textAlign = 'center';
-			ctx.fillText("How To Play!", 300, 100);
+			ctx.fillText("How To Play", 300, 100);
 			ctx.font = "30px Arial";
 			ctx.fillText("Press enter to continue", 300, 500);
 			break;

@@ -22,6 +22,7 @@ function Player(playerX, playerY) {
 	this.speed = 5;
 	this.action = "walk";
 	this.wasHit = 0;
+	this.wasBurned = 0;
 
 	this.moveRight = function() {
 		// Restrict movement to certain paths
@@ -187,8 +188,14 @@ function Player(playerX, playerY) {
 				console.log("GOT HIT");
 				this.invincible = 1;
 				this.lives--;
-				this.points -= 15;
+				this.points -= 100;
 				this.wasHit = 0;
+			if (this.wasBurned === 1) {
+				console.log("GOT BURNED");
+				this.invincible = 1;
+				this.lives--;
+				this.points -= 250;
+				this.wasBurned = 0;
 			}
 		}
 	}

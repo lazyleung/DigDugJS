@@ -101,12 +101,12 @@ function Dragon(dragonX, dragonY) {
             case "left":
                 fire.x -= 25;
                 if (hasCollided(player, fire) === true) {
-                    player.wasHit = 1;
+                    player.wasBurned = 1;
                     break;
                 }
                 fire.x -= 25;
                 if (hasCollided(player, fire) === true) {
-                    player.wasHit = 1;
+                    player.wasBurned = 1;
                     break;
                 }
                 break;
@@ -114,12 +114,12 @@ function Dragon(dragonX, dragonY) {
             case "right":
                 fire.x += 25;
                 if (hasCollided(player, fire) === true) {
-                    player.wasHit = 1;
+                    player.wasBurned = 1;
                     break;
                 }
                 fire.x += 25;
                 if (hasCollided(player, fire) === true) {
-                    player.wasHit = 1;
+                    player.wasBurned = 1;
                     break;
                 }
                 break;

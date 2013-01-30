@@ -208,7 +208,7 @@ function startGame() {
 			rockArray.push(new Rock(400, 475));
 			break;
 		case 2:
-			player = new Player(150, 150);
+			player = new Player(100, 150);
 			monstersArray.push(new Blob(150,200));
 			monstersArray.push(new Blob(350,400));
 		  monstersArray.push(new Dragon(450,200));

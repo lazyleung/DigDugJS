@@ -618,6 +618,8 @@ var Key = {
 			itemArray = new Array();
 			cloudArray = new Array();
 			stage = 0;
+			canvas.removeEventListener('keydown', gamekeydown, false);
+			canvas.removeEventListener('keyup', gamekeyup, false);
 			startMainMenu();
 		}
 		// Pause game if esc or 'p' is pressed

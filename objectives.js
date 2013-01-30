@@ -77,3 +77,43 @@ function Eggplant(eggplantX, eggplantY) {
 	}
 
 }
+
+function Flower(flowerX, flowerY) {
+	this.x = flowerX;
+	this.y = flowerY;
+    this.width = 25;
+    this.height = 25;
+    this.image = new Image();
+    this.image.src = "digdugsprite.png";
+    this.points = 250;
+	this.update = function() {
+    	this.draw();	
+	}
+	
+	this.draw = function(ctx) {
+		var x = this.x;
+		var y = this.y;
+		ctx.drawImage(this.image, 105, 340, 16, 24, x, y, 25, 25);
+	}
+
+}
+
+function Cucumber(cucumberX, cucumberY) {
+	this.x = cucumberX;
+	this.y = cucumberY;
+    this.width = 25;
+    this.height = 25;
+    this.image = new Image();
+    this.image.src = "digdugsprite.png";
+    this.points = 25;
+	this.update = function() {
+    	this.draw();	
+	}
+	
+	this.draw = function(ctx) {
+		var x = this.x;
+		var y = this.y;
+		ctx.drawImage(this.image, 39, 366, 16, 16, x, y, 25, 25);
+	}
+
+}

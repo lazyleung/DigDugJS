@@ -478,6 +478,10 @@ function checkMonsterCollision () {
 }
 
 function checkItemCollision () {
+	if (itemArray.length === 0) {
+		mode = "win";
+		gameEnded();
+	}
 	for (i = 0; i < itemArray.length; i++) {
 		var aItem = itemArray[i];
 		if (hasCollided(player, aItem)) {

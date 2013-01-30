@@ -14,6 +14,7 @@ var blockSize = 25;
 var xGridSize = 24;
 var timer;
 var menuSelector;
+var randomItem = 0;
 // Array to keep track of the monsters
 var monstersArray = new Array();
 var rockArray = new Array();
@@ -240,6 +241,23 @@ function startGame() {
 			rockArray.push(new Rock(150, 150));
 			rockArray.push(new Rock(400, 475));
 			break;
+		case 4:
+			randomItem = 1;
+			player = new Player(300, 150);
+			monstersArray.push(new Blob(150,200));
+			monstersArray.push(new Blob(350,400));
+			monstersArray.push(new Dragon(450,200));
+			monstersArray.push(new Dragon(500,100));
+		 	monstersArray.push(new Dragon(100,500));
+			itemArray.push(new Mushroom(100,100));
+			itemArray.push(new Carrot(175, 175));
+			itemArray.push(new Watermelon(440, 400));
+			itemArray.push(new Eggplant(325, 300));
+			itemArray.push(new Cucumber(475, 50));
+			itemArray.push(new Flower(475, 200));
+			rockArray.push(new Rock(275,100));
+			rockArray.push(new Rock(150, 150));
+			rockArray.push(new Rock(400, 475));
 		default:
 			break;
 	}
@@ -465,7 +483,6 @@ function checkItemCollision () {
 		if (hasCollided(player, aItem)) {
 			player.points += aItem.points;
 			removeItem(aItem);
-			//placeItem();
 		}
 	}
 }
@@ -473,6 +490,9 @@ function checkItemCollision () {
 function removeItem(aItem) {
     var startingIndex = itemArray.indexOf(aItem);
     itemArray.splice(startingIndex, 1);
+    if (randomItem === 1) {
+    	placeItem();
+    }
 }
 
 function removeRock(aItem) {
@@ -481,8 +501,11 @@ function removeRock(aItem) {
 }
 
 function countDown() {
-	if(player.lives <= 0 || timer <= 0) {
+	if(player.lives <= 0) {
 		mode = "lose";
+		gameEnded();
+	}else if(timer <= 0) {
+		mode = "win";
 		gameEnded();
 	} else 
 		timer--;

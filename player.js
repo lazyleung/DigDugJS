@@ -190,6 +190,7 @@ function Player(playerX, playerY) {
 				this.lives--;
 				this.points -= 100;
 				this.wasHit = 0;
+			}
 			if (this.wasBurned === 1) {
 				console.log("GOT BURNED");
 				this.invincible = 1;

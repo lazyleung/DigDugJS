@@ -185,12 +185,9 @@ function startGame() {
 		case 0:
 			ctx.fillStyle = "rgba(0, 0, 0, 0.95)";
 			ctx.fillRect(0, 0, canvas.width, canvas.height);
-			ctx.fillStyle = "white";
-			ctx.font = "40px Arial";
-			ctx.textAlign = 'center';
-			ctx.fillText("How To Play", 300, 100);
-			ctx.font = "30px Arial";
-			ctx.fillText("Press enter to continue", 300, 500);
+			var howtoplay = new Image();
+			howtoplay.src = "howtoplay.png"
+			window.ctx.drawImage(howtoplay, 0, 0);
 			break;
 		case 1:
 			player = new Player(300, 150);

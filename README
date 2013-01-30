@@ -1,2 +1,18 @@
-Aurthor: Jonathan Leung
+Aurthors: Jonathan Leung, Alvin Wang, & Ethan Chan
 This project aims to recreate and improve the classic game Digdug in javascript.
+
+How to Play:
+	Use arrow keys to navigate menu
+	Move with arrow keys
+	Pause with p
+	
+	CHEAT: n to pass level
+	
+	Objective of the game is to collect all the items on the screen while avoiding the monsters.
+	You lose a life if you get hit by monsters.
+	Lose all lives then game over
+	
+	
+Citations:
+	The graphics and names are tradmarks of Namaco
+	We obtained the sprite sheet from: http://spriters-resource.com/gameboy_advance/namcomuseum/sheet/22728

@@ -12,7 +12,7 @@ var timerDelay = 25;
 var player;
 var blockSize = 25;
 var xGridSize = 24;
-var timer = 120;
+var timer;
 var menuSelector = 0;
 // Array to keep track of the monsters
 var monstersArray = new Array();
@@ -113,12 +113,10 @@ function openPauseMenu() {
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
 	ctx.fillStyle = "white";
 	ctx.font = "30px Arial";
-	ctx.textAlign = 'left';
-	ctx.fillText("Paused", 250,300);
-
+	ctx.textAlign = 'center';
+	ctx.fillText("Paused", 300,300);
+	ctx.fillText("Press P to resume", 300,400);
 }
-
-
 
 // ********** END PAUSE MENU **********
 
@@ -181,7 +179,8 @@ var spriteArray = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ,0, 0, 0, 0, 0, 0, 0
 
 function startGame() {
 	mode = "game";
-	
+	timer = 120;
+
 	switch(stage) {
 		case 0:
 			ctx.fillStyle = "rgba(0, 0, 0, 0.95)";
@@ -194,6 +193,38 @@ function startGame() {
 			ctx.fillText("Press enter to continue", 300, 500);
 			break;
 		case 1:
+			player = new Player(300, 150);
+			monstersArray.push(new Blob(150,200));
+			monstersArray.push(new Blob(350,400));
+		  monstersArray.push(new Dragon(500,100));
+			itemArray.push(new Mushroom(100,100));
+			itemArray.push(new Carrot(175, 175));
+			itemArray.push(new Watermelon(440, 400));
+			itemArray.push(new Eggplant(325, 300));
+			itemArray.push(new Cucumber(475, 50));
+			itemArray.push(new Flower(475, 200));
+			rockArray.push(new Rock(275,100));
+			rockArray.push(new Rock(150, 150));
+			rockArray.push(new Rock(400, 475));
+			break;
+		case 2:
+			player = new Player(150, 150);
+			monstersArray.push(new Blob(150,200));
+			monstersArray.push(new Blob(350,400));
+		  monstersArray.push(new Dragon(450,200));
+		  monstersArray.push(new Dragon(500,100));
+		  monstersArray.push(new Dragon(100,500));
+			itemArray.push(new Mushroom(100,100));
+			itemArray.push(new Carrot(175, 175));
+			itemArray.push(new Watermelon(440, 400));
+			itemArray.push(new Eggplant(325, 300));
+			itemArray.push(new Cucumber(475, 50));
+			itemArray.push(new Flower(475, 200));
+			rockArray.push(new Rock(275,100));
+			rockArray.push(new Rock(150, 150));
+			rockArray.push(new Rock(400, 475));
+			break;
+		case 3:
 			player = new Player(300, 150);
 			monstersArray.push(new Blob(150,200));
 			monstersArray.push(new Blob(350,400));
@@ -235,7 +266,7 @@ function placeItem() {
 	var x_coord = Math.floor(Math.random()*24*25);
 	var y_coord = Math.floor(Math.random()*19*25+75); 
 	if (itemNumber < 0.16) itemArray.push(new Mushroom(x_coord, y_coord));
-    else if (itemNumber < 0.33) itemArray.push(new Carrot(x_coord, y_coord));
+  else if (itemNumber < 0.33) itemArray.push(new Carrot(x_coord, y_coord));
 	else if (itemNumber < 0.49) itemArray.push(new Watermelon(x_coord, y_coord));
 	else if (itemNumber < 0.65) itemArray.push(new Eggplant(x_coord, y_coord));
 	else if (itemNumber < 0.81) itemArray.push(new Cucumber(x_coord, y_coord));
@@ -435,7 +466,7 @@ function checkItemCollision () {
 		if (hasCollided(player, aItem)) {
 			player.points += aItem.points;
 			removeItem(aItem);
-			placeItem();
+			//placeItem();
 		}
 	}
 }
@@ -451,24 +482,39 @@ function removeRock(aItem) {
 }
 
 function countDown() {
-	if (timer <= 0)
+	if(player.lives <= 0) {
+		mode = "lose";
 		gameEnded();
-	else
+	}else if(timer <= 0) {
+		mode = "win";
+		gameEnded();
+	} else 
 		timer--;
 }
 
 function gameEnded() {
+	clearInterval(intervalId);
 	clearInterval(timerInterval);
 	highScores.push(player.points);
-	stage += 1; 
-	startGame(); 
 	spriteArray = spriteArrayStatic;
 	monstersArray = new Array();
 	rockArray = new Array();
 	itemArray = new Array();
 	cloudArray = new Array();
-	timer = 120;
-
+	overlay = [0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000, 0000]
+	ctx.fillStyle = "rgba(0, 0, 0, 0.95)";
+	ctx.fillRect(0, 0, canvas.width, canvas.height);
+	ctx.fillStyle = "white";
+	ctx.font = "30px Arial";
+	ctx.textAlign = 'center';
+	ctx.fillText("Score: " + new String(player.points), 300, 300);
+	if(mode === "lose") {
+		ctx.fillText("You lost!", 300,150);
+		ctx.fillText("Press enter to restart level", 300,150);
+	} else {
+		ctx.fillText("You passed level " + new String(stage), 300,150);
+		ctx.fillText("Press enter to continue", 300,450);
+	}
 }
 
 // ********** END GAME ***********
@@ -534,10 +580,17 @@ var Key = {
 			}
 		}
 		//Advacnes game
-		if(stage === 0 && event.keyCode === 13){
-			stage++;
+		if((mode === "win" || stage === 0 || mode === "lose") && event.keyCode === 13){
+			if(mode === "win" || stage === 0) stage++;
 			startGame();
 		}
+		
+		//Pass level by pressing n
+		if(mode === "game" && event.keyCode === 78) {
+			mode = "win";
+			gameEnded();
+		}
+		
     this.pressed[event.keyCode] = true;
 	},
   
@@ -549,7 +602,3 @@ var Key = {
 // ********** END EVENT LISTENERS ***********
 
 startMainMenu();
-
-
-
-

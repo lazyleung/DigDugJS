@@ -270,7 +270,6 @@ function startGame() {
 			ctx.fillStyle = "rgb(255,255,255)";
 			ctx.fillText("Congratulations!", 300,250);
 			ctx.fillText("You Win!", 300,350);
-			ctx.fillText("Press enter to return to menu", 300,400);
 	}
 	if(stage > 0 && mode !== "end") {
 		createLevel();
@@ -612,13 +611,6 @@ var Key = {
 			canvas.removeEventListener('keyup', gamekeyup, false);
 			startMainMenu();
 		}
-		
-		if(event.keyCode === 13 && mode === "end") {
-			stage = 0;
-			canvas.removeEventListener('keydown', gamekeydown, false);
-			canvas.removeEventListener('keyup', gamekeyup, false);
-			startMainMenu();
-		}
 		// Pause game if esc or 'p' is pressed
 		if(event.keyCode === 27 || event.keyCode === 80) {
 			if (mode === "game") {
@@ -634,7 +626,7 @@ var Key = {
 				timerInterval = setInterval(countDown, 1000);
 			}
 		}
-		//Advacnes game
+		//Advances game
 		if((mode === "win" || stage === 0 || mode === "lose") && event.keyCode === 13){
 			if(mode === "win" || stage === 0) stage++;
 			startGame();
